@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pnw.DataAccess\Pnw.DataAccess.csproj">
-      <Project>{953c99d2-45f6-49aa-b331-131a5b1a5529}</Project>
+      <Project>{953C99D2-45F6-49AA-B331-131A5B1A5529}</Project>
       <Name>Pnw.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pnw.Model\Pnw.Model.csproj">

@@ -1,12 +1,12 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
+using Breeze.ContextProvider;
+using Breeze.WebApi2;
 using Newtonsoft.Json.Linq;
-using Breeze.WebApi;
 using Pnw.DataAccess;
 using Pnw.Model;
 
-
-namespace Pnw.Web.Controllers
+namespace Pnw.Admin.Controllers
 {
     [BreezeController]
     public class BreezeController : ApiController
@@ -41,6 +41,18 @@ namespace Pnw.Web.Controllers
         public IQueryable<Team> Teams()
         {
             return _repository.Teams;
+        }
+
+        [HttpGet]
+        public IQueryable<League> Leagues()
+        {
+            return _repository.Leagues;
+        }
+
+        [HttpGet]
+        public IQueryable<Season> Seasons()
+        {
+            return _repository.Seasons;
         }
 
         [HttpGet]

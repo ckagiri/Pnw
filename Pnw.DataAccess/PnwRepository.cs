@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-using Breeze.WebApi;
+using Breeze.ContextProvider;
+using Breeze.ContextProvider.EF6;
 using Newtonsoft.Json.Linq;
 using Pnw.Model;
 
@@ -10,8 +11,8 @@ namespace Pnw.DataAccess
     /// </summary>
     public class PnwRepository
     {
-        private readonly Breeze.WebApi.EF.EFContextProvider<PnwDbContext>
-            _contextProvider = new Breeze.WebApi.EF.EFContextProvider<PnwDbContext>();
+        private readonly EFContextProvider<PnwDbContext>
+            _contextProvider = new EFContextProvider<PnwDbContext>();
 
         private PnwDbContext Context { get { return _contextProvider.Context; } }
 
