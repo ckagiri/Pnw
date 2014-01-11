@@ -39,6 +39,16 @@
                         content: '<i class="icon-lock"></i> Admin'
                     }
                 }
+            }, {
+                url: '/fixtures',
+                config: {
+                    title: 'fixtures',
+                    templateUrl: 'app/fixture/fixtures.html',
+                    settings: {
+                        nav: 2,
+                        content: '<i class="icon-calendar"></i> Fixtures'
+                    }
+                }
             }
         ];
     }

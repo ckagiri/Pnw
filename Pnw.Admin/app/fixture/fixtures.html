@@ -1,0 +1,36 @@
+﻿<section id="fixtures-view" class="mainbar" data-ng-controller="fixtures as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="widget worange">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.fixtures.length}}"
+                        allow-collapse="true">
+                    </div>
+                    <div class="widget-content text-center text-info">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Kick Off</th>
+                                    <th>Home Team</th>
+                                    <th>Away Team</th>
+                                    <th>Venue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="f in vm.fixtures">
+                                    <td>{{f.kickOff}}</td>
+                                    <td>{{f.homeTeam.name}}</td>
+                                    <td>{{f.awayTeam.name}}</td>
+                                    <td>{{f.venue}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
