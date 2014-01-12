@@ -2,6 +2,25 @@
     'use strict';
 
     var app = angular.module('app');
+    
+    app.directive('ccImgTeam', ['config', function (config) {
+        //Usage:
+        //<img data-cc-img-team="{{t.imageSource}}"/>
+        var basePath = config.imageSettings.imageBasePath;
+        var unknownImage = config.imageSettings.unknownPersonImageSource;
+        var directive = {
+            link: link,
+            restrict: 'A'
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+            attrs.$observe('ccImgTeam', function (value) {
+                value = basePath + (value || unknownImage);
+                attrs.$set('src', value);
+            });
+        }
+    }]);
 
     app.directive('ccSidebar', ['$window', function ($window) {
         // Repositions the sidebar on window resize 

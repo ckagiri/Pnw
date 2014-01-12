@@ -12,12 +12,22 @@
         var logError = getLogFn(serviceId, 'error');
         var logSuccess = getLogFn(serviceId, 'success');
         var manager = emFactory.newManager();
+        var primePromise;
         var $q = common.$q;
+        var entityNames = {
+            fixture: 'Fixture',
+            result: 'Result',
+            league: 'League',
+            season: 'Season',
+            team: 'Team'
+        };
 
         var service = {
             getPeople: getPeople,
             getMessageCount: getMessageCount,
-            getFixturePartials: getFixturePartials
+            getFixturePartials: getFixturePartials,
+            getTeamPartials: getTeamPartials,
+            prime: prime
         };
 
         return service;
@@ -53,6 +63,82 @@
                 log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
                 return fixtures;
             }
+        }
+        
+        function getTeamPartials() {
+            var orderBy = 'name';
+            var teams;
+
+            return EntityQuery.from('Teams')
+                .select('id, name, code, tags')
+                .orderBy(orderBy)
+                .toType('Team')
+                .using(manager).execute()
+                .to$q(querySucceeded, _queryFailed);
+
+            function querySucceeded(data) {
+                teams = data.results;
+                log('Retrieved [Team Partials] from remote data source', teams.length, true);
+                return teams;
+            }
+        }
+
+        function prime() {
+            if (primePromise) return primePromise;
+
+            primePromise = $q.all([getLookups(), getTeamPartials()])
+                .then(extendMetadata)
+                .then(success);
+            return primePromise;
+
+            function success() {
+                setLookups();
+                log('Primed the data');
+            }
+            
+            function extendMetadata() {
+                var metadataStore = manager.metadataStore;
+                var types = metadataStore.getEntityTypes();
+                types.forEach(function (type) {
+                    if (type instanceof breeze.EntityType) {
+                        set(type.shortName, type);
+                    }
+                });
+
+                var fixtureEntityName = 'Fixture';
+                ['Result', 'Results', 'Fixtures'].forEach(function (r) {
+                    set(r, fixtureEntityName);
+                });
+
+                function set(resourceName, entityName) {
+                    metadataStore.setEntityTypeForResourceName(resourceName, entityName);
+                }
+            }
+        }
+        
+        function setLookups() {
+            service.lookupCachedData = {
+                leagues: _getAllLocal('League', 'name'),
+                seasons: _getAllLocal('Season', 'name'),
+            };
+        }
+
+        function getLookups() {
+            return EntityQuery.from('Lookups')
+                .using(manager).execute()
+                .to$q(querySucceeded, _queryFailed);
+
+            function querySucceeded(data) {
+                log('Retrieved [Lookups]', data, true);
+                return true;
+            }
+        }
+        
+        function _getAllLocal(resource, ordering) {
+            return EntityQuery.from(resource)
+                .orderBy(ordering)
+                .using(manager)
+                .executeLocally();
         }
         
         function _queryFailed(error) {

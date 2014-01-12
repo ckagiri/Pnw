@@ -9,6 +9,11 @@
 
     // For use with the HotTowel-Angular-Breeze add-on that uses Breeze
     var remoteServiceName = 'breeze/Breeze';
+    
+    var imageSettings = {
+        imageBasePath: '../content/images/photos/',
+        unknownPersonImageSource: 'default.png'
+    };
 
     var events = {
         controllerActivateSuccess: 'controller.activateSuccess',
@@ -16,9 +21,10 @@
     };
 
     var config = {
-        appErrorPrefix: '[HT Error] ', //Configure the exceptionHandler decorator
-        docTitle: 'HotTowel: ',
+        appErrorPrefix: '[Pnw Error] ', //Configure the exceptionHandler decorator
+        docTitle: 'Pnw: ',
         events: events,
+        imageSettings: imageSettings,
         remoteServiceName: remoteServiceName,
         version: '2.0.0'
     };

@@ -5,7 +5,7 @@
 
     // Collect the routes
     app.constant('routes', getRoutes());
-    
+
     // Configure the routes and route resolvers
     app.config(['$routeProvider', 'routes', routeConfigurator]);
     function routeConfigurator($routeProvider, routes) {
@@ -30,16 +30,6 @@
                     }
                 }
             }, {
-                url: '/admin',
-                config: {
-                    title: 'admin',
-                    templateUrl: 'app/admin/admin.html',
-                    settings: {
-                        nav: 2,
-                        content: '<i class="icon-lock"></i> Admin'
-                    }
-                }
-            }, {
                 url: '/fixtures',
                 config: {
                     title: 'fixtures',
@@ -47,6 +37,16 @@
                     settings: {
                         nav: 2,
                         content: '<i class="icon-calendar"></i> Fixtures'
+                    }
+                }
+            }, {
+                url: '/teams',
+                config: {
+                    title: 'teams',
+                    templateUrl: 'app/team/teams.html',
+                    settings: {
+                        nav: 3,
+                        content: '<i class="icon-lock"></i> Teams'
                     }
                 }
             }
