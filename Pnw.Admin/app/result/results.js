@@ -15,11 +15,11 @@
 
         function activate() {
             common.activateController([getResults()], controllerId)
-                .then(function () { log('Activated Fixtures View'); });
+                .then(function () { log('Activated Results View'); });
         }
 
         function getResults() {
-            return datacontext.getResultPartials().then(function (data) {
+            return datacontext.getResults().then(function (data) {
                 return vm.results = data;
             });
         }

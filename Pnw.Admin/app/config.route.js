@@ -40,12 +40,22 @@
                     }
                 }
             }, {
+                url: '/results',
+                config: {
+                    title: 'results',
+                    templateUrl: 'app/result/results.html',
+                    settings: {
+                        nav: 3,
+                        content: '<i class="icon-calendar"></i> Results'
+                    }
+                }
+            }, {
                 url: '/teams',
                 config: {
                     title: 'teams',
                     templateUrl: 'app/team/teams.html',
                     settings: {
-                        nav: 3,
+                        nav: 4,
                         content: '<i class="icon-lock"></i> Teams'
                     }
                 }

@@ -23,6 +23,7 @@
         };
 
         var service = {
+            getResults: getResults,
             getPeople: getPeople,
             getMessageCount: getMessageCount,
             getFixturePartials: getFixturePartials,
@@ -47,12 +48,30 @@
             return $q.when(people);
         }
 
+        function getResults() {
+            var orderBy = 'kickOff';
+            var results;
+
+            return EntityQuery.from('Fixtures')
+                .select('id, kickOff, homeTeamId, awayTeamId, homeScore, venue')
+                .orderBy(orderBy)
+                .toType('Fixture')
+                .using(manager).execute()
+                .to$q(querySucceeded, _queryFailed);
+
+            function querySucceeded(data) {
+                results = data.results;
+                log('Retrieved [Results] from remote data source', results.length, true);
+                return results;
+            }
+        }
+
         function getFixturePartials() {
             var orderBy = 'kickOff, homeTeam.name';
             var fixtures;
             
             return EntityQuery.from('Fixtures')
-                .select('id, kickOff, homeTeamId, awayTeamId, venue')
+                .select('id, kickOff, homeTeamId, awayTeamId, venue, canPredict')
                 .orderBy(orderBy)
                 .toType('Fixture')
                 .using(manager).execute()

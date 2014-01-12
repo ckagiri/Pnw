@@ -36,6 +36,16 @@
                     return value;
                 }
             });
+            
+            Object.defineProperty(Fixture.prototype, 'score', {
+                get: function () {
+                    var homeScore = this.homeScore;
+                    var awayScore = this.awayScore;
+                    var value = homeScore + ' - ' + awayScore;
+                    if (this.matchStatus === 1) { value += '*'; }
+                    return value;
+                }
+            });
         }
 
 

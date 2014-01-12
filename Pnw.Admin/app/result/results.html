@@ -2,9 +2,8 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="widget worange">
-                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.results.length}}"
-                        allow-collapse="true">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.results.length}}">
                     </div>
                     <div class="widget-content text-center text-info">
                         <table class="table table-condensed table-striped">
@@ -13,15 +12,17 @@
                                     <th>Kick Off</th>
                                     <th>Home Team</th>
                                     <th>Away Team</th>
+                                    <th>Score</th>
                                     <th>Venue</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="f in vm.fixtures">
-                                    <td>{{f.kickOffFormatted}}</td>
-                                    <td>{{f.homeTeam.name}}</td>
-                                    <td>{{f.awayTeam.name}}</td>
-                                    <td>{{f.venue}}</td>
+                                <tr data-ng-repeat="r in vm.results">
+                                    <td>{{r.kickOffFormatted}}</td>
+                                    <td>{{r.homeTeam.name}}</td>
+                                    <td>{{r.awayTeam.name}}</td>
+                                    <td>{{r.score}}</td>
+                                    <td>{{r.venue}}</td>
                                 </tr>
                             </tbody>
                         </table>
