@@ -11,8 +11,17 @@
 
     function model() {
         // Define the functions and properties to reveal.
+        var entityNames = {
+            fixture: 'Fixture',
+            result: 'Result',
+            league: 'League',
+            season: 'Season',
+            team: 'Team'
+        };
+
         var service = {
-            configureMetadataStore: configureMetadataStore
+            configureMetadataStore: configureMetadataStore,
+            entityNames: entityNames
         };
 
         return service;
@@ -27,7 +36,9 @@
         function registerFixture(metadataStore) {
             metadataStore.registerEntityTypeCtor('Fixture', Fixture);
 
-            function Fixture() { }
+            function Fixture() {
+                this.isScheduled = false;
+            }
 
             Object.defineProperty(Fixture.prototype, 'kickOffFormatted', {
                 get: function () {

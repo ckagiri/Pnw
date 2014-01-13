@@ -113,6 +113,8 @@
   <ItemGroup>
     <Content Include="app\result\results.html" />
     <Content Include="app\result\results.js" />
+    <Content Include="app\seasonteam\seasonteams.html" />
+    <Content Include="app\seasonteam\seasonteams.js" />
     <Content Include="app\services\model.js" />
     <Content Include="app\team\teams.html" />
     <Content Include="app\team\teams.js" />
@@ -223,7 +225,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\league\" />
+    <Folder Include="app\season\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pnw.DataAccess\Pnw.DataAccess.csproj">
       <Project>{953C99D2-45F6-49AA-B331-131A5B1A5529}</Project>

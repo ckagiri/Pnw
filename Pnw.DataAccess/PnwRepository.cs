@@ -43,12 +43,12 @@ namespace Pnw.DataAccess
 
         public IQueryable<Fixture> Fixtures
         {
-            get { return Context.Fixtures; }
+            get { return Context.Fixtures.Where(f => f.MatchStatus == MatchStatus.Scheduled); }
         }
 
         public IQueryable<Fixture> Results
         {
-            get { return Context.Fixtures; }
+            get { return Context.Fixtures.Where(f => f.MatchStatus != MatchStatus.Scheduled); }
         }
     }
 }

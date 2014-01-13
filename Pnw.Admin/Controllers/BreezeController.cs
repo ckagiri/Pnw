@@ -34,7 +34,7 @@ namespace Pnw.Admin.Controllers
         [HttpGet]
         public IQueryable<Fixture> Results()
         {
-            return _repository.Fixtures;
+            return _repository.Results;
         }
 
         [HttpGet]

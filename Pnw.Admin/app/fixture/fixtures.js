@@ -14,7 +14,8 @@
         activate();
 
         function activate() {
-            common.activateController([getFixtures()], controllerId)
+            var promises = [datacontext.getTeamPartials(), getFixtures()];
+            common.activateController(promises, controllerId)
                 .then(function () { log('Activated Fixtures View'); });
         }
 

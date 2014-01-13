@@ -14,7 +14,8 @@
         activate();
 
         function activate() {
-            common.activateController([getResults()], controllerId)
+            var promises = [datacontext.getTeamPartials(), getResults()];
+            common.activateController(promises, controllerId)
                 .then(function () { log('Activated Results View'); });
         }
 
