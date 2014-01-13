@@ -115,7 +115,13 @@
     <Content Include="app\result\results.js" />
     <Content Include="app\seasonteam\seasonteams.html" />
     <Content Include="app\seasonteam\seasonteams.js" />
+    <Content Include="app\services\repository.result.js" />
     <Content Include="app\services\model.js" />
+    <Content Include="app\services\repositories.js" />
+    <Content Include="app\services\repository.abstract.js" />
+    <Content Include="app\services\repository.lookup.js" />
+    <Content Include="app\services\repository.team.js" />
+    <Content Include="app\services\repository.fixture.js" />
     <Content Include="app\team\teams.html" />
     <Content Include="app\team\teams.js" />
     <Content Include="app\app.js" />

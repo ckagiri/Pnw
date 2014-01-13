@@ -16,12 +16,12 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 10
+            pageSize: 3
         };
         vm.pageChanged = pageChanged;
         vm.refresh = refresh;
         vm.search = search;
-        vm.title = 'Team';
+        vm.title = 'Teams';
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
@@ -37,17 +37,17 @@
         }
         
         function getTeamCount() {
-            return datacontext.getTeamCount().then(function (data) {
+            return datacontext.team.getCount().then(function (data) {
                 return vm.teamCount = data;
             });
         }
 
         function getTeamFilteredCount() {
-            vm.teamFilteredCount = datacontext.getFilteredTeamCount(vm.teamSearch);
+            vm.teamFilteredCount = datacontext.team.getFilteredCount(vm.teamSearch);
         }
         
         function getTeams(forceRefresh) {
-            return datacontext.getTeamPartials(forceRefresh, vm.paging.currentPage, vm.paging.pageSize, vm.teamSearch)
+            return datacontext.team.getPartials(forceRefresh, vm.paging.currentPage, vm.paging.pageSize, vm.teamSearch)
                 .then(function (data) {
                     vm.teams = data;
                     if (!vm.teamCount || forceRefresh) {

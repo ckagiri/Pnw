@@ -14,13 +14,13 @@
         activate();
 
         function activate() {
-            var promises = [datacontext.getTeamPartials(), getResults()];
+            var promises = [datacontext.team.getPartials(), getResults()];
             common.activateController(promises, controllerId)
                 .then(function () { log('Activated Results View'); });
         }
 
         function getResults() {
-            return datacontext.getResults().then(function (data) {
+            return datacontext.result.getPartials().then(function (data) {
                 return vm.results = data;
             });
         }
