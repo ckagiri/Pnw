@@ -73,6 +73,13 @@
                         content: '<i class="icon-lock"></i> Teams'
                     }
                 }
+            }, {
+                url: '/team/:id',
+                config: {
+                    title: 'team',
+                    templateUrl: 'app/team/teamdetail.html',
+                    settings: {}
+                }
             }
         ];
     }

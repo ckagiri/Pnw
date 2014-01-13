@@ -17,6 +17,8 @@
         var repoNames = ['fixture', 'lookup', 'team', 'result'];
         
         var service = {
+            cancel: cancel,
+            save: save,
             getMessageCount: getMessageCount,
             getPeople: getPeople,
             prime: prime
@@ -34,6 +36,11 @@
         function init() {
             repositories.init(manager);
             defineLazyLoadedRepos();
+        }
+        
+        function cancel() {
+            manager.rejectChanges();
+            logSuccess('Canceled changes', null, true);
         }
         
         function defineLazyLoadedRepos() {
@@ -103,6 +110,23 @@
                 { firstName: 'Haley', lastName: 'Guthrie', age: 35, location: 'Wyoming' }
             ];
             return $q.when(people);
+        }
+        
+        function save() {
+            return manager.saveChanges()
+                .to$q(saveSucceeded, saveFailed);
+
+            function saveSucceeded(result) {
+                logSuccess('Saved data', result, true);
+            }
+
+            function saveFailed(error) {
+                var msg = config.appErrorPrefix + 'Save failed: ' +
+                    breeze.saveErrorMessageService.getErrorMessage(error);
+                error.message = msg;
+                logError(msg, error);
+                throw error;
+            }
         }
     }
 })();

@@ -8,6 +8,7 @@
     function AbstractRepository(common) {
         var EntityQuery = breeze.EntityQuery;
         var logError = common.logger.getLogFn(this.serviceId, 'error');
+        var $q = common.$q;
 
         // Abstract repo gets its derived object's this.manager
         function Ctor() {
@@ -25,9 +26,11 @@
         // Shared by repository classes 
         Ctor.prototype._areItemsLoaded = _areItemsLoaded;
         Ctor.prototype._getAllLocal = _getAllLocal;
+        Ctor.prototype._getById = _getById;
         Ctor.prototype._getInlineCount = _getInlineCount;
         Ctor.prototype._getLocalEntityCount = _getLocalEntityCount;
         Ctor.prototype._queryFailed = _queryFailed;
+        Ctor.prototype._setIsPartialTrue = _setIsPartialTrue;
         // Convenience functions for the Repos
         Ctor.prototype.log = common.logger.getLogFn(this.serviceId);
         Ctor.prototype.$q = common.$q;
@@ -48,6 +51,39 @@
                 .using(this.manager)
                 .executeLocally();
         }
+        
+        function _getById(entityName, id, forceRemote) {
+            var self = this;
+            var manager = self.manager;
+            if (!forceRemote) {
+                // check cache first
+                var entity = manager.getEntityByKey(entityName, id);
+                if (entity && !entity.isPartial) {
+                    self.log('Retrieved [' + entityName + '] id:' + entity.id + ' from cache.', entity, true);
+                    if (entity.entityAspect.entityState.isDeleted()) {
+                        entity = null; // hide session marked-for-delete
+                    }
+                    return $q.when(entity);
+                }
+            }
+
+            // Hit the server
+            // It was not found in cache, so let's query for it.
+            return manager.fetchEntityByKey(entityName, id)
+                .to$q(querySucceeded, self._queryFailed);
+
+            function querySucceeded(data) {
+                entity = data.entity;
+                if (!entity) {
+                    self.log('Could not find [' + entityName + '] id:' + id, null, true);
+                    return null;
+                }
+                entity.isPartial = false;
+                self.log('Retrieved [' + entityName + '] id ' + entity.id
+                    + ' from remote data source', entity, true);
+                return entity;
+            }
+        }
 
         function _getLocalEntityCount(resource) {
             var entities = EntityQuery.from(resource)
@@ -62,6 +98,13 @@
             var msg = config.appErrorPrefix + 'Error retrieving data.' + error.message;
             logError(msg, error);
             throw error;
+        }
+        
+        function _setIsPartialTrue(entities) {
+            for (var i = entities.length; i--;) {
+                entities[i].isPartial = true;
+            }
+            return entities;
         }
     }
 })();

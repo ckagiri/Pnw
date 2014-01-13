@@ -17,7 +17,7 @@
                 <div class="widget worange">
                     <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.teamFilteredCount}} / {{vm.teamCount}}" right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}"></div>
                     <div class="widget-content user">
-                        <div class="padd" data-ng-repeat="t in vm.teams">
+                        <div class="padd" data-ng-repeat="t in vm.teams" data-ng-click="vm.gotoTeam(t)">
                             <div class="user">
                                 <img data-cc-img-team="{{t.team.imageSource}}"
                                      class="img-polaroid user-pic"/>

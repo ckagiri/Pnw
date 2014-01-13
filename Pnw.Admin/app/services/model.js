@@ -38,6 +38,7 @@
 
             function Fixture() {
                 this.isScheduled = false;
+                this.isPartial = false;
             }
 
             Object.defineProperty(Fixture.prototype, 'kickOffFormatted', {
@@ -63,7 +64,9 @@
         function registerTeam(metadataStore) {
             metadataStore.registerEntityTypeCtor('Team', Team);
 
-            function Team() { }
+            function Team() {
+                this.isPartial = false;
+            }
 
             Object.defineProperty(Team.prototype, 'tagsFormatted', {
                 get: function () {

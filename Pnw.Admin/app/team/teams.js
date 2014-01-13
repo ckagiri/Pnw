@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'teams';
-    angular.module('app').controller(controllerId, ['common', 'config', 'datacontext', teams]);
+    angular.module('app').controller(controllerId, ['$location', 'common', 'config', 'datacontext', teams]);
 
-    function teams(common, config, datacontext) {
+    function teams($location, common, config, datacontext) {
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
@@ -22,6 +22,7 @@
         vm.refresh = refresh;
         vm.search = search;
         vm.title = 'Teams';
+        vm.gotoTeam = gotoTeam;
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
@@ -34,6 +35,12 @@
         function activate() {
             common.activateController([getTeams()], controllerId)
                 .then(function () { log('Activated Teams View'); });
+        }
+        
+        function gotoTeam(team) {
+            if (team && team.id) {
+                $location.path('/team/' + team.id);
+            }
         }
         
         function getTeamCount() {

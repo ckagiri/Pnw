@@ -16,6 +16,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             // Exposed data access functions
+            this.getById = getById;
             this.getCount = getCount;
             this.getPartials = getPartials;
             this.getFilteredCount = getFilteredCount;
@@ -24,6 +25,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+        
+        function getById(id, forceRemote) {
+            return this._getById(entityName, id, forceRemote);
+        }
 
         function getCount() {
             var self = this;
@@ -55,6 +60,7 @@
                .to$q(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
+                self._setIsPartialTrue(data.results);
                 self._areItemsLoaded(true);
                 self.log('Retrieved [Team Partials] from remote data source', data.results.length, true);
                 self._areItemsLoaded(true);
