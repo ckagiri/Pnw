@@ -22,8 +22,6 @@ namespace Pnw.DataAccess
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
 
-            modelBuilder.Entity<Season>().HasMany(s => s.Teams).WithMany();
-
             modelBuilder.Entity<Fixture>()
                 .HasRequired(f => f.HomeTeam)
                 .WithMany()
@@ -35,12 +33,28 @@ namespace Pnw.DataAccess
                 .WithMany()
                 .HasForeignKey(f => f.AwayTeamId)
                 .WillCascadeOnDelete(false);
+
+            // modelBuilder.Entity<Season>().HasMany(s => s.Teams).WithMany();
+
+            modelBuilder.Entity<Participation>()
+                .HasKey(p => new { p.SeasonId, p.TeamId })
+                .HasRequired(p => p.Team)
+                .WithMany(t => t.ParticipationList)
+                .HasForeignKey(p => p.TeamId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Participation>()
+                .HasRequired(p => p.Season)
+                .WithMany(s => s.ParticipationList)
+                .HasForeignKey(p => p.SeasonId)
+                .WillCascadeOnDelete(false);
         }
 
         public DbSet<League> Leagues { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
+        public DbSet<Participation> Participations { get; set; }
 
         public static string ConnectionStringName
         {

@@ -36,6 +36,11 @@ namespace Pnw.DataAccess
             get { return Context.Seasons; }
         }
 
+        public IQueryable<Participation> Participations
+        {
+            get { return Context.Participations; }
+        }
+
         public IQueryable<Team> Teams
         {
             get { return Context.Teams; }

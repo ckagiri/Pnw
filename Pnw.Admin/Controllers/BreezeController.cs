@@ -56,6 +56,12 @@ namespace Pnw.Admin.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Participation> Participations()
+        {
+            return _repository.Participations;
+        }
+
+        [HttpGet]
         public object Lookups()
         {
             var leagues = _repository.Leagues;

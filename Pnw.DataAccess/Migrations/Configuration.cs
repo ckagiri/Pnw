@@ -314,10 +314,14 @@ namespace Pnw.DataAccess.Migrations
             var teamsKpl = teams.Take(5).ToList();
             var teamsEpl = teams.Skip(5).ToList();
 
-            teamsEpl.ForEach(t => eplSeason.Teams.Add(t));
-            teamsKpl.ForEach(t => kplSeason.Teams.Add(t));
+            teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
+                new Participation { SeasonId = eplSeason.Id, TeamId = t.Id }));
+            teamsEpl.ForEach(t => kplSeason.ParticipationList.Add(
+                new Participation { SeasonId = kplSeason.Id, TeamId = t.Id }));
 
-            context.Seasons.AddOrUpdate(p => new { p.LeagueId, p.Name }, new[] { kplSeason, eplSeason });
+            var participations = eplSeason.ParticipationList.Concat(kplSeason.ParticipationList).ToArray();
+
+            context.Participations.AddOrUpdate(p =>new { p.SeasonId, p.TeamId },  participations);
         }
 
         private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)

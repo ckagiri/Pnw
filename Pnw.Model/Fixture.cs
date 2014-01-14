@@ -17,8 +17,8 @@ namespace Pnw.Model
         [Range(0, 15)]
         public int AwayScore { get; set; }
         public bool CanPredict { get; set; }
-        public virtual Team HomeTeam { get; set; }
-        public virtual Team AwayTeam { get; set; }
+        public Team HomeTeam { get; set; }
+        public Team AwayTeam { get; set; }
     }
 
     public enum MatchStatus

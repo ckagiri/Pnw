@@ -8,14 +8,14 @@ namespace Pnw.Model
     {
         public Season()
         {
-            Teams = new Collection<Team>();
+            ParticipationList = new Collection<Participation>();
         }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Guid LeagueId { get; set; }
-        public virtual League League { get; set; }
-        public virtual ICollection<Team> Teams { get; set; }
+        public League League { get; set; }
+        public ICollection<Participation> ParticipationList { get; set; }
     }
 }
