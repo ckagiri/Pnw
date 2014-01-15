@@ -16,6 +16,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             // Exposed data access functions
+            this.create = create;
             this.getById = getById;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
@@ -25,6 +26,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+        
+        function create() {
+            return this.manager.createEntity(entityName, { id: breeze.core.getUuid() });
+        }
         
         function getById(id, forceRemote) {
             return this._getById(entityName, id, forceRemote);

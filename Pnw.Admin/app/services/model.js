@@ -21,6 +21,7 @@
 
         var service = {
             configureMetadataStore: configureMetadataStore,
+            createNullos: createNullos,
             entityNames: entityNames
         };
 
@@ -30,6 +31,18 @@
             registerSeason(metadataStore);
             registerFixture(metadataStore);
             registerTeam(metadataStore);
+        }
+        
+        function createNullos(manager) {
+            var unchanged = breeze.EntityState.Unchanged;
+
+            createNullo(entityNames.league);
+            createNullo(entityNames.season);
+
+            function createNullo(entityName, values) {
+                var initialValues = values || { name: ' [Select a ' + entityName.toLowerCase() + ']' };
+                return manager.createEntity(entityName, initialValues, unchanged);
+            }
         }
 
         //#region Internal Methods        
@@ -52,10 +65,11 @@
             
             Object.defineProperty(Fixture.prototype, 'title', {
                 get: function () {
-                    var hName = this.homeTeam.name;
-                    var aName = this.awayTeam.name;
-                    var value = hName + ' v ' + aName;
-                    return value;
+                    var hName = this.homeTeam ? this.homeTeam.name : '';
+                    var aName = this.awayTeam ? this.awayTeam.name : '';
+                    if (hName && aName) 
+                        return hName + ' v ' + aName;
+                    return '';
                 }
             });
             

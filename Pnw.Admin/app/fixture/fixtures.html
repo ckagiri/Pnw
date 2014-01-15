@@ -2,6 +2,20 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
+                <div class="form-search">
+                  <!--  <input class="input-large search-query"
+                           data-ng-model="vm.fixturesSearch"
+                           data-ng-keyup="vm.search($event)"
+                           placeholder="Filter team"/>-->
+                    <div class="btn-group pull-right">
+                        <!--<a class="btn btn-info"
+                           data-ng-click="vm.refresh()"><i class="icon-refresh"></i><span>Refresh</span></a>-->
+                        <a class="btn btn-info"
+                           href="#/fixture/new"><i class="icon-plus"></i><span>Add Fixture</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
                 <div class="widget wgreen">
                     <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.fixtures.length}}">
                     </div>
@@ -16,7 +30,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="f in vm.fixtures" data-ng-click="vm.gotoFixture(f)">
+                                <tr data-ng-repeat="f in vm.fixtures" data-ng-click="vm.gotoFixture(f)" 
+                                    title="Go to fixture details">
                                     <td>{{f.kickOffFormatted}}</td>
                                     <td>{{f.homeTeam.name}}</td>
                                     <td>{{f.awayTeam.name}}</td>

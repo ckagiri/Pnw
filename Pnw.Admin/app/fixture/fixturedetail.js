@@ -4,17 +4,16 @@
     var controllerId = 'fixturedetail';
 
     angular.module('app').controller(controllerId,
-        ['$scope', '$routeParams', '$window',
+        ['$location', '$scope', '$routeParams', '$window',
             'common', 'config', 'datacontext', fixturedetail]);
 
-    function fixturedetail($scope, $routeParams, $window,
+    function fixturedetail($location, $scope, $routeParams, $window,
             common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
 
         vm.cancel = cancel;
-        vm.getTitle = getTitle;
         vm.goBack = goBack;
         vm.hasChanges = false;
         vm.isSaving = false;
@@ -24,6 +23,7 @@
         vm.leagues = [];
         vm.seasons = [];
         vm.teams = [];
+        
         activate();
 
         Object.defineProperty(vm, 'canSave', { get: canSave });
@@ -35,12 +35,18 @@
             common.activateController([datacontext.team.getPartials(), getRequestedFixture()], controllerId);
         }
 
-        function cancel() { datacontext.cancel(); }
+        function cancel() {
+            datacontext.cancel();
+            if (vm.fixture.entityAspect.entityState.isDetached()) {
+                gotoFixtures();
+            }
+        }
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
 
         function getRequestedFixture() {
             var val = $routeParams.id;
+            if (val === 'new') { return vm.fixture = datacontext.fixture.create(); }
 
             return datacontext.fixture.getById(val)
                 .then(function (data) {
@@ -50,11 +56,9 @@
                 });
         }
 
-        function getTitle() {
-            return 'Edit ' + ((vm.fixture && vm.fixture.title) || 'New Fixture');
-        }
-
         function goBack() { $window.history.back(); }
+        
+        function gotoFixtures() { $location.path('/fixtures'); }
 
         function initLookups() {
             var lookups = datacontext.lookup.lookupCachedData;

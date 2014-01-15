@@ -16,6 +16,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             // Exposed data access functions
+            this.create = create;
             this.getById = getById;
             this.getCount = getCount;
             this.getPartials = getPartials;
@@ -26,6 +27,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+        
+        function create() {
+             return this.manager.createEntity(entityName, {id: breeze.core.getUuid()});
+        }
         
         function getById(id, forceRemote) {
             return this._getById(entityName, id, forceRemote);
@@ -97,9 +102,13 @@
             return teams.length;
         }
         
-        function getAllLocal() {
-            var self = this;
-            return self._getAllLocal(entityName, orderBy);
+        function getAllLocal(includeNullo) {
+            var self = this,
+                predicate = null;
+            if (includeNullo) {
+                predicate = this._predicates.isNullo;
+            } 
+            return self._getAllLocal(entityName, orderBy, predicate);
         }
 
         function _namePredicate(filterValue) {

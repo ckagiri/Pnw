@@ -41,8 +41,10 @@
         }
         
         function cancel() {
-            manager.rejectChanges();
-            logSuccess('Canceled changes', null, true);
+            if (manager.hasChanges()) {
+                manager.rejectChanges();
+                logSuccess('Canceled changes', null, true);
+            }
         }
         
         function defineLazyLoadedRepos() {

@@ -4,16 +4,15 @@
     var controllerId = 'teamdetail';
 
     angular.module('app').controller(controllerId,
-        ['$routeParams', '$scope', '$window',
+        ['$location', '$routeParams', '$scope', '$window',
             'common', 'config', 'datacontext', teamdetail]);
 
-    function teamdetail($routeParams, $scope, $window, common, config, datacontext) {
+    function teamdetail($location, $routeParams, $scope, $window, common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
 
         vm.cancel = cancel;
-        vm.getTitle = getTitle;
         vm.goBack = goBack;
         vm.hasChanges = false;
         vm.isSaving = false;
@@ -30,7 +29,14 @@
             common.activateController([getRequestedTeam()], controllerId);
         }
         
-        function cancel() { datacontext.cancel(); }
+        function cancel() {
+            datacontext.cancel();
+            if (vm.team.entityAspect.entityState.isDetached()) {
+                gotoTeams();
+            }
+        }
+        
+        function gotoTeams() { $location.path('/teams'); }
         
         function onDestroy() {
             $scope.$on('$destroy', function () {
@@ -49,6 +55,9 @@
         
         function getRequestedTeam() {
             var val = $routeParams.id;
+            if (val === 'new') {
+                 return vm.team = datacontext.team.create();
+            }
 
             return datacontext.team.getById(val)
                 .then(function (data) {
@@ -58,12 +67,7 @@
                 });
         }
         
-        function getTitle() {
-            return 'Edit ' + ((vm.team && vm.team.name) || 'New Team');
-        }
-        
         function goBack() { $window.history.back(); }
-        
         
         function save() {
             if (!canSave()) { return $q.when(null); } // Must return a promise
