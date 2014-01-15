@@ -16,6 +16,10 @@
                         data-ng-disabled="!vm.canSave">
                     <i class="icon-save"></i>Save
                 </button>
+                <button class="btn btn-danger" 
+                        data-ng-click="vm.deleteTeam()">
+                    <i class="icon-trash"></i>Delete
+                </button> 
                 <span data-ng-show="vm.hasChanges"
                       class="dissolve-animation ng-hide">
                     <i class="icon-asterisk icon-asterisk-large"></i>
@@ -28,11 +32,13 @@
                         <div>
                             <label>Name</label>
                             <input data-ng-model="vm.team.name"
-                                   placeholder="Name" />
+                                   data-z-validate
+                                placeholder="Name" />
                         </div>
                         <div>
                             <label>Code</label>
                             <input data-ng-model="vm.team.code"
+                                data-z-validate
                                    placeholder="Code" />
                         </div>
                         <div>

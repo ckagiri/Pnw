@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pnw.Model
 {
@@ -12,7 +13,9 @@ namespace Pnw.Model
             ParticipationList = new Collection<Participation>();
         }
         public Guid Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required, MaxLength(4)]
         public string Code { get; set; }
         public string HomeGround { get; set; }
         public string Tags { get; set; }

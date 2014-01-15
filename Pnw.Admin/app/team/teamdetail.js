@@ -5,14 +5,15 @@
 
     angular.module('app').controller(controllerId,
         ['$location', '$routeParams', '$scope', '$window',
-            'common', 'config', 'datacontext', teamdetail]);
+            'bootstrap.dialog', 'common', 'config', 'datacontext', teamdetail]);
 
-    function teamdetail($location, $routeParams, $scope, $window, common, config, datacontext) {
+    function teamdetail($location, $routeParams, $scope, $window, bsDialog, common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
 
         vm.cancel = cancel;
+        vm.deleteTeam = deleteTeam;
         vm.goBack = goBack;
         vm.hasChanges = false;
         vm.isSaving = false;
@@ -52,6 +53,22 @@
         }
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
+        
+        function deleteTeam() {
+            return bsDialog.deleteDialog('Team')
+                .then(confirmDelete);
+
+            function confirmDelete() {
+                datacontext.markDeleted(vm.team);
+                vm.save().then(success, failed);
+
+                function success() { gotoTeams(); }
+
+                function failed(error) {
+                    cancel(); // Makes the entity available to edit again
+                }
+            }
+        }
         
         function getRequestedTeam() {
             var val = $routeParams.id;
