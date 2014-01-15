@@ -31,6 +31,7 @@
                     <div>
                         <label>Season</label>
                         <select data-ng-options="s.name for s in vm.seasons"
+                            data-z-validate
                             data-ng-model="vm.fixture.season">
                         </select>
                     </div>

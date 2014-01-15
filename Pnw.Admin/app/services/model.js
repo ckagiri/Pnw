@@ -7,9 +7,9 @@
     // Define the factory on the module.
     // Inject the dependencies. 
     // Point to the factory definition function.
-    angular.module('app').factory(serviceId, model);
+    angular.module('app').factory(serviceId, ['model.validation', model]);
 
-    function model() {
+    function model(modelValidation) {
         // Define the functions and properties to reveal.
         var entityNames = {
             fixture: 'Fixture',
@@ -22,7 +22,8 @@
         var service = {
             configureMetadataStore: configureMetadataStore,
             createNullos: createNullos,
-            entityNames: entityNames
+            entityNames: entityNames,
+            extendMetadata: extendMetadata
         };
 
         return service;
@@ -31,6 +32,8 @@
             registerSeason(metadataStore);
             registerFixture(metadataStore);
             registerTeam(metadataStore);
+            
+            modelValidation.createAndRegister(entityNames);
         }
         
         function createNullos(manager) {
@@ -43,6 +46,10 @@
                 var initialValues = values || { name: ' [Select a ' + entityName.toLowerCase() + ']' };
                 return manager.createEntity(entityName, initialValues, unchanged);
             }
+        }
+        
+        function extendMetadata(metadataStore) {
+            modelValidation.applyValidators(metadataStore);
         }
 
         //#region Internal Methods        

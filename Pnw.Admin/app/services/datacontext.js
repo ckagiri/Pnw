@@ -88,6 +88,12 @@
 
             function extendMetadata() {
                 var metadataStore = manager.metadataStore;
+                model.extendMetadata(metadataStore);
+                registerResourceNames(metadataStore);
+            }
+            
+            // Wait to call until entityTypes are loaded in metadata
+            function registerResourceNames(metadataStore) {
                 var types = metadataStore.getEntityTypes();
                 types.forEach(function (type) {
                     if (type instanceof breeze.EntityType) {
