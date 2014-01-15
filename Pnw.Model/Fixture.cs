@@ -17,6 +17,9 @@ namespace Pnw.Model
         [Range(0, 15)]
         public int AwayScore { get; set; }
         public bool CanPredict { get; set; }
+        public string HomeTeamImageSource { get; set; }
+        public string AwayTeamImageSource { get; set; }
+        public Season Season { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
     }

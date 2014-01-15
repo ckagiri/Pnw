@@ -26,7 +26,7 @@
             return $routeProvider;
         }
     }
-    
+
     prime.$inject = ['datacontext'];
     function prime(dc) { return dc.prime(); }
 
@@ -52,6 +52,13 @@
                         nav: 2,
                         content: '<i class="icon-calendar"></i> Fixtures'
                     }
+                }
+            }, {
+                url: '/fixture/:id',
+                config: {
+                    title: 'fixture',
+                    templateUrl: 'app/fixture/fixturedetail.html',
+                    settings: {}
                 }
             }, {
                 url: '/results',

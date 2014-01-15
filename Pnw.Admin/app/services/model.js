@@ -27,6 +27,7 @@
         return service;
 
         function configureMetadataStore(metadataStore) {
+            registerSeason(metadataStore);
             registerFixture(metadataStore);
             registerTeam(metadataStore);
         }
@@ -45,6 +46,15 @@
                 get: function () {
                     var kickOff = this.kickOff;
                     var value = moment.utc(kickOff).format('ddd hh:mm a');
+                    return value;
+                }
+            });
+            
+            Object.defineProperty(Fixture.prototype, 'title', {
+                get: function () {
+                    var hName = this.homeTeam.name;
+                    var aName = this.awayTeam.name;
+                    var value = hName + ' v ' + aName;
                     return value;
                 }
             });
@@ -75,6 +85,20 @@
                 set: function (value) {
                     this.tags = value.replace(/\, /g, '|');
                 }
+            });
+        }
+        
+        function registerSeason(metadataStore) {
+            metadataStore.registerEntityTypeCtor('Season', Season);
+
+            function Season() {
+                this.isPartial = false;
+            }
+
+            Object.defineProperty(Season.prototype, 'fullName', {
+                get: function () {
+                    return (this.league.code || "Unknown League") + ' ' + this.name;
+                },
             });
         }
 

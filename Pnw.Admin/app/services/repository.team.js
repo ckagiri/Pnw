@@ -20,6 +20,7 @@
             this.getCount = getCount;
             this.getPartials = getPartials;
             this.getFilteredCount = getFilteredCount;
+            this.getAllLocal = getAllLocal;
         }
 
         AbstractRepository.extend(Ctor);
@@ -53,7 +54,7 @@
             }
         
             return EntityQuery.from('Teams')
-               .select('id, name, code, tags')
+               .select('id, name, code, tags, imageSource')
                .orderBy(orderBy)
                .toType(entityName)
                .using(self.manager).execute()
@@ -94,6 +95,11 @@
                 .executeLocally();
 
             return teams.length;
+        }
+        
+        function getAllLocal() {
+            var self = this;
+            return self._getAllLocal(entityName, orderBy);
         }
 
         function _namePredicate(filterValue) {

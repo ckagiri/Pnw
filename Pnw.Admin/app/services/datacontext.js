@@ -3,10 +3,11 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['common', 'entityManagerFactory', 'model', 'repositories', datacontext]);
+        ['common', 'config', 'entityManagerFactory', 'model', 'repositories', datacontext]);
 
-    function datacontext(common, emFactory, model, repositories) {
+    function datacontext(common, config, emFactory, model, repositories) {
         var entityNames = model.entityNames;
+        var events = config.events;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(serviceId);
         var logError = getLogFn(serviceId, 'error');
@@ -36,6 +37,7 @@
         function init() {
             repositories.init(manager);
             defineLazyLoadedRepos();
+            setupEventForHasChangesChanged();
         }
         
         function cancel() {
@@ -127,6 +129,14 @@
                 logError(msg, error);
                 throw error;
             }
+        }
+        
+        function setupEventForHasChangesChanged() {
+            manager.hasChangesChanged.subscribe(function (eventArgs) {
+                var data = { hasChanges: eventArgs.hasChanges };
+                // send the message (the ctrl receives it)
+                common.$broadcast(events.hasChangesChanged, data);
+            });
         }
     }
 })();

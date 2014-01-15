@@ -16,6 +16,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             // Exposed data access functions
+            this.getById = getById;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
             this.getPartials = getPartials;
@@ -24,6 +25,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+        
+        function getById(id, forceRemote) {
+            return this._getById(entityName, id, forceRemote);
+        }
 
         function getAllLocal() {
             var self = this;
@@ -43,7 +48,7 @@
             }
 
             return EntityQuery.from('Fixtures')
-                .select('id, kickOff, homeTeamId, awayTeamId, venue')
+                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, matchStatus, venue')
                 .orderBy(orderBy)
                 .toType('Fixture')
                 .using(self.manager).execute()

@@ -98,7 +98,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Gor Mahia",
                                            Code = "GOR",
                                            HomeGround = "City Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa"
+                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -106,7 +107,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "AFC Leopards",
                                            Code = "AFC",
                                            HomeGround = "Chui Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa"
+                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -114,7 +116,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Tusker",
                                            Code = "TUSK",
                                            HomeGround = "The Breweries",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa"
+                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -122,7 +125,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Sofapaka",
                                            Code = "SOFP",
                                            HomeGround = "Sofapaka Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa"
+                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -130,7 +134,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Ulinzi Stars",
                                            Code = "ULNZ",
                                            HomeGround = "Ulinzi Grounds",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa"
+                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
                                        }
                                };
 
@@ -142,7 +147,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Manchester United",
                                            Code = "MANU",
                                            HomeGround = "Old Trafford",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "manchester_united.png"
                                        },
                                    new Team
                                        {
@@ -150,7 +156,9 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Manchester City",
                                            Code = "MANC",
                                            HomeGround = "Etihad",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "manchester_city.png"
+
                                        },
                                    new Team
                                        {
@@ -158,7 +166,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Chelsea",
                                            Code = "CHE",
                                            HomeGround = "Stamford Bridge",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "chelsea.png"
                                        },
                                    new Team
                                        {
@@ -166,7 +175,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Arsenal",
                                            Code = "ASNL",
                                            HomeGround = "Emirates",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "arsenal.png"
                                        },
                                    new Team
                                        {
@@ -174,7 +184,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Tottenham Hotspur",
                                            Code = "TOTT",
                                            HomeGround = "White Hart Lane",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "tottenham.png"
                                        },
                                    new Team
                                        {
@@ -182,7 +193,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Everton",
                                            Code = "EVE",
                                            HomeGround = "Goodison Park",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "everton.png"
                                        },
                                    new Team
                                        {
@@ -190,7 +202,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Liverpool",
                                            Code = "LIV",
                                            HomeGround = "Anfield",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "liverpool.png"
                                        },
                                    new Team
                                        {
@@ -198,7 +211,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "West Bromwich Albion",
                                            Code = "WBA",
                                            HomeGround = "The Hawthorns",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "west_brom.png"
                                        },
                                    new Team
                                        {
@@ -206,7 +220,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Swansea",
                                            Code = "SWA",
                                            HomeGround = "Liberty Stadium",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "swansea.png"
                                        },
                                    new Team
                                        {
@@ -214,7 +229,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "West Ham United",
                                            Code = "WHU",
                                            HomeGround = "Boleyn Ground",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "west_ham_united.png"
                                        },
                                    new Team
                                        {
@@ -222,7 +238,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Norwich City",
                                            Code = "NOR",
                                            HomeGround = "Carrow Road",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "english_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -230,7 +247,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Fulham",
                                            Code = "FUL",
                                            HomeGround = "Craven Cottage",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "fulham.png"
                                        },
                                    new Team
                                        {
@@ -238,7 +256,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Stoke City",
                                            Code = "STO",
                                            HomeGround = "Britannia Stadium",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "stoke_city.png"
                                        },
                                    new Team
                                        {
@@ -246,7 +265,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Southampton",
                                            Code = "SOU",
                                            HomeGround = "St. Marys",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "english_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -254,7 +274,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Aston Villa",
                                            Code = "AVIL",
                                            HomeGround = "Villa Park",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "aston_villa.png"
                                        },
                                    new Team
                                        {
@@ -262,7 +283,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Newcastle United",
                                            Code = "NUTD",
                                            HomeGround = "St. James' park",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "newcastle_united.png"
                                        },
                                    new Team
                                        {
@@ -270,7 +292,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Sunderland",
                                            Code = "SUN",
                                            HomeGround = "Stadium Of Light",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "sunderland.png"
                                        },
                                    new Team
                                        {
@@ -278,7 +301,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Hull City",
                                            Code = "HUC",
                                            HomeGround = "KC Stadium",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "english_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -286,7 +310,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Cardiff City",
                                            Code = "CAC",
                                            HomeGround = "Cardiff City Stadium",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "english_premier_league.png"
                                        },
                                    new Team
                                        {
@@ -294,7 +319,8 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Crystal Palace",
                                            Code = "CRP",
                                            HomeGround = "Selhurst Park",
-                                           Tags = "EPL|England|UK"
+                                           Tags = "EPL|England|UK",
+                                           ImageSource = "english_premier_league.png"
                                        },
                                };
 

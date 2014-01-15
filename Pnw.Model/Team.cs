@@ -18,5 +18,6 @@ namespace Pnw.Model
         public string Tags { get; set; }
         public ICollection<Fixture> Fixtures { get; set; }
         public ICollection<Participation> ParticipationList { get; set; }
+        public string ImageSource { get; set; }
     }
 }

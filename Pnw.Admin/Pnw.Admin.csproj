@@ -111,8 +111,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\fixture\teamdetail.html" />
-    <Content Include="app\fixture\teamdetail.js" />
+    <Content Include="app\fixture\fixturedetail.html" />
+    <Content Include="app\fixture\fixturedetail.js" />
     <Content Include="app\result\results.html" />
     <Content Include="app\result\results.js" />
     <Content Include="app\seasonteam\seasonteams.html" />

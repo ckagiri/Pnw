@@ -1,13 +1,13 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'sessiondetail';
+    var controllerId = 'fixturedetail';
 
     angular.module('app').controller(controllerId,
         ['$scope', '$routeParams', '$window',
-            'common', 'config', 'datacontext', sessiondetail]);
+            'common', 'config', 'datacontext', fixturedetail]);
 
-    function sessiondetail($scope, $routeParams, $window,
+    function fixturedetail($scope, $routeParams, $window,
             common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
@@ -18,51 +18,49 @@
         vm.goBack = goBack;
         vm.hasChanges = false;
         vm.isSaving = false;
-        vm.rooms = [];
         vm.save = save;
-        vm.session = undefined;
-        vm.speakers = [];
-        vm.timeslots = [];
-        vm.tracks = [];
-
+        vm.fixture = undefined;
+        vm.league = undefined;
+        vm.leagues = [];
+        vm.seasons = [];
+        vm.teams = [];
         activate();
-        
+
         Object.defineProperty(vm, 'canSave', { get: canSave });
-        
+
         function activate() {
             initLookups();
             onDestroy();
             onHasChanges();
-            common.activateController([getRequestedSession()], controllerId);
+            common.activateController([datacontext.team.getPartials(), getRequestedFixture()], controllerId);
         }
-        
+
         function cancel() { datacontext.cancel(); }
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
-        
-        function getRequestedSession() {
+
+        function getRequestedFixture() {
             var val = $routeParams.id;
 
-            return datacontext.session.getById(val)
+            return datacontext.fixture.getById(val)
                 .then(function (data) {
-                    vm.session = data;
+                    vm.fixture = data;
                 }, function (error) {
-                    logError('Unable to get session ' + val);
+                    logError('Unable to get fixture ' + val);
                 });
         }
-        
+
         function getTitle() {
-            return 'Edit ' + ((vm.session && vm.session.title) || 'New Session');
+            return 'Edit ' + ((vm.fixture && vm.fixture.title) || 'New Fixture');
         }
-        
+
         function goBack() { $window.history.back(); }
-        
+
         function initLookups() {
             var lookups = datacontext.lookup.lookupCachedData;
-            vm.rooms = lookups.rooms;
-            vm.timeslots = lookups.timeslots;
-            vm.tracks = lookups.tracks;
-            vm.speakers = datacontext.speaker.getAllLocal();
+            vm.leagues = lookups.leagues;
+            vm.seasons = lookups.seasons;
+            vm.teams = datacontext.team.getAllLocal();
         }
 
         function onDestroy() {
@@ -77,7 +75,7 @@
                     vm.hasChanges = data.hasChanges;
                 });
         }
-        
+
         function save() {
             if (!canSave()) { return $q.when(null); } // Must return a promise
 

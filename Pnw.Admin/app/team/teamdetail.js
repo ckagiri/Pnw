@@ -4,11 +4,10 @@
     var controllerId = 'teamdetail';
 
     angular.module('app').controller(controllerId,
-        ['$scope', '$routeParams', '$window',
+        ['$routeParams', '$scope', '$window',
             'common', 'config', 'datacontext', teamdetail]);
 
-    function teamdetail($scope, $routeParams, $window,
-            common, config, datacontext) {
+    function teamdetail($routeParams, $scope, $window, common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
@@ -20,10 +19,10 @@
         vm.isSaving = false;
         vm.save = save;
         vm.team = undefined;
-
-        activate();
-        
+      
         Object.defineProperty(vm, 'canSave', { get: canSave });
+        
+        activate();
         
         function activate() {
             onDestroy();
@@ -32,6 +31,19 @@
         }
         
         function cancel() { datacontext.cancel(); }
+        
+        function onDestroy() {
+            $scope.$on('$destroy', function () {
+                datacontext.cancel();
+            });
+        }
+
+        function onHasChanges() {
+            $scope.$on(config.events.hasChangesChanged,
+                function (event, data) {
+                    vm.hasChanges = data.hasChanges;
+                });
+        }
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
         
@@ -52,18 +64,6 @@
         
         function goBack() { $window.history.back(); }
         
-        function onDestroy() {
-            $scope.$on('$destroy', function () {
-                datacontext.cancel();
-            });
-        }
-
-        function onHasChanges() {
-            $scope.$on(config.events.hasChangesChanged,
-                function (event, data) {
-                    vm.hasChanges = data.hasChanges;
-                });
-        }
         
         function save() {
             if (!canSave()) { return $q.when(null); } // Must return a promise
