@@ -55,7 +55,7 @@
                 for (var i = results.length; i--;) {
                     results[i].isScheduled = false;
                 }
-                self.zStorage.areItemsLoaded('results');
+                self.zStorage.areItemsLoaded('results', true);
                 self.zStorage.save();
                 self.log('Retrieved [Result Partials] from remote data source', results.length, true);
                 return results;
