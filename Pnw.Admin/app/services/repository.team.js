@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.team';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositoryTeam]);
+        ['model', 'repository.abstract', 'zStorage', 'zStorageWip', RepositoryTeam]);
 
-    function RepositoryTeam(model, AbstractRepository, zStorage) {
+    function RepositoryTeam(model, AbstractRepository, zStorage, zStorageWip) {
         var entityName = model.entityNames.team;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'name';
@@ -16,6 +16,7 @@
             this.entityName = entityName;
             this.manager = mgr;
             this.zStorage = zStorage;
+            this.zStorageWip = zStorageWip;
             // Exposed data access functions
             this.create = create;
             this.getById = getById;

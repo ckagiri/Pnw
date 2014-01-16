@@ -87,6 +87,15 @@
                     templateUrl: 'app/team/teamdetail.html',
                     settings: {}
                 }
+            }, {
+                url: '/workinprogress',
+                config: {
+                    templateUrl: 'app/wip/wip.html',
+                    title: 'workinprogress',
+                    settings: {
+                        content: '<i class="icon-asterisk"></i> Work In Progress'
+                    }
+                }
             }
         ];
     }

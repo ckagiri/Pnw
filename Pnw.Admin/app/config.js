@@ -36,6 +36,7 @@
     var events = {
         controllerActivateSuccess: 'controller.activateSuccess',
         hasChangesChanged: 'datacontext.hasChangesChanged',
+        entitiesChanged: 'datacontext.entitiesChanged',
         spinnerToggle: 'spinner.toggle',
         storage: {
             error: 'store.error',

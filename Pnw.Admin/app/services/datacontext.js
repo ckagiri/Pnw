@@ -3,9 +3,11 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$rootScope', 'common', 'config', 'entityManagerFactory', 'model', 'repositories', 'zStorage', datacontext]);
+        ['$rootScope', 'common', 'config', 'entityManagerFactory',
+            'model', 'repositories', 'zStorage', 'zStorageWip', datacontext]);
 
-    function datacontext($rootScope, common, config, emFactory, model, repositories, zStorage) {
+    function datacontext($rootScope, common, config, emFactory,
+            model, repositories, zStorage, zStorageWip) {
         var entityNames = model.entityNames;
         var events = config.events;
         var getLogFn = common.logger.getLogFn;
@@ -25,7 +27,8 @@
             getPeople: getPeople,
             prime: prime,
             // sub-services
-            zStorage: zStorage
+            zStorage: zStorage,
+            zStorageWip: zStorageWip
             // Repositories to be added on demand:
             //      lookups
             //      teams
@@ -39,9 +42,11 @@
 
         function init() {
             zStorage.init(manager);
+            zStorageWip.init(manager);
             repositories.init(manager);
             defineLazyLoadedRepos();
             setupEventForHasChangesChanged();
+            setupEventForEntitiesChanged();
             listenForStorageEvents();
         }
         
@@ -172,6 +177,34 @@
                 // send the message (the ctrl receives it)
                 common.$broadcast(events.hasChangesChanged, data);
             });
+        }
+        
+        function setupEventForEntitiesChanged() {
+            // We use this for detecting changes of any kind so we can save them to local storage
+            manager.entityChanged.subscribe(function (changeArgs) {
+                if (changeArgs.entityAction === breeze.EntityAction.PropertyChange) {
+                    interceptPropertyChange(changeArgs);
+                    common.$broadcast(events.entitiesChanged, changeArgs);
+                }
+            });
+        }
+        
+        // Forget certain changes by removing them from the entity's originalValues
+        // This function becomes unnecessary if Breeze decides that
+        // unmapped properties are not recorded in originalValues
+        //
+        // We do this so we can remove the isScheduled and isPartial properties from
+        // the originalValues of an entity. Otherwise, when the object's changes
+        // are canceled these values will also reset: isPartial will go
+        // from false to true, and force the controller to refetch the
+        // entity from the server.
+        // Ultimately, we do not want to track changes to these properties, 
+        // so we remove them.        
+        function interceptPropertyChange(changeArgs) {
+            var changedProp = changeArgs.args.propertyName;
+            if (changedProp === 'isPartial' || changedProp === 'isScheduled') {
+                delete changeArgs.entity.entityAspect.originalValues[changedProp];
+            }
         }
     }
 })();
