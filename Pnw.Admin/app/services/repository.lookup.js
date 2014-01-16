@@ -4,9 +4,9 @@
     var serviceId = 'repository.lookup';
 
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', RepositoryLookup]);
+        ['model', 'repository.abstract', 'zStorage', RepositoryLookup]);
 
-    function RepositoryLookup(model, AbstractRepository) {
+    function RepositoryLookup(model, AbstractRepository, zStorage) {
         var entityName = 'lookups';
         var entityNames = model.entityNames;
         var EntityQuery = breeze.EntityQuery;
@@ -15,6 +15,7 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
+            this.zStorage = zStorage;
             // Exposed data access functions
             this.getAll = getAll;
             this.setLookups = setLookups;
@@ -36,6 +37,7 @@
 
             function querySucceeded(data) {
                 model.createNullos(self.manager);
+                self.zStorage.save();
                 self.log('Retrieved [Lookups]', data, true);
                 return true;
             }

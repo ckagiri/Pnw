@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.fixture';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', RepositoryFixture]);
+        ['model', 'repository.abstract', 'zStorage', RepositoryFixture]);
 
-    function RepositoryFixture(model, AbstractRepository) {
+    function RepositoryFixture(model, AbstractRepository, zStorage) {
         var entityName = model.entityNames.fixture;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'kickOff, homeTeam.name';
@@ -15,6 +15,7 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
+            this.zStorage = zStorage;
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
@@ -47,7 +48,7 @@
             var orderBy = 'kickOff, homeTeam.name';
             var fixtures = [];
 
-            if (self._areItemsLoaded() && !forceRemote) {
+            if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
                 fixtures = self._getAllLocal(entityName, orderBy, predicate);
                 return self.$q.when(fixtures);
             }
@@ -64,8 +65,9 @@
                 for (var i = fixtures.length; i--;) {
                     fixtures[i].isScheduled = true;
                 }
+                self.zStorage.areItemsLoaded('fixtures', true);
+                self.zStorage.save();
                 self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
-                self._areItemsLoaded(true);
                 return fixtures;
             }
         }

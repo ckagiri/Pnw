@@ -8,6 +8,10 @@
         breeze.config.initializeAdapterInstance('modelLibrary', 'backingStore', true);
         breeze.NamingConvention.camelCase.setAsDefault();
         
+        // Tell breeze not to validate when we attach a newly created entity to any manager.
+        // We could also set this per entityManager
+        new breeze.ValidationOptions({ validateOnAttach: false }).setAsDefault();
+        
         var serviceName = config.remoteServiceName;
         var metadataStore = createMetadataStore();
 

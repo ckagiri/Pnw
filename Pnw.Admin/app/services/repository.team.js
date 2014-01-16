@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.team';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', RepositoryTeam]);
+        ['model', 'repository.abstract', 'zStorage', RepositoryTeam]);
 
-    function RepositoryTeam(model, AbstractRepository) {
+    function RepositoryTeam(model, AbstractRepository, zStorage) {
         var entityName = model.entityNames.team;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'name';
@@ -15,6 +15,7 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
+            this.zStorage = zStorage;
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
@@ -38,7 +39,7 @@
 
         function getCount() {
             var self = this;
-            if (self._areItemsLoaded()) {
+            if (self.zStorage.areItemsLoaded('teams')) {
                 return self.$q.when(self._getLocalEntityCount(entityName));
             }
             // Teams aren't loaded; ask the server for a count.
@@ -53,7 +54,7 @@
             var take = size || 20;
             var skip = page ? (page - 1) * size : 0;
 
-            if (self._areItemsLoaded() && !forceRemote) {
+            if (self.zStorage.areItemsLoaded('teams') && !forceRemote) {
                 // Get the page of teams from local cache
                 return self.$q.when(getByPage());
             }
@@ -67,9 +68,9 @@
 
             function querySucceeded(data) {
                 self._setIsPartialTrue(data.results);
-                self._areItemsLoaded(true);
+                self.zStorage.areItemsLoaded('teams', true);
+                self.zStorage.save();
                 self.log('Retrieved [Team Partials] from remote data source', data.results.length, true);
-                self._areItemsLoaded(true);
                 return getByPage();
             }
             

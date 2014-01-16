@@ -36,7 +36,12 @@
     var events = {
         controllerActivateSuccess: 'controller.activateSuccess',
         hasChangesChanged: 'datacontext.hasChangesChanged',
-        spinnerToggle: 'spinner.toggle'
+        spinnerToggle: 'spinner.toggle',
+        storage: {
+            error: 'store.error',
+            storeChanged: 'store.changed',
+            wipChanged: 'wip.changed'
+        }
     };
 
     var config = {
@@ -46,7 +51,7 @@
         imageSettings: imageSettings,
         keyCodes: keyCodes,
         remoteServiceName: remoteServiceName,
-        version: '2.0.0'
+        version: '1.0.0'
     };
 
     app.value('config', config);
@@ -63,5 +68,39 @@
         cfg.config.controllerActivateSuccessEvent = config.events.controllerActivateSuccess;
         cfg.config.spinnerToggleEvent = config.events.spinnerToggle;
     }]);
+    //#endregion
+    
+    //#region Configure the zStorage and zStorageWip services via zStorageConfig
+    app.config(['zStorageConfigProvider', function (cfg) {
+        cfg.config = {
+            // zStorage
+            enabled: true,
+            key: 'PnwAdminAngularBreeze',
+            events: events.storage,
+            appErrorPrefix: config.appErrorPrefix,
+            version: config.version,
+            // zStorageWip
+            wipKey: 'PnwAdminAngularBreeze.wip',
+            newGuid: breeze.core.getUuid
+        };
+    }]);
+    //#endregion
+    
+    //#region Configure the Breeze Validation Directive
+    //app.config(['zDirectivesConfigProvider', function (cfg) {
+    //    cfg.zValidateTemplate =
+    //                 '<span class="invalid"><i class="icon-warning-sign"></i>' +
+    //                 'Inconceivable! %error%</span>';
+        //cfg.zRequiredTemplate =
+        //    '<i class="icon-asterisk icon-asterisk-invalid z-required" title="Required"></i>';
+    //}]);
+
+    // Learning Point:
+    // Can configure during config or app.run phase
+    //app.run(['zDirectivesConfig', function(cfg) {
+    //    cfg.zValidateTemplate =
+    //                 '<span class="invalid"><i class="icon-warning-sign"></i>' +
+    //                 'Inconceivable! %error%</span>';
+    //}]);
     //#endregion
 })();
