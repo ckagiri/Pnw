@@ -16,9 +16,9 @@ namespace Pnw.TestConsole
         private static void CreateDatabase()
         {
             var context = new PnwDbContext();
-            //context.Database.Initialize(true);
-            var season = context.Seasons.FirstOrDefault();
-            var x = season;
+            context.Database.Initialize(true);
+            //var season = context.Seasons.FirstOrDefault();
+            //var x = season;
 
         }
     }

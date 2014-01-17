@@ -5,10 +5,10 @@ namespace Pnw.Model
 {
     public class Fixture
     {
-        public Guid Id { get; set; }
-        public Guid SeasonId { get; set; }
-        public Guid HomeTeamId { get; set; }
-        public Guid AwayTeamId { get; set; }
+        public int Id { get; set; }
+        public int SeasonId { get; set; }
+        public int HomeTeamId { get; set; }
+        public int AwayTeamId { get; set; }
         public DateTime KickOff { get; set; }
         public string Venue { get; set; }
         public MatchStatus MatchStatus { get; set; }

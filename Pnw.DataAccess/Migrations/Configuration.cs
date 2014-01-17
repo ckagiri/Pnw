@@ -31,13 +31,11 @@ namespace Pnw.DataAccess.Migrations
                               {
                                   new League
                                       {
-                                          Id = Guid.NewGuid(),
                                           Name = "English Premier League",
                                           Code = "EPL"
                                       },
                                   new League
                                       {
-                                          Id = Guid.NewGuid(),
                                           Name = "Tusker Premier League",
                                           Code = "KPL"
                                       }
@@ -55,16 +53,14 @@ namespace Pnw.DataAccess.Migrations
                                  {
                                      new Season
                                          {
-                                             Id = Guid.NewGuid(),
-                                             LeagueId = leagues.First(l => l.Code == "EPL").Id,
+                                             League = leagues.First(l => l.Code == "EPL"),
                                              StartDate = now.AddDays(-14),
                                              EndDate = now.AddDays(91),
                                              Name = "2013 - 2014",
                                          },
                                      new Season
                                          {
-                                             Id = Guid.NewGuid(),
-                                             LeagueId = leagues.First(l => l.Code == "EPL").Id,
+                                             League = leagues.First(l => l.Code == "EPL"),
                                              StartDate = now.AddMonths(-24),
                                              EndDate = now.AddDays(-12),
                                              Name = "2012 - 2013",
@@ -74,8 +70,7 @@ namespace Pnw.DataAccess.Migrations
                                  {
                                      new Season
                                          {
-                                             Id = Guid.NewGuid(),
-                                             LeagueId = leagues.First(l => l.Code == "KPL").Id,
+                                             League = leagues.First(l => l.Code == "KPL"),
                                              StartDate = now.AddDays(-14),
                                              EndDate = now.AddDays(21),
                                              Name = "2013 - 2014",
@@ -83,7 +78,7 @@ namespace Pnw.DataAccess.Migrations
                                  };
 
             var seasons = eplSeasons.Concat(kplSeasons).ToArray();
-            context.Seasons.AddOrUpdate(p => new { p.LeagueId, p.Name }, seasons);
+            context.Seasons.AddOrUpdate(p => new {p.LeagueId, p.Name}, seasons);
 
             return seasons;
         }
@@ -94,7 +89,6 @@ namespace Pnw.DataAccess.Migrations
                                {
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Gor Mahia",
                                            Code = "GOR",
                                            HomeGround = "City Stadium",
@@ -103,7 +97,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "AFC Leopards",
                                            Code = "AFC",
                                            HomeGround = "Chui Stadium",
@@ -112,7 +105,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Tusker",
                                            Code = "TUSK",
                                            HomeGround = "The Breweries",
@@ -121,7 +113,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Sofapaka",
                                            Code = "SOFP",
                                            HomeGround = "Sofapaka Stadium",
@@ -130,7 +121,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Ulinzi Stars",
                                            Code = "ULNZ",
                                            HomeGround = "Ulinzi Grounds",
@@ -143,7 +133,6 @@ namespace Pnw.DataAccess.Migrations
                                {
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Manchester United",
                                            Code = "MANU",
                                            HomeGround = "Old Trafford",
@@ -152,7 +141,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Manchester City",
                                            Code = "MANC",
                                            HomeGround = "Etihad",
@@ -162,7 +150,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Chelsea",
                                            Code = "CHE",
                                            HomeGround = "Stamford Bridge",
@@ -171,7 +158,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Arsenal",
                                            Code = "ARS",
                                            HomeGround = "Emirates",
@@ -180,7 +166,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Tottenham Hotspur",
                                            Code = "TOTT",
                                            HomeGround = "White Hart Lane",
@@ -189,7 +174,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Everton",
                                            Code = "EVE",
                                            HomeGround = "Goodison Park",
@@ -198,7 +182,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Liverpool",
                                            Code = "LIV",
                                            HomeGround = "Anfield",
@@ -207,7 +190,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "West Bromwich Albion",
                                            Code = "WBA",
                                            HomeGround = "The Hawthorns",
@@ -216,7 +198,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Swansea",
                                            Code = "SWA",
                                            HomeGround = "Liberty Stadium",
@@ -225,7 +206,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "West Ham United",
                                            Code = "WHU",
                                            HomeGround = "Boleyn Ground",
@@ -234,7 +215,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Norwich City",
                                            Code = "NOR",
                                            HomeGround = "Carrow Road",
@@ -243,7 +223,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Fulham",
                                            Code = "FUL",
                                            HomeGround = "Craven Cottage",
@@ -252,7 +231,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Stoke City",
                                            Code = "STO",
                                            HomeGround = "Britannia Stadium",
@@ -261,7 +239,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
                                            Name = "Southampton",
                                            Code = "SOU",
                                            HomeGround = "St. Marys",
@@ -270,7 +247,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Aston Villa",
                                            Code = "AVIL",
                                            HomeGround = "Villa Park",
@@ -279,7 +256,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Newcastle United",
                                            Code = "NUTD",
                                            HomeGround = "St. James' park",
@@ -288,7 +265,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Sunderland",
                                            Code = "SUN",
                                            HomeGround = "Stadium Of Light",
@@ -297,7 +274,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Hull City",
                                            Code = "HUC",
                                            HomeGround = "KC Stadium",
@@ -306,7 +283,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Cardiff City",
                                            Code = "CAC",
                                            HomeGround = "Cardiff City Stadium",
@@ -315,13 +292,13 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = Guid.NewGuid(),
+
                                            Name = "Crystal Palace",
                                            Code = "CRP",
                                            HomeGround = "Selhurst Park",
                                            Tags = "EPL|England|UK",
                                            ImageSource = "english_premier_league.png"
-                                       },
+                                       }
                                };
 
             var teams = kplTeams.Concat(eplTeams).ToArray();
@@ -332,29 +309,26 @@ namespace Pnw.DataAccess.Migrations
 
         private void AddTeamsToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
-            var epl = leagues.First(l => l.Code == "EPL").Id;
-            var kpl = leagues.First(l => l.Code == "KPL").Id;
-            var eplSeason = seasons.First(s => s.LeagueId == epl && s.Name == "2013 - 2014");
-            var kplSeason = seasons.First(s => s.LeagueId == kpl && s.Name == "2013 - 2014");
+            var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
+            var kplSeason = seasons.First(s => s.League.Code == "KPL" && s.Name == "2013 - 2014");
 
             var teamsKpl = teams.Take(5).ToList();
             var teamsEpl = teams.Skip(5).ToList();
 
             teamsKpl.ForEach(t => kplSeason.ParticipationList.Add(
-                new Participation { SeasonId = kplSeason.Id, TeamId = t.Id }));
+                new Participation {Season = kplSeason, Team = t}));
 
             teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
-                new Participation { SeasonId = eplSeason.Id, TeamId = t.Id }));
+                new Participation {Season = eplSeason, Team = t}));
 
             var participations = eplSeason.ParticipationList.Concat(kplSeason.ParticipationList).ToArray();
 
-            context.Participations.AddOrUpdate(p =>new { p.SeasonId, p.TeamId },  participations);
+            context.Participations.AddOrUpdate(p => new {p.SeasonId, p.TeamId}, participations);
         }
 
         private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
-            var epl = leagues.First(l => l.Code == "EPL").Id;
-            var eplSeason = seasons.First(s => s.LeagueId == epl && s.Name == "2013 - 2014");
+            var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
 
             var manunited = teams.First(t => t.Code == "MANU");
             var mancity = teams.First(t => t.Code == "MANC");
@@ -376,10 +350,9 @@ namespace Pnw.DataAccess.Migrations
                                   {
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = manunited.Id,
-                                              AwayTeamId = chelsea.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = manunited,
+                                              AwayTeam = chelsea,
                                               Venue = manunited.HomeGround,
                                               KickOff = day1,
                                               HomeScore = 2,
@@ -390,10 +363,9 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = mancity.Id,
-                                              AwayTeamId = arsenal.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = mancity,
+                                              AwayTeam = arsenal,
                                               Venue = mancity.HomeGround,
                                               KickOff = day2,
                                               HomeScore = 2,
@@ -404,10 +376,9 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = everton.Id,
-                                              AwayTeamId = liverpool.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = everton,
+                                              AwayTeam = liverpool,
                                               Venue = everton.HomeGround,
                                               KickOff = day3,
                                               HomeTeamImageSource = "everton1.png",
@@ -415,10 +386,10 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = spurs.Id,
-                                              AwayTeamId = newcastle.Id,
+
+                                              Season = eplSeason,
+                                              HomeTeam = spurs,
+                                              AwayTeam = newcastle,
                                               Venue = spurs.HomeGround,
                                               KickOff = day4,
                                               HomeTeamImageSource = "tottenham1.png",
@@ -426,10 +397,9 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = chelsea.Id,
-                                              AwayTeamId = spurs.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = chelsea,
+                                              AwayTeam = spurs,
                                               Venue = chelsea.HomeGround,
                                               KickOff = day5,
                                               HomeTeamImageSource = "chelsea1.png",
@@ -437,10 +407,9 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = arsenal.Id,
-                                              AwayTeamId = manunited.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = arsenal,
+                                              AwayTeam = manunited,
                                               Venue = arsenal.HomeGround,
                                               KickOff = day6.AddHours(3),
                                               HomeTeamImageSource = "arsenal1.png",
@@ -448,10 +417,9 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = liverpool.Id,
-                                              AwayTeamId = mancity.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = liverpool,
+                                              AwayTeam = mancity,
                                               Venue = liverpool.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "liverpool1.png",
@@ -459,17 +427,18 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-                                              Id = Guid.NewGuid(),
-                                              SeasonId = eplSeason.Id,
-                                              HomeTeamId = newcastle.Id,
-                                              AwayTeamId = everton.Id,
+                                              Season = eplSeason,
+                                              HomeTeam = newcastle,
+                                              AwayTeam = everton,
                                               Venue = newcastle.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "newcastle1.png",
                                               AwayTeamImageSource = "everton2.png"
                                           }
                                   };
-            context.Fixtures.AddOrUpdate(p => new { p.SeasonId, p.HomeTeamId, p.AwayTeamId }, eplFixtures);
+            context.Fixtures.AddOrUpdate(p => new {p.SeasonId, p.HomeTeamId, p.AwayTeamId}, eplFixtures);
         }
     }
 }
+    
+

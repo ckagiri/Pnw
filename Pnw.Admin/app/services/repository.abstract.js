@@ -54,15 +54,15 @@
             // val could be an ID or a wipKey
             var wipEntityKey = val;
 
-            //if (common.isNumber(val)) {
-                //val = parseInt(val);
+            if (common.isNumber(val)) {
+                val = parseInt(val);
                 wipEntityKey = this.zStorageWip.findWipKeyByEntityId(this.entityName, val);
                 if (!wipEntityKey) {
                     // Returns a promise with the entity because 
                     // the entity may be in storagelocal or remote (async). 
                     return this._getById(this.entityName, val);
                 }
-           // }
+            }
 
             var importedEntity = this.zStorageWip.loadWipEntity(wipEntityKey);
             if (importedEntity) {

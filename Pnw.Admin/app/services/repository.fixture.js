@@ -29,7 +29,7 @@
         return Ctor;
         
         function create() {
-            return this.manager.createEntity(entityName, { id: breeze.core.getUuid() });
+            return this.manager.createEntity(entityName);
         }
         
         function getById(id, forceRemote) {

@@ -12,7 +12,7 @@ namespace Pnw.Model
             Fixtures = new Collection<Fixture>();
             ParticipationList = new Collection<Participation>();
         }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required, MaxLength(4)]

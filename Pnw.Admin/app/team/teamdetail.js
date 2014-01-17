@@ -5,9 +5,9 @@
 
     angular.module('app').controller(controllerId,
         ['$location', '$routeParams', '$scope', '$window',
-            'bootstrap.dialog', 'common', 'config', 'datacontext', 'model', teamdetail]);
+            'bootstrap.dialog', 'common', 'config', 'datacontext', 'helper', 'model', teamdetail]);
 
-    function teamdetail($location, $routeParams, $scope, $window, bsDialog, common, config, datacontext, model) {
+    function teamdetail($location, $routeParams, $scope, $window, bsDialog, common, config, datacontext, helper, model) {
         var vm = this;
         var entityName = model.entityNames.team;
         var logError = common.logger.getLogFn(controllerId, 'error');
@@ -40,6 +40,8 @@
         function cancel() {
             datacontext.cancel();
             removeWipEntity();
+            helper.replaceLocationUrlGuidWithId(vm.team.id);
+
             if (vm.team.entityAspect.entityState.isDetached()) {
                 gotoTeams();
             }
@@ -118,6 +120,7 @@
             return datacontext.save().then(function (saveResult) {
                 vm.isSaving = false;
                 removeWipEntity();
+                helper.replaceLocationUrlGuidWithId(vm.team.id);
             }, function (error) {
                 vm.isSaving = false;
             });
