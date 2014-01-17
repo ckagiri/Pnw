@@ -173,7 +173,7 @@ namespace Pnw.DataAccess.Migrations
                                        {
                                            Id = Guid.NewGuid(),
                                            Name = "Arsenal",
-                                           Code = "ASNL",
+                                           Code = "ARS",
                                            HomeGround = "Emirates",
                                            Tags = "EPL|England|UK",
                                            ImageSource = "arsenal.png"
@@ -340,10 +340,11 @@ namespace Pnw.DataAccess.Migrations
             var teamsKpl = teams.Take(5).ToList();
             var teamsEpl = teams.Skip(5).ToList();
 
+            teamsKpl.ForEach(t => kplSeason.ParticipationList.Add(
+                new Participation { SeasonId = kplSeason.Id, TeamId = t.Id }));
+
             teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
                 new Participation { SeasonId = eplSeason.Id, TeamId = t.Id }));
-            teamsEpl.ForEach(t => kplSeason.ParticipationList.Add(
-                new Participation { SeasonId = kplSeason.Id, TeamId = t.Id }));
 
             var participations = eplSeason.ParticipationList.Concat(kplSeason.ParticipationList).ToArray();
 
@@ -352,10 +353,19 @@ namespace Pnw.DataAccess.Migrations
 
         private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
-            var now = DateTime.Now;
             var epl = leagues.First(l => l.Code == "EPL").Id;
             var eplSeason = seasons.First(s => s.LeagueId == epl && s.Name == "2013 - 2014");
-            var eplTeams = teams.Skip(5).ToList();
+
+            var manunited = teams.First(t => t.Code == "MANU");
+            var mancity = teams.First(t => t.Code == "MANC");
+            var arsenal = teams.First(t => t.Code == "ARS");
+            var liverpool = teams.First(t => t.Code == "LIV");
+            var spurs = teams.First(t => t.Code == "TOTT");
+            var everton = teams.First(t => t.Code == "EVE");
+            var newcastle = teams.First(t => t.Code == "NUTD");
+            var chelsea = teams.First(t => t.Code == "CHE");
+
+            var now = DateTime.Now;
             var day1 = now.AddDays(-4).AddHours(-3);
             var day2 = now.AddDays(-4);
             var day3 = now.AddHours(10);
@@ -368,70 +378,95 @@ namespace Pnw.DataAccess.Migrations
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[0].Id,
-                                              AwayTeamId = eplTeams[11].Id,
-                                              Venue = eplTeams[0].HomeGround,
+                                              HomeTeamId = manunited.Id,
+                                              AwayTeamId = chelsea.Id,
+                                              Venue = manunited.HomeGround,
                                               KickOff = day1,
                                               HomeScore = 2,
                                               AwayScore = 2,
                                               MatchStatus = MatchStatus.Played,
+                                              HomeTeamImageSource = "manu1.png",
+                                              AwayTeamImageSource = "chelsea2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[4].Id,
-                                              AwayTeamId = eplTeams[16].Id,
-                                              Venue = eplTeams[4].HomeGround,
+                                              HomeTeamId = mancity.Id,
+                                              AwayTeamId = arsenal.Id,
+                                              Venue = mancity.HomeGround,
                                               KickOff = day2,
                                               HomeScore = 2,
                                               AwayScore = 3,
                                               MatchStatus = MatchStatus.Played,
+                                              HomeTeamImageSource = "mancity1.png",
+                                              AwayTeamImageSource = "arsenal2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[3].Id,
-                                              AwayTeamId = eplTeams[10].Id,
-                                              Venue = eplTeams[3].HomeGround,
+                                              HomeTeamId = everton.Id,
+                                              AwayTeamId = liverpool.Id,
+                                              Venue = everton.HomeGround,
                                               KickOff = day3,
+                                              HomeTeamImageSource = "everton1.png",
+                                              AwayTeamImageSource = "liverpool2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[2].Id,
-                                              AwayTeamId = eplTeams[14].Id,
-                                              Venue = eplTeams[2].HomeGround,
+                                              HomeTeamId = spurs.Id,
+                                              AwayTeamId = newcastle.Id,
+                                              Venue = spurs.HomeGround,
                                               KickOff = day4,
+                                              HomeTeamImageSource = "tottenham1.png",
+                                              AwayTeamImageSource = "newcastle2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[4].Id,
-                                              AwayTeamId = eplTeams[1].Id,
-                                              Venue = eplTeams[4].HomeGround,
+                                              HomeTeamId = chelsea.Id,
+                                              AwayTeamId = spurs.Id,
+                                              Venue = chelsea.HomeGround,
                                               KickOff = day5,
+                                              HomeTeamImageSource = "chelsea1.png",
+                                              AwayTeamImageSource = "tottenham2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[2].Id,
-                                              AwayTeamId = eplTeams[9].Id,
-                                              Venue = eplTeams[2].HomeGround,
+                                              HomeTeamId = arsenal.Id,
+                                              AwayTeamId = manunited.Id,
+                                              Venue = arsenal.HomeGround,
                                               KickOff = day6.AddHours(3),
+                                              HomeTeamImageSource = "arsenal1.png",
+                                              AwayTeamImageSource = "manu2.png"
                                           },
                                       new Fixture
                                           {
                                               Id = Guid.NewGuid(),
                                               SeasonId = eplSeason.Id,
-                                              HomeTeamId = eplTeams[1].Id,
-                                              AwayTeamId = eplTeams[13].Id,
-                                              Venue = eplTeams[1].HomeGround,
+                                              HomeTeamId = liverpool.Id,
+                                              AwayTeamId = mancity.Id,
+                                              Venue = liverpool.HomeGround,
                                               KickOff = day6.AddHours(6),
+                                              HomeTeamImageSource = "liverpool1.png",
+                                              AwayTeamImageSource = "mancity2.png"
+                                          },
+                                      new Fixture
+                                          {
+                                              Id = Guid.NewGuid(),
+                                              SeasonId = eplSeason.Id,
+                                              HomeTeamId = newcastle.Id,
+                                              AwayTeamId = everton.Id,
+                                              Venue = newcastle.HomeGround,
+                                              KickOff = day6.AddHours(6),
+                                              HomeTeamImageSource = "newcastle1.png",
+                                              AwayTeamImageSource = "everton2.png"
                                           }
                                   };
             context.Fixtures.AddOrUpdate(p => new { p.SeasonId, p.HomeTeamId, p.AwayTeamId }, eplFixtures);

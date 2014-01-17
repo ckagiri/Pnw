@@ -3,9 +3,9 @@
 
     var app = angular.module('app');
     
-    app.directive('ccImgTeam', ['config', function (config) {
+    app.directive('ccImgPerson', ['config', function (config) {
         //Usage:
-        //<img data-cc-img-team="{{t.imageSource}}"/>
+        //<img data-cc-img-person="{{x.imageSource}}"/>
         var basePath = config.imageSettings.imageBasePath;
         var unknownImage = config.imageSettings.unknownPersonImageSource;
         var directive = {
@@ -15,7 +15,7 @@
         return directive;
 
         function link(scope, element, attrs) {
-            attrs.$observe('ccImgTeam', function (value) {
+            attrs.$observe('ccImgPerson', function (value) {
                 value = basePath + (value || unknownImage);
                 attrs.$set('src', value);
             });

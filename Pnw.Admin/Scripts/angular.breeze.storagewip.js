@@ -63,8 +63,9 @@
             breezeVersion: breeze.version,
             appVersion: storeConfig.version,
             isLoaded: {
-                sessions: false,
-                attendees: false
+                teams: false,
+                fixtures: false,
+                results: false
             }
         };
 
@@ -92,8 +93,9 @@
                 if (importMeta.breezeVersion === storeMeta.breezeVersion &&
                     importMeta.appVersion === storeMeta.appVersion) {
                     if (importMeta.isLoaded) {
-                        storeMeta.isLoaded.sessions = storeMeta.isLoaded.sessions || importMeta.isLoaded.sessions;
-                        storeMeta.isLoaded.attendees = storeMeta.isLoaded.attendees || importMeta.isLoaded.attendees;
+                        storeMeta.isLoaded.teams = storeMeta.isLoaded.teams || importMeta.isLoaded.teams;
+                        storeMeta.isLoaded.fixtures = storeMeta.isLoaded.fixtures || importMeta.isLoaded.fixtures;
+                        storeMeta.isLoaded.results = storeMeta.isLoaded.results || importMeta.isLoaded.results;
                     }
                     return data[1];
                 } else {
