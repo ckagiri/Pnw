@@ -32,7 +32,7 @@
             initLookups();
             onDestroy();
             onHasChanges();
-            common.activateController([datacontext.team.getPartials(), getRequestedFixture()], controllerId);
+            common.activateController([datacontext.team.getAll(), getRequestedFixture()], controllerId);
         }
 
         function cancel() {

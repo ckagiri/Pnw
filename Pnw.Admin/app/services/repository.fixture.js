@@ -19,9 +19,9 @@
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
+            this.getAll = getAll;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
-            this.getPartials = getPartials;
         }
 
         AbstractRepository.extend(Ctor);
@@ -42,7 +42,7 @@
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getPartials(forceRemote) {
+        function getAll(forceRemote) {
             var self = this;
             var predicate = breeze.Predicate.create('isScheduled', '==', true);
             var orderBy = 'kickOff, homeTeam.name';

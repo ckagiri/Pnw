@@ -21,7 +21,7 @@
             this.create = create;
             this.getById = getById;
             this.getCount = getCount;
-            this.getPartials = getPartials;
+            this.getAll = getAll;
             this.getFilteredCount = getFilteredCount;
             this.getAllLocal = getAllLocal;
         }
@@ -50,7 +50,7 @@
                 .to$q(self._getInlineCount);
         }
 
-        function getPartials(forceRemote, page, size, nameFilter) {
+        function getAll(forceRemote, page, size, nameFilter) {
             var self = this;
             var take = size || 20;
             var skip = page ? (page - 1) * size : 0;

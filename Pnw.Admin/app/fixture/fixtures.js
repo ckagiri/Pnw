@@ -16,13 +16,13 @@
         activate();
 
         function activate() {
-            var promises = [datacontext.team.getPartials(), getFixtures()];
+            var promises = [datacontext.team.getAll(), getFixtures()];
             common.activateController(promises, controllerId)
                 .then(function () { log('Activated Fixtures View'); });
         }
 
         function getFixtures() {
-            return datacontext.fixture.getPartials().then(function(data) {
+            return datacontext.fixture.getAll().then(function(data) {
                 return vm.fixtures = data;
             });
         }

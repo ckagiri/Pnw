@@ -54,7 +54,7 @@
         }
         
         function getTeams(forceRefresh) {
-            return datacontext.team.getPartials(forceRefresh, vm.paging.currentPage, vm.paging.pageSize, vm.teamSearch)
+            return datacontext.team.getAll(forceRefresh, vm.paging.currentPage, vm.paging.pageSize, vm.teamSearch)
                 .then(function (data) {
                     vm.teams = data;
                     if (!vm.teamCount || forceRefresh) {

@@ -17,9 +17,9 @@
             this.manager = mgr;
             this.zStorage = zStorage;
             // Exposed data access functions
+            this.getAll = getAll;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
-            this.getPartials = getPartials;
         }
 
         AbstractRepository.extend(Ctor);
@@ -32,7 +32,7 @@
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getPartials(forceRemote) {
+        function getAll(forceRemote) {
             var self = this;
             var predicate = breeze.Predicate.create('isScheduled', '==', false);
             var orderBy = 'kickOff, homeTeam.name';
