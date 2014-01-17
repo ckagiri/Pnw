@@ -77,7 +77,7 @@
                     templateUrl: 'app/team/teams.html',
                     settings: {
                         nav: 4,
-                        content: '<i class="icon-lock"></i> Teams'
+                        content: '<i class="icon-list"></i> Teams'
                     }
                 }
             }, {
