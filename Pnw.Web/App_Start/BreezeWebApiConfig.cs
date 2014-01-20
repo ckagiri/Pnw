@@ -1,8 +1,8 @@
 using System.Web.Http;
 
 [assembly: WebActivator.PreApplicationStartMethod(
-    typeof(Pnw.Web.App_Start.BreezeWebApiConfig), "RegisterBreezePreStart")]
-namespace Pnw.Web.App_Start {
+    typeof(Pnw.Web.BreezeWebApiConfig), "RegisterBreezePreStart")]
+namespace Pnw.Web {
   ///<summary>
   /// Inserts the Breeze Web API controller route at the front of all Web API routes
   ///</summary>

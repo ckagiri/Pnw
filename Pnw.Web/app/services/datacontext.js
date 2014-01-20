@@ -102,7 +102,8 @@
             var storageEnabledAndHasData = zStorage.load(manager);
             primePromise = storageEnabledAndHasData ?
                 $q.when(log('Loading entities and metadata from local storage')) :
-                $q.all([service.lookup.getAll()]).then(extendMetadata);
+                $q.all([service.lookup.getAll(), service.team.getAll(), service.fixture.getAll()])
+                    .then(extendMetadata);
 
             return primePromise.then(success);
            

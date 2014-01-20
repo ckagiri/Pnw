@@ -55,5 +55,15 @@ namespace Pnw.DataAccess
         {
             get { return Context.Fixtures.Where(f => f.MatchStatus != MatchStatus.Scheduled); }
         }
+
+        public IQueryable<Prediction> Predictions
+        {
+            get { return Context.Predictions; }
+        }
+
+        public IQueryable<Fixture> AllFixtures
+        {
+            get { return Context.Fixtures; }
+        }
     }
 }

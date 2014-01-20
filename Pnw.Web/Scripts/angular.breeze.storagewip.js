@@ -64,8 +64,7 @@
             appVersion: storeConfig.version,
             isLoaded: {
                 teams: false,
-                fixtures: false,
-                results: false
+                fixtures: false
             }
         };
 

@@ -2,7 +2,7 @@
 
 namespace Pnw.Model
 {
-    public class Prediction
+    public class Prediction : IAuditInfo
     {
         public Guid Id { get; set; }
         public int UserId { get; set; }
@@ -17,7 +17,9 @@ namespace Pnw.Model
         public bool IsProcessed { get; set; }
         public int FixtureYear { get; set; }
         public int FixtureMonth { get; set; }
-        public bool FixturePlayed { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public bool IsFixturePlayed { get; set; }
+        public Fixture Fixture { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

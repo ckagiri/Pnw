@@ -21,7 +21,7 @@
             this.create = create;
             this.getById = getById;
             this.getCount = getCount;
-            this.getPartials = getPartials;
+            this.getAll = getAll;
             this.getFilteredCount = getFilteredCount;
             this.getAllLocal = getAllLocal;
         }
@@ -50,10 +50,8 @@
                 .to$q(self._getInlineCount);
         }
 
-        function getPartials(forceRemote, page, size, nameFilter) {
+        function getAll(forceRemote) {
             var self = this;
-            var take = size || 20;
-            var skip = page ? (page - 1) * size : 0;
 
             if (self.zStorage.areItemsLoaded('teams') && !forceRemote) {
                 // Get the page of teams from local cache
@@ -72,24 +70,7 @@
                 self.zStorage.areItemsLoaded('teams', true);
                 self.zStorage.save();
                 self.log('Retrieved [Team Partials] from remote data source', data.results.length, true);
-                return getByPage();
-            }
-            
-            function getByPage() {
-                var predicate = null;
-
-                if (nameFilter) {
-                    predicate = _namePredicate(nameFilter);
-                }
-
-                var teams = EntityQuery.from(entityName)
-                    .where(predicate)
-                    .orderBy(orderBy)
-                    .take(take).skip(skip)
-                    .using(self.manager)
-                    .executeLocally();
-
-                return teams;
+                return data;
             }
         }
         

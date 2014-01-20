@@ -10,6 +10,13 @@
                 data-ng-repeat="r in vm.navRoutes">
                 <a href="#{{r.url}}" data-ng-bind-html="r.config.settings.content"></a>
             </li>
+            <li class="nlightblue">
+                <a href="" data-ng-click="vm.clearStorage()">
+                    <i class="icon-cloud"></i> Clear Storage
+                    <span class="pull-right"></span>
+                </a>
+            </li>
+        </ul>
         </ul>
     </div>
 </div>

@@ -1,6 +1,9 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
+using Pnw.DataAccess.Configuration;
 using Pnw.Model;
 
 namespace Pnw.DataAccess
@@ -48,6 +51,13 @@ namespace Pnw.DataAccess
                 .WithMany(s => s.ParticipationList)
                 .HasForeignKey(p => p.SeasonId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Configurations.Add(new UserConfiguration());
+
+            // Add ASP.NET WebPages SimpleSecurity tables
+            modelBuilder.Configurations.Add(new RoleConfiguration());
+            modelBuilder.Configurations.Add(new OAuthMembershipConfiguration());
+            modelBuilder.Configurations.Add(new MembershipConfiguration());
         }
 
         public DbSet<League> Leagues { get; set; }
@@ -55,6 +65,9 @@ namespace Pnw.DataAccess
         public DbSet<Team> Teams { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<Participation> Participations { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Prediction> Predictions { get; set; }
 
         public static string ConnectionStringName
         {
@@ -69,6 +82,33 @@ namespace Pnw.DataAccess
 
                 return "PnwDemo";
             }
+        }
+
+        private void ApplyRules()
+        {
+            // Approach via @julielerman: http://bit.ly/123661P
+            foreach (var entry in this.ChangeTracker.Entries()
+                        .Where(
+                             e => e.Entity is IAuditInfo &&
+                            (e.State == EntityState.Added) ||
+                            (e.State == EntityState.Modified)))
+            {
+                var e = (IAuditInfo)entry.Entity;
+
+                if (entry.State == EntityState.Added)
+                {
+                    e.CreatedOn = DateTime.Now;
+                }
+
+                e.ModifiedOn = DateTime.Now;
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            this.ApplyRules();
+
+            return base.SaveChanges();
         }
     }
 }

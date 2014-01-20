@@ -18,6 +18,9 @@ namespace Pnw.DataAccess.Configuration
             this.Property(p => p.LastName)
                 .IsOptional().HasMaxLength(100);
 
+            this.Property(p => p.Email)
+                .IsOptional().HasMaxLength(100);
+
             this.HasMany(a => a.Roles).WithMany(b => b.Users).Map(m =>
                 {
                     m.MapLeftKey("UserId");

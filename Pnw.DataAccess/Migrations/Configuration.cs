@@ -1,4 +1,7 @@
+using System.Web.Security;
 using Pnw.Model;
+using WebMatrix.WebData;
+using Membership = System.Web.Security.Membership;
 
 namespace Pnw.DataAccess.Migrations
 {
@@ -23,6 +26,7 @@ namespace Pnw.DataAccess.Migrations
 
             AddTeamsToSeason(context, leagues, seasons, teams);
             AddFixturesToSeason(context, leagues, seasons, teams);
+            SeedMembership(context);
         }
 
         private League[] AddLeagues(PnwDbContext context)
@@ -437,6 +441,63 @@ namespace Pnw.DataAccess.Migrations
                                           }
                                   };
             context.Fixtures.AddOrUpdate(p => new {p.SeasonId, p.HomeTeamId, p.AwayTeamId}, eplFixtures);
+        }
+
+        private void SeedMembership(PnwDbContext context)
+        {
+            WebSecurity.InitializeDatabaseConnection(
+                                    "PnwDEMO",
+                                    "User",
+                                    "Id",
+                                    "Username",
+                                    autoCreateTables: true);
+
+            var roles = (SimpleRoleProvider)Roles.Provider;
+            var membership = (SimpleMembershipProvider)Membership.Provider;
+
+            if (!roles.RoleExists("Admin")) { roles.CreateRole("Admin"); }
+
+            if (!roles.RoleExists("User")) { roles.CreateRole("User"); }
+
+            context.SaveChanges();
+
+
+            if (membership.GetUser("test1", false) == null)
+            {
+                membership.CreateUserAndAccount("test1", "123456");
+            }
+
+            if (!roles.GetRolesForUser("test1").Contains("Admin"))
+            {
+                roles.AddUsersToRoles(new[] { "test1" }, new[] { "Admin" });
+            }
+
+            if (membership.GetUser("test2", false) == null)
+            {
+                membership.CreateUserAndAccount("test2", "123456");
+            }
+            if (!roles.GetRolesForUser("test2").Contains("User"))
+            {
+                roles.AddUsersToRoles(new[] { "test2" }, new[] { "User" });
+            }
+
+            if (membership.GetUser("test3", false) == null)
+            {
+                membership.CreateUserAndAccount("test3", "123456");
+            }
+            if (!roles.GetRolesForUser("test3").Contains("User"))
+            {
+                roles.AddUsersToRoles(new[] { "test3" }, new[] { "User" });
+            }
+
+            if (membership.GetUser("test4", false) == null)
+            {
+                membership.CreateUserAndAccount("test4", "123456");
+            }
+            if (!roles.GetRolesForUser("test4").Contains("User"))
+            {
+                roles.AddUsersToRoles(new[] { "test4" }, new[] { "User" });
+            }
         }
     }
 }

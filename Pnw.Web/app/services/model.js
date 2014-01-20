@@ -13,7 +13,6 @@
         // Define the functions and properties to reveal.
         var entityNames = {
             fixture: 'Fixture',
-            result: 'Fixture',
             league: 'League',
             season: 'Season',
             team: 'Team'

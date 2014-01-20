@@ -21,7 +21,7 @@
             this.getById = getById;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
-            this.getPartials = getPartials;
+            this.getAll = getAll;
         }
 
         AbstractRepository.extend(Ctor);
@@ -42,7 +42,7 @@
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getPartials(forceRemote) {
+        function getAll(forceRemote) {
             var self = this;
             var predicate = breeze.Predicate.create('isScheduled', '==', true);
             var orderBy = 'kickOff, homeTeam.name';
@@ -54,9 +54,9 @@
             }
 
             return EntityQuery.from('Fixtures')
-                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, matchStatus, venue')
+                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, homeTeamImageSource, awayTeamImageSource, homeScore, awayScore, matchStatus, venue')
                 .orderBy(orderBy)
-                .toType('Fixture')
+                .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
 

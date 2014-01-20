@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pnw.Model
 {
-    public class Fixture
+    public class Fixture : IAuditInfo
     {
         public int Id { get; set; }
         public int SeasonId { get; set; }
@@ -22,6 +22,8 @@ namespace Pnw.Model
         public Season Season { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 
     public enum MatchStatus
