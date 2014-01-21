@@ -10,7 +10,7 @@
         var logError = common.logger.getLogFn(this.serviceId, 'error');
         var $q = common.$q;
         var _predicates = {
-        isNotNullo: breeze.Predicate.create('id', '!=', '00000000-0000-0000-0000-000000000000'),
+        isNotNullo: breeze.Predicate.create('id', '!=', '0'),
             isNullo: breeze.Predicate.create('id', '==', 0)
         };
 

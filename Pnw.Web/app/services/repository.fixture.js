@@ -44,12 +44,11 @@
 
         function getAll(forceRemote) {
             var self = this;
-            var predicate = breeze.Predicate.create('isScheduled', '==', true);
             var orderBy = 'kickOff, homeTeam.name';
             var fixtures = [];
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
-                fixtures = self._getAllLocal(entityName, orderBy, predicate);
+                fixtures = self._getAllLocal(entityName, orderBy);
                 return self.$q.when(fixtures);
             }
 
@@ -63,7 +62,7 @@
             function querySucceeded(data) {
                 fixtures = data.results;
                 for (var i = fixtures.length; i--;) {
-                    fixtures[i].isScheduled = true;
+                    fixtures[i].isScheduled = fixtures[i].matchStatus === "Scheduled";
                 }
                 self.zStorage.areItemsLoaded('fixtures', true);
                 self.zStorage.save();

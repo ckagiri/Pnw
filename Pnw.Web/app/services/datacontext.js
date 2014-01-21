@@ -17,14 +17,13 @@
         var manager = emFactory.newManager();
         var primePromise;
         var $q = common.$q;
-        var repoNames = ['fixture', 'lookup', 'team', 'result'];
+        var repoNames = ['fixture', 'lookup', 'team', 'result', 'prediction'];
         
         var service = {
+            clean: clean,
             cancel: cancel,
             markDeleted: markDeleted,
             save: save,
-            getMessageCount: getMessageCount,
-            getPeople: getPeople,
             prime: prime,
             // sub-services
             zStorage: zStorage,
@@ -54,6 +53,13 @@
             if (manager.hasChanges()) {
                 manager.rejectChanges();
                 logSuccess('Canceled changes', null, true);
+            }
+        }
+        
+        function clean() {
+            if (manager.hasChanges()) {
+                manager.rejectChanges();
+                logSuccess('Cleared changes', null, true);
             }
         }
         
@@ -102,7 +108,7 @@
             var storageEnabledAndHasData = zStorage.load(manager);
             primePromise = storageEnabledAndHasData ?
                 $q.when(log('Loading entities and metadata from local storage')) :
-                $q.all([service.lookup.getAll(), service.team.getAll(), service.fixture.getAll()])
+                $q.all([service.lookup.getAll(), service.team.getAll()])
                     .then(extendMetadata);
 
             return primePromise.then(success);
@@ -139,21 +145,6 @@
             }
         }
 
-        function getMessageCount() { return $q.when(72); }
-
-        function getPeople() {
-            var people = [
-                { firstName: 'John', lastName: 'Papa', age: 25, location: 'Florida' },
-                { firstName: 'Ward', lastName: 'Bell', age: 31, location: 'California' },
-                { firstName: 'Colleen', lastName: 'Jones', age: 21, location: 'New York' },
-                { firstName: 'Madelyn', lastName: 'Green', age: 18, location: 'North Dakota' },
-                { firstName: 'Ella', lastName: 'Jobs', age: 18, location: 'South Dakota' },
-                { firstName: 'Landon', lastName: 'Gates', age: 11, location: 'South Carolina' },
-                { firstName: 'Haley', lastName: 'Guthrie', age: 35, location: 'Wyoming' }
-            ];
-            return $q.when(people);
-        }
-        
         function save() {
             return manager.saveChanges()
                 .to$q(saveSucceeded, saveFailed);

@@ -8,15 +8,14 @@ namespace Pnw.Model
         public int UserId { get; set; }
         public int SeasonId { get; set; }
         public int FixtureId { get; set; }
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
+        public int HomeGoals { get; set; }
+        public int AwayGoals { get; set; }
         public int Points { get; set; }
         public int CorrectScorePoints { get; set; }
         public int CorrectResultPoints { get; set; }
         public int CrossProductPoints { get; set; }
         public bool IsProcessed { get; set; }
-        public int FixtureYear { get; set; }
-        public int FixtureMonth { get; set; }
+        public DateTime FixtureDate { get; set; }
         public bool IsFixturePlayed { get; set; }
         public Fixture Fixture { get; set; }
         public DateTime CreatedOn { get; set; }

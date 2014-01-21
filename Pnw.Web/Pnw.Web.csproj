@@ -232,6 +232,7 @@
     <Content Include="app\layout\widgetheader.html" />
     <Content Include="app\predict\home.html" />
     <Content Include="app\predict\home.js" />
+    <Content Include="app\services\repository.prediction.js" />
     <Content Include="app\services\datacontext.js" />
     <Content Include="app\services\directives.js" />
     <Content Include="app\services\entityManagerFactory.js" />

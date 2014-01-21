@@ -15,7 +15,8 @@
             fixture: 'Fixture',
             league: 'League',
             season: 'Season',
-            team: 'Team'
+            team: 'Team',
+            prediction: 'Prediction'
         };
 
         var service = {
@@ -64,7 +65,7 @@
             Object.defineProperty(Fixture.prototype, 'kickOffFormatted', {
                 get: function () {
                     var kickOff = this.kickOff;
-                    var value = moment.utc(kickOff).format('ddd hh:mm a');
+                    var value = moment.utc(kickOff).format('ddd MMM DD, h:mm a');
                     return value;
                 }
             });
@@ -81,10 +82,17 @@
             
             Object.defineProperty(Fixture.prototype, 'score', {
                 get: function () {
-                    var homeScore = this.homeScore;
-                    var awayScore = this.awayScore;
-                    var value = homeScore + ' - ' + awayScore;
-                    if (this.matchStatus === 1) { value += '*'; }
+                    var value = "";
+                    if (this.matchStatus === "Played") {
+                        var homeScore = this.homeScore;
+                        var awayScore = this.awayScore;
+                        value = homeScore + ' - ' + awayScore;
+                    }
+                    else {
+                        value = " - ";
+                    }
+                    if (this.matchStatus === "InProgress") { value += '*'; } 
+                    
                     return value;
                 }
             });
