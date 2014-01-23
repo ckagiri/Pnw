@@ -363,7 +363,8 @@ namespace Pnw.DataAccess.Migrations
                                               AwayScore = 2,
                                               MatchStatus = MatchStatus.Played,
                                               HomeTeamImageSource = "manu1.png",
-                                              AwayTeamImageSource = "chelsea2.png"
+                                              AwayTeamImageSource = "chelsea2.png",
+                                              CanPredict = false
                                           },
                                       new Fixture
                                           {
@@ -376,7 +377,8 @@ namespace Pnw.DataAccess.Migrations
                                               AwayScore = 3,
                                               MatchStatus = MatchStatus.Played,
                                               HomeTeamImageSource = "mancity1.png",
-                                              AwayTeamImageSource = "arsenal2.png"
+                                              AwayTeamImageSource = "arsenal2.png",
+                                              CanPredict = false
                                           },
                                       new Fixture
                                           {
@@ -386,7 +388,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = everton.HomeGround,
                                               KickOff = day3,
                                               HomeTeamImageSource = "everton1.png",
-                                              AwayTeamImageSource = "liverpool2.png"
+                                              AwayTeamImageSource = "liverpool2.png",
+                                              CanPredict = true
                                           },
                                       new Fixture
                                           {
@@ -397,7 +400,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = spurs.HomeGround,
                                               KickOff = day4,
                                               HomeTeamImageSource = "tottenham1.png",
-                                              AwayTeamImageSource = "newcastle2.png"
+                                              AwayTeamImageSource = "newcastle2.png",
+                                              CanPredict = true
                                           },
                                       new Fixture
                                           {
@@ -407,7 +411,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = chelsea.HomeGround,
                                               KickOff = day5,
                                               HomeTeamImageSource = "chelsea1.png",
-                                              AwayTeamImageSource = "tottenham2.png"
+                                              AwayTeamImageSource = "tottenham2.png",
+                                              CanPredict = true
                                           },
                                       new Fixture
                                           {
@@ -417,7 +422,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = arsenal.HomeGround,
                                               KickOff = day6.AddHours(3),
                                               HomeTeamImageSource = "arsenal1.png",
-                                              AwayTeamImageSource = "manu2.png"
+                                              AwayTeamImageSource = "manu2.png",
+                                              CanPredict = true
                                           },
                                       new Fixture
                                           {
@@ -427,7 +433,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = liverpool.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "liverpool1.png",
-                                              AwayTeamImageSource = "mancity2.png"
+                                              AwayTeamImageSource = "mancity2.png",
+                                              CanPredict = true
                                           },
                                       new Fixture
                                           {
@@ -437,7 +444,8 @@ namespace Pnw.DataAccess.Migrations
                                               Venue = newcastle.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "newcastle1.png",
-                                              AwayTeamImageSource = "everton2.png"
+                                              AwayTeamImageSource = "everton2.png",
+                                              CanPredict = true
                                           }
                                   };
             context.Fixtures.AddOrUpdate(p => new {p.SeasonId, p.HomeTeamId, p.AwayTeamId}, eplFixtures);
