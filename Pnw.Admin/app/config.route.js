@@ -96,6 +96,36 @@
                         content: '<i class="icon-asterisk"></i> Work In Progress'
                     }
                 }
+            }, {
+                url: '/leagues',
+                config: {
+                    title: 'leagues',
+                    templateUrl: 'app/league/leagues.html',
+                    settings: {
+                        nav: 5,
+                        content: '<i class="icon-list"></i> Leagues'
+                    }
+                }
+            }, {
+                url: '/seasons',
+                config: {
+                    title: 'seasons',
+                    templateUrl: 'app/season/seasons.html',
+                    settings: {
+                        nav: 6,
+                        content: '<i class="icon-list"></i> Seasons'
+                    }
+                }
+            }, {
+                url: '/seasonteams',
+                config: {
+                    title: 'seasonteams',
+                    templateUrl: 'app/seasonteam/seasonteams.html',
+                    settings: {
+                        nav: 7,
+                        content: '<i class="icon-list"></i> Season-Teams'
+                    }
+                }
             }
         ];
     }

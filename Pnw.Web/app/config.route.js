@@ -36,11 +36,21 @@
             {
                 url: '/',
                 config: {
-                    templateUrl: 'app/predict/home.html',
+                    templateUrl: 'app/predict/fixtures.html',
                     title: 'predict fixtures',
                     settings: {
                         nav: 1,
                         content: '<i class="icon-calendar"></i> Fixtures'
+                    }
+                }
+            }, {
+                url: '/predictions',
+                config: {
+                    templateUrl: 'app/predict/predictions.html',
+                    title: 'your predictions',
+                    settings: {
+                        nav: 1,
+                        content: '<i class="icon-list"></i> Predictions'
                     }
                 }
             }

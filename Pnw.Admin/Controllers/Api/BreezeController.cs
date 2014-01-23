@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using Pnw.DataAccess;
 using Pnw.Model;
 
-namespace Pnw.Admin.Controllers
+namespace Pnw.Admin.Controllers.Api
 {
     [BreezeController]
     public class BreezeController : ApiController

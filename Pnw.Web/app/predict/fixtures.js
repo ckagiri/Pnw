@@ -129,7 +129,7 @@
             vm.isSubmitting = true;
             return datacontext.save().then(function (saveResult) {
                 getPredictions().then(function () {
-                    addPredictionToFixture();
+                    2();
                     vm.predictionsToSubmit = [];
                     vm.isSubmitting = false;
                 });

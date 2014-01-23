@@ -63,7 +63,7 @@ namespace Pnw.DataAccess
 
         public IQueryable<Fixture> AllFixtures
         {
-            get { return Context.Fixtures; }
+            get { return Context.Fixtures.Where(f => f.CanPredict); }
         }
     }
 }

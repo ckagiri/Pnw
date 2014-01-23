@@ -4,11 +4,10 @@
             <div class="row-fluid">
                 <a><span><b>EPL 2013-2014</b></span></a><p />
                 <div class="form-search">
-                    <div class="btn-group">
-                        <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>January (0 points)</a>
-                        <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
-                    </div> <a class="pull-right btn btn-info"
+                    <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
+                    <a class="btn btn-info"><i class="icon-calendar"></i>January (0 points)</a>
+                    <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
+                    <a class="pull-right btn btn-info"
                         data-ng-click="vm.submitPredictions()" data-ng-disabled="!vm.predictionsToSubmit.length">
                         <i class="icon-arrow-up"></i><span>Submit Predictions </span><b>{{vm.predictionsToSubmit.length}}</b>
                     </a>
@@ -16,9 +15,9 @@
                         data-ng-click="vm.cancel()" data-ng-disabled="!vm.predictionsToSubmit.length">
                         <i class="icon-undo"></i><span>Cancel </span>
                     </a>
-                   
+
                     <a class="pull-right btn btn-info"><i class="icon-refresh"></i><span>Refresh</span></a>
-                     
+
                 </div>
             </div>
             <div class="row-fluid">
@@ -31,7 +30,8 @@
                                     <tr>
                                         <th>Kickoff</th>
                                         <th>Home Team</th>
-                                        <th></th><th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th>Away Team</th>
                                         <th>Prediction</th>
                                         <th>Actual Score</th>
@@ -44,11 +44,11 @@
                                         <td>{{f.homeTeam.name}}</td>
                                         <td>
                                             <img data-cc-img-person="{{f.homeTeamImageSource}}"
-                                                 class="hidden-phone thumbnail img-polaroid user-pic" /> 
+                                                class="hidden-phone thumbnail img-polaroid user-pic" />
                                         </td>
                                         <td>
                                             <img data-cc-img-person="{{f.awayTeamImageSource}}"
-                                                 class="hidden-phone thumbnail img-polaroid user-pic" />
+                                                class="hidden-phone thumbnail img-polaroid user-pic" />
                                         </td>
                                         <td>{{f.awayTeam.name}}</td>
                                         <td>
@@ -62,8 +62,7 @@
                                             </select>
                                         </td>
                                         <td>{{f.score}}</td>
-                                        <td>
-                                            {{f.prediction.isProcessed == null ? '': f.prediction.isProcessed === false ? "?" : f.prediction.points}}
+                                        <td>{{f.prediction.isProcessed == null ? '': f.prediction.isProcessed === false ? "?" : f.prediction.points}}
                                         </td>
                                     </tr>
                                 </tbody>

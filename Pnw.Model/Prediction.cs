@@ -11,6 +11,8 @@ namespace Pnw.Model
         public int HomeGoals { get; set; }
         public int AwayGoals { get; set; }
         public int Points { get; set; }
+        public int SpreadDifference { get; set; }
+        public int AccuracyDifference { get; set; }
         public int CorrectScorePoints { get; set; }
         public int CorrectResultPoints { get; set; }
         public int CrossProductPoints { get; set; }
