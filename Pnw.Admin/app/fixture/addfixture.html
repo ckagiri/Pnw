@@ -1,0 +1,70 @@
+﻿<section class="mainbar" data-ng-controller="addfixture as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <button class="btn btn-info"
+                    data-ng-click="vm.goBack()">
+                    <i class="icon-hand-left"></i>Back
+                </button>
+                <button class="btn btn-info"
+                    data-ng-click="vm.cancel()"
+                    data-ng-disabled="!vm.canSave">
+                    <i class="icon-undo"></i>Cancel
+                </button>
+                <button class="btn btn-info"
+                    data-ng-click="vm.save()"
+                    data-ng-disabled="!vm.canSave">
+                    <i class="icon-save"></i>Save
+                </button>
+                <span data-ng-show="vm.hasChanges"
+                    class="dissolve-animation ng-hide">
+                    <i class="icon-asterisk icon-asterisk-large"></i>
+                </span>
+            </div>
+            <div class="widget wgreen">
+                <div data-cc-widget-header title="Edit New - {{vm.fixture.homeTeam.name}} vs {{vm.fixture.awayTeam.name}}"></div>
+                <div class="widget-content user">
+                   <div>
+                       <label>League</label>
+                       <select data-ng-model="vm.leagues"></select>
+                    </div>
+                    <div>
+                        <label>Season</label>
+                        <select data-ng-model="vm.fixture.season" />
+                    </div>
+                    <div>
+                        <label>Kickoff</label>
+                        <input type="datetime" data-ng-model="vm.fixture.kickOffFormatted"/>
+                    </div>
+                    <div>
+                        <label>Home Team</label>
+                        <select data-ng-options="t.name for t in vm.teams"
+                                data-ng-model="vm.fixture.homeTeam">
+                        </select>
+                    </div>
+                    <div>
+                        <label>Away Team</label>
+                        <select data-ng-options="t.name for t in vm.teams"
+                                data-ng-model="vm.fixture.awayTeam">
+                        </select>
+                    </div>
+                    <div>
+                        <label>Venue</label>
+                        <input data-ng-model="vm.fixture.venue"
+                               placeholder="Venue" />
+                    </div>
+                    <div>
+                        <label>MatchStatus</label>
+                        <select data-ng-model="vm.fixture.matchStatus" data-ng-options="s for s in vm.matchStatuses" 
+                                class="input-medium">
+                            <option value="">-- Select Status --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="checkbox" data-ng-model="vm.fixture.canPredict"/>Can Predict
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

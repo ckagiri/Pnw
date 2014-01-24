@@ -226,8 +226,10 @@
     <Content Include="app\config.route.js" />
     <Content Include="app\dashboard\dashboard.html" />
     <Content Include="app\dashboard\dashboard.js" />
-    <Content Include="app\fixture\fixturedetail.html" />
-    <Content Include="app\fixture\fixturedetail.js" />
+    <Content Include="app\fixture\addfixture.html" />
+    <Content Include="app\fixture\addfixture.js" />
+    <Content Include="app\fixture\editfixture.html" />
+    <Content Include="app\fixture\editfixture.js" />
     <Content Include="app\fixture\fixtures.html" />
     <Content Include="app\fixture\fixtures.js" />
     <Content Include="app\layout\shell.html" />
@@ -237,6 +239,8 @@
     <Content Include="app\layout\widgetheader.html" />
     <Content Include="app\league\leagues.html" />
     <Content Include="app\league\leagues.js" />
+    <Content Include="app\result\editresult.html" />
+    <Content Include="app\result\editresult.js" />
     <Content Include="app\result\results.html" />
     <Content Include="app\result\results.js" />
     <Content Include="app\seasonteam\seasonteams.html" />

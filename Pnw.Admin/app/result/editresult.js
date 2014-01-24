@@ -1,13 +1,13 @@
 ﻿(function () {
     'use strict';
 
-    var controllerId = 'fixturedetail';
+    var controllerId = 'editresult';
 
     angular.module('app').controller(controllerId,
         ['$location', '$scope', '$routeParams', '$window',
-            'common', 'config', 'datacontext', fixturedetail]);
+            'common', 'config', 'datacontext', editresult]);
 
-    function fixturedetail($location, $scope, $routeParams, $window,
+    function editresult($location, $scope, $routeParams, $window,
             common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
@@ -23,6 +23,7 @@
         vm.leagues = [];
         vm.seasons = [];
         vm.teams = [];
+        vm.matchStatuses = ['InProgress', 'Played', 'Cancelled', 'Abandoned', 'PostPoned'];
         
         activate();
 
@@ -46,7 +47,6 @@
 
         function getRequestedFixture() {
             var val = $routeParams.id;
-            if (val === 'new') { return vm.fixture = datacontext.fixture.create(); }
 
             return datacontext.fixture.getById(val)
                 .then(function (data) {

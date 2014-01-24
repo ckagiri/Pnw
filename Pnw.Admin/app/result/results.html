@@ -17,7 +17,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="r in vm.results">
+                                <tr data-ng-repeat="r in vm.results" data-ng-click="vm.gotoFixture(r)" 
+                                    title="Go to result details">
                                     <td>{{r.kickOffFormatted}}</td>
                                     <td>{{r.homeTeam.name}}</td>
                                     <td>{{r.awayTeam.name}}</td>

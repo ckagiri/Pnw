@@ -54,10 +54,17 @@
                     }
                 }
             }, {
-                url: '/fixture/:id',
+                url: '/fixture/edit/:id',
                 config: {
                     title: 'fixture',
-                    templateUrl: 'app/fixture/fixturedetail.html',
+                    templateUrl: 'app/fixture/editfixture.html',
+                    settings: {}
+                }
+            }, {
+                url: '/fixture/new',
+                config: {
+                    title: 'fixture',
+                    templateUrl: 'app/fixture/addfixture.html',
                     settings: {}
                 }
             }, {
@@ -69,6 +76,13 @@
                         nav: 3,
                         content: '<i class="icon-calendar"></i> Results'
                     }
+                }
+            }, {
+                url: '/result/edit/:id',
+                config: {
+                    title: 'results',
+                    templateUrl: 'app/result/editresult.html',
+                    settings: { }
                 }
             }, {
                 url: '/teams',

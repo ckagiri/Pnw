@@ -65,7 +65,7 @@
             Object.defineProperty(Fixture.prototype, 'kickOffFormatted', {
                 get: function () {
                     var kickOff = this.kickOff;
-                    var value = moment.utc(kickOff).format('ddd hh:mm a');
+                    var value = moment.utc(kickOff).format('ddd MMM DD, h:mm a');
                     return value;
                 }
             });
@@ -79,13 +79,31 @@
                     return '';
                 }
             });
-            
+           
             Object.defineProperty(Fixture.prototype, 'score', {
                 get: function () {
                     var homeScore = this.homeScore;
                     var awayScore = this.awayScore;
-                    var value = homeScore + ' - ' + awayScore;
-                    if (this.matchStatus === 1) { value += '*'; }
+                    var value = "";
+                    switch (this.matchStatus) {
+                        case "InProgress":
+                            value = homeScore + " - " + awayScore + "*";
+                            break;
+                        case "Played":
+                            value = homeScore + " - " + awayScore;
+                            break;
+                        case "Cancelled":
+                            value = "C - C";
+                            break;
+                        case "Abandoned":
+                            value = homeScore + " - " + awayScore;
+                            break;
+                        case "PostPoned":
+                            value = "P - P";
+                            break;
+                        default:
+                            break;
+                    }
                     return value;
                 }
             });

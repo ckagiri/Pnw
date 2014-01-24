@@ -1,0 +1,65 @@
+﻿<section class="mainbar" data-ng-controller="editresult as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <button class="btn btn-info"
+                    data-ng-click="vm.goBack()">
+                    <i class="icon-hand-left"></i>Back
+                </button>
+                <button class="btn btn-info"
+                    data-ng-click="vm.cancel()"
+                    data-ng-disabled="!vm.canSave">
+                    <i class="icon-undo"></i>Cancel
+                </button>
+                <button class="btn btn-info"
+                    data-ng-click="vm.save()"
+                    data-ng-disabled="!vm.canSave">
+                    <i class="icon-save"></i>Save
+                </button>
+                <span data-ng-show="vm.hasChanges"
+                    class="dissolve-animation ng-hide">
+                    <i class="icon-asterisk icon-asterisk-large"></i>
+                </span>
+            </div>
+            <div class="widget wgreen">
+                <div data-cc-widget-header title="Edit result - {{vm.fixture.title}}"></div>
+                <div class="widget-content user">
+                   <div>
+                        <label>League Season</label>
+                        <input data-ng-disabled="true" class="uneditable-input input-xlarge" value="{{vm.fixture.season.league.name}}  {{vm.fixture.season.name}}" />
+                    </div>
+                    <div>
+                        <label>Kickoff</label>
+                        <input data-ng-model="vm.fixture.kickOffFormatted"
+                            placeholder="Kickoff time" />
+                    </div>
+                    <div>
+                        <label>Home Score</label>
+                        <input type="number" data-ng-model="vm.fixture.homeScore" 
+                            data-ng-disabled="vm.fixture.matchStatus !== 'InProgress'" class="input-mini"/>
+                    </div>
+                    <div>
+                        <label>Away Score</label>
+                        <input type="number" data-ng-model="vm.fixture.awayScore" 
+                            data-ng-disabled="vm.fixture.matchStatus !== 'InProgress'" class="input-mini"/>
+                    </div>
+                    <div>
+                        <label>Venue</label>
+                        <input data-ng-model="vm.fixture.venue"
+                               placeholder="Venue" />
+                    </div>
+                    <div>
+                        <label>MatchStatus</label>
+                        <select data-ng-model="vm.fixture.matchStatus" data-ng-options="s for s in vm.matchStatuses" 
+                            data-ng-disabled="vm.fixture.matchStatus !== 'InProgress'"
+                                class="input-medium">
+                        </select>
+                    </div>
+                    <div>
+                        <input type="checkbox" data-ng-model="vm.fixture.canPredict" data-ng-disabled="true"/>Can Predict
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

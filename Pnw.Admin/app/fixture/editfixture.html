@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="fixturedetail as vm">
+﻿<section class="mainbar" data-ng-controller="editfixture as vm">
     <section class="matter">
         <div class="container-fluid">
             <div>
@@ -22,7 +22,7 @@
                 </span>
             </div>
             <div class="widget wgreen">
-                <div data-cc-widget-header title="Edit {{vm.fixture.title || 'New Fixture'}}"></div>
+                <div data-cc-widget-header title="Edit {{vm.fixture.title}}"></div>
                 <div class="widget-content user">
                    <div>
                         <label>League Season</label>
@@ -30,25 +30,34 @@
                     </div>
                     <div>
                         <label>Kickoff</label>
-                        <input data-ng-model="vm.fixture.kickOff"
+                        <input data-ng-model="vm.fixture.kickOffFormatted"
                             placeholder="Kickoff time" />
                     </div>
                     <div>
                         <label>Home Team</label>
-                        <select data-ng-options="s.name for s in vm.teams"
+                        <select data-ng-disabled="true" data-ng-options="s.name for s in vm.teams"
                                 data-ng-model="vm.fixture.homeTeam">
                         </select>
                     </div>
                     <div>
                         <label>Away Team</label>
-                        <select data-ng-options="s.name for s in vm.teams"
+                        <select data-ng-disabled="true" data-ng-options="s.name for s in vm.teams"
                                 data-ng-model="vm.fixture.awayTeam">
                         </select>
                     </div>
                     <div>
                         <label>Venue</label>
                         <input data-ng-model="vm.fixture.venue"
-                            placeholder="Venue" />
+                               placeholder="Venue" />
+                    </div>
+                    <div>
+                        <label>MatchStatus</label>
+                        <select data-ng-model="vm.fixture.matchStatus" data-ng-options="s for s in vm.matchStatuses" 
+                            class="input-medium">
+                        </select>
+                    </div>
+                    <div>
+                        <input type="checkbox" data-ng-model="vm.fixture.canPredict" data-ng-disabled="vm.fixture.canPredict"/>Can Predict
                     </div>
                 </div>
             </div>

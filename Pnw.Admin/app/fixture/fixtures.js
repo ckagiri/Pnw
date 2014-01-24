@@ -29,7 +29,7 @@
         
         function gotoFixture(fixture) {
             if (fixture && fixture.id) {
-                $location.path('/fixture/' + fixture.id);
+                $location.path('/fixture/edit/' + fixture.id);
             }
         }
     }

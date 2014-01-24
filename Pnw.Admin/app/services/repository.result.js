@@ -44,7 +44,7 @@
             }
             
             return EntityQuery.from('Results')
-                .select('id, kickOff, homeTeamId, awayTeamId, homeScore, awayScore, venue')
+                .select('id,seasonId, kickOff, homeTeamId, awayTeamId, homeScore, awayScore, venue, matchStatus, canPredict')
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()

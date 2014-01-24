@@ -20,6 +20,7 @@
             this.create = create;
             this.getById = getById;
             this.getAll = getAll;
+            this.calcIsScheduled = calcIsScheduled;
             this.getAllLocal = getAllLocal;
             //this.getTopLocal = getTopLocal;
         }
@@ -54,7 +55,7 @@
             }
 
             return EntityQuery.from('Fixtures')
-                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, matchStatus, venue')
+                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, matchStatus, venue, canPredict')
                 .orderBy(orderBy)
                 .toType('Fixture')
                 .using(self.manager).execute()
@@ -70,6 +71,15 @@
                 self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
                 return fixtures;
             }
+        }
+        
+        function calcIsScheduled() {
+            var self = this;
+
+            var fixtures = self.manager.getEntities(model.entityNames.fixture);
+
+            fixtures.forEach(function (f) { f.isScheduled = (f.isScheduled === "Scheduled"); });
+            self.zStorage.save();
         }
 
         function getTopLocal() {
