@@ -42,7 +42,7 @@ namespace Pnw.Admin
                         using (var context = new PnwDbContext())
                         {
                             var results = context.Fixtures.Where
-                                (f => f.MatchStatus != MatchStatus.Scheduled && f.CanPredict);
+                                (f => f.MatchStatus != MatchStatus.Scheduled && f.CanPredict).ToArray();
                             if (!results.Any()) 
                                 return;
                             using (var scope = new TransactionScope(
@@ -52,7 +52,7 @@ namespace Pnw.Admin
                                 foreach (var result in results)
                                 {
                                     var fixture = result;
-                                    var predictions = context.Predictions.Where(p => p.FixtureId == fixture.Id);
+                                    var predictions = context.Predictions.Where(p => p.FixtureId == fixture.Id).ToArray();
                                     foreach (var prediction in predictions)
                                     {
                                         var correctScoreHome = prediction.HomeGoals == fixture.HomeScore;
@@ -71,7 +71,7 @@ namespace Pnw.Admin
                                         var spreadDiffFixture = fixture.HomeScore - fixture.AwayScore;
                                         var spreadDiff = spreadDiffPrediction - spreadDiffFixture;
 
-                                        var accuracyDiffHome = Math.Abs(fixture.HomeScore - prediction.AwayGoals);
+                                        var accuracyDiffHome = Math.Abs(fixture.HomeScore - prediction.HomeGoals);
                                         var accuracyDiffAway = Math.Abs(fixture.AwayScore - prediction.AwayGoals);
                                         var accuracyDiff = -(accuracyDiffHome + accuracyDiffAway);
 

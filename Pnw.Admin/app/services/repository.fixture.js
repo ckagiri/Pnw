@@ -75,10 +75,8 @@
         
         function calcIsScheduled() {
             var self = this;
-
             var fixtures = self.manager.getEntities(model.entityNames.fixture);
-
-            fixtures.forEach(function (f) { f.isScheduled = (f.isScheduled === "Scheduled"); });
+            fixtures.forEach(function (f) { f.isScheduled = (f.matchStatus === "Scheduled"); });
             self.zStorage.save();
         }
 

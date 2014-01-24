@@ -22,6 +22,7 @@
         vm.cancel = cancel;
         vm.homePredictionChanged = predictionChanged;
         vm.awayPredictionChanged = predictionChanged;
+        vm.refresh = refresh;
         
         activate();
 
@@ -31,6 +32,11 @@
             onDestroy();
             common.activateController(promises, controllerId)
                 .then(addPredictionToFixture).then(console.log("hi"));
+        }
+
+        function refresh() {
+            $q.all([getFixtures(true), getPredictions(true)])
+                .then(addPredictionToFixture);
         }
 
         function predictionChanged(f) {
@@ -111,14 +117,14 @@
             });
         }
         
-        function getFixtures() {
-            return datacontext.fixture.getAll().then(function (data) {
+        function getFixtures(forceRemote) {
+            return datacontext.fixture.getAll(forceRemote).then(function (data) {
                 vm.fixtures = data;
             });
         }
 
-        function getPredictions() {
-            return datacontext.prediction.getAll().then(function (data) {
+        function getPredictions(forceRemote) {
+            return datacontext.prediction.getAll(forceRemote).then(function (data) {
                 return vm.predictions = data;
             });
         }
@@ -129,7 +135,7 @@
             vm.isSubmitting = true;
             return datacontext.save().then(function (saveResult) {
                 getPredictions().then(function () {
-                    2();
+                    addPredictionToFixture();
                     vm.predictionsToSubmit = [];
                     vm.isSubmitting = false;
                 });
