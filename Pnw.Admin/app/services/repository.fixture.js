@@ -22,7 +22,7 @@
             this.getAll = getAll;
             this.calcIsScheduled = calcIsScheduled;
             this.getAllLocal = getAllLocal;
-            //this.getTopLocal = getTopLocal;
+            this.getCount = getCount;
         }
 
         AbstractRepository.extend(Ctor);
@@ -43,15 +43,17 @@
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getAll(forceRemote) {
+        function getAll(forceRemote, seasonId, page, size, nameFilter) {
             var self = this;
+            var take = size || 20;
+            var skip = page ? (page - 1) * size : 0;
             var predicate = breeze.Predicate.create('isScheduled', '==', true);
             var orderBy = 'kickOff, homeTeam.name';
             var fixtures = [];
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
-                fixtures = self._getAllLocal(entityName, orderBy, predicate);
-                return self.$q.when(fixtures);
+                //fixtures = self._getAllLocal(entityName, orderBy, predicate);
+                return self.$q.when(getByPage());
             }
 
             return EntityQuery.from('Fixtures')
@@ -69,6 +71,27 @@
                 self.zStorage.areItemsLoaded('fixtures', true);
                 self.zStorage.save();
                 self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
+                return getByPage();
+            }
+            
+            function getByPage() {
+                predicate = predicate.and('seasonId', '==', seasonId);
+
+                if (nameFilter) {
+                    var namePredicate = breeze.Predicate.create('homeTeam.name', 'contains', nameFilter)
+                        .or('homeTeam.code', 'contains', nameFilter)
+                        .or('awayTeam.name', 'contains', nameFilter)
+                        .or('awayTeam.code', 'contains', nameFilter);
+                    predicate = predicate.and(namePredicate);
+                }
+
+                fixtures = EntityQuery.from(entityName)
+                    .where(predicate)
+                    .orderBy(orderBy)
+                    .take(take).skip(skip)
+                    .using(self.manager)
+                    .executeLocally();
+
                 return fixtures;
             }
         }
@@ -80,12 +103,23 @@
             self.zStorage.save();
         }
 
-        function getTopLocal() {
-            var self = this;
-            var predicate = Predicate.create('homeTeam.name', '==', 'Chelsea')
-                .and('isScheduled', '==', true);
+        function getCount(seasonId, nameFilter) {
+            var predicate = breeze.Predicate.create('isScheduled', '==', true).and('seasonId', '==', seasonId);
 
-            return self._getAllLocal(entityName, orderBy, predicate);
+            if (nameFilter) {
+                var namePredicate = breeze.Predicate.create('homeTeam.name', 'contains', nameFilter)
+                        .or('homeTeam.code', 'contains', nameFilter)
+                        .or('awayTeam.name', 'contains', nameFilter)
+                        .or('awayTeam.code', 'contains', nameFilter);
+                predicate = predicate.and(namePredicate);
+            }
+
+            var xs = EntityQuery.from(entityName)
+                .where(predicate)
+                .using(this.manager)
+                .executeLocally();
+
+            return this.$q.when(xs.length);
         }
     }
 })();

@@ -19,11 +19,11 @@ namespace Pnw.Model
         public bool CanPredict { get; set; }
         public string HomeTeamImageSource { get; set; }
         public string AwayTeamImageSource { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
         public Season Season { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
     }
 
     public enum MatchStatus

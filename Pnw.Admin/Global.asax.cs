@@ -77,28 +77,27 @@ namespace Pnw.Admin
 
                                         if (correctScoreHome)
                                         {
-                                            prediction.Points += 1;
                                             prediction.CorrectScorePoints += 1;
                                         }
                                         if (correctScoreAway)
                                         {
-                                            prediction.Points += 1;
                                             prediction.CorrectScorePoints += 1;
                                         }
                                         if (correctScoreHome && correctScoreAway)
                                         {
-                                            prediction.Points += 1;
+                                            prediction.CorrectScorePoints += 1;
                                         }
                                         if (correctResult)
                                         {
-                                            prediction.Points += 3;
-                                            prediction.CorrectResultPoints = 1;
+                                            prediction.CorrectResultPoints = 3;
                                         }
 
+                                        prediction.Points = 
+                                            prediction.CorrectScorePoints + prediction.CorrectResultPoints;
                                         prediction.SpreadDifference = spreadDiff;
                                         prediction.AccuracyDifference = accuracyDiff;
                                         prediction.CrossProductPoints =
-                                            prediction.CorrectScorePoints*prediction.CorrectResultPoints;
+                                            prediction.CorrectScorePoints * prediction.CorrectResultPoints;
 
                                         prediction.IsProcessed = true;
                                     }

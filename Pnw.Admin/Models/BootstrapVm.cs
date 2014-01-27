@@ -11,7 +11,9 @@ namespace Pnw.Admin.Models
         {
             _serializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Formatting = Formatting.Indented,
+                //ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
         }
 

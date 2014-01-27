@@ -1,4 +1,6 @@
-﻿<div>
+﻿@model Pnw.Admin.Models.BootstrapVm
+
+<div>
     <div data-ng-include="'/app/layout/shell.html'"></div>
     <div id="splash-page" data-ng-show="false">
         <div class="page-splash">
@@ -37,6 +39,18 @@
 <script src="~/app/config.js"></script>
 <script src="~/app/config.exceptionHandler.js"></script>
 <script src="~/app/config.route.js"></script>
+
+@section script
+{
+    <script type="text/javascript">
+        angular.module('app').factory('bootstrappedData', function() {
+            return {
+                defaultLeague: @Html.Raw(Model.DefaultLeagueJSON),
+                defaultSeason: @Html.Raw(Model.DefaultSeasonJSON)
+            };
+        });
+    </Script>
+}
 
 <!-- common Modules -->
 <script src="~/app/common/common.js"></script>

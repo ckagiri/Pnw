@@ -18,8 +18,8 @@ namespace Pnw.Model
         public int CrossProductPoints { get; set; }
         public bool IsProcessed { get; set; }
         public DateTime FixtureDate { get; set; }
-        public Fixture Fixture { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
+        public Fixture Fixture { get; set; }
     }
 }

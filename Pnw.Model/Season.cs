@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Pnw.Model
 {
@@ -15,7 +17,13 @@ namespace Pnw.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int LeagueId { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember] 
         public League League { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember] 
         public ICollection<Participation> ParticipationList { get; set; }
     }
 }
