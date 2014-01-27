@@ -19,7 +19,9 @@
                         <a class="btn btn-info">
                             <i class="icon-refresh"></i><span>Refresh</span></a>
                         <a class="btn btn-info"
-                           href="#/fixture/new"><i class="icon-plus"></i><span>Add Fixture</span></a>
+                           data-ng-disabled ="!vm.selectedSeason" data-ng-click="vm.gotoFixture()">
+                            <i class="icon-plus"></i><span>Add Fixture</span>
+                        </a>
                     </div>
 
                 </div>

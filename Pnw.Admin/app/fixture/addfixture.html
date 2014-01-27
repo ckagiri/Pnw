@@ -24,13 +24,10 @@
             <div class="widget wgreen">
                 <div data-cc-widget-header title="Edit New - {{vm.fixture.homeTeam.name}} vs {{vm.fixture.awayTeam.name}}"></div>
                 <div class="widget-content user">
-                   <div>
-                       <label>League</label>
-                       <select data-ng-model="vm.leagues"></select>
-                    </div>
                     <div>
-                        <label>Season</label>
-                        <select data-ng-model="vm.fixture.season" />
+                        <label>League Season</label>
+                        <input class="uneditable-input input-xlarge" data-ng-disabled="true"  
+                            value="{{vm.season.league.name}}  {{vm.season.name}}" />
                     </div>
                     <div>
                         <label>Kickoff</label>

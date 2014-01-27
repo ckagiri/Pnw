@@ -86,7 +86,11 @@
         
         function gotoFixture(fixture) {
             if (fixture && fixture.id) {
-                $location.path('/fixture/edit/' + fixture.id);
+                $location.path('/fixture/edit/' + fixture.seasonId + '/' + fixture.id);
+            } else {
+                if (vm.selectedSeason) {
+                    $location.path('/fixture/new/' + vm.selectedSeason.id);
+                }
             }
         }
 

@@ -54,14 +54,14 @@
                     }
                 }
             }, {
-                url: '/fixture/edit/:id',
+                url: '/fixture/edit/:seasondId/:fixtureId',
                 config: {
                     title: 'fixture',
                     templateUrl: 'app/fixture/editfixture.html',
                     settings: {}
                 }
             }, {
-                url: '/fixture/new',
+                url: '/fixture/new/:seasonId',
                 config: {
                     title: 'fixture',
                     templateUrl: 'app/fixture/addfixture.html',

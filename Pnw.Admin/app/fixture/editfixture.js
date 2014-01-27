@@ -4,10 +4,10 @@
     var controllerId = 'editfixture';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', '$window',
+        ['$location', '$scope', '$routeParams', '$route', '$window',
             'common', 'config', 'datacontext', editfixture]);
 
-    function editfixture($location, $scope, $routeParams, $window,
+    function editfixture($location, $scope, $routeParams, $route, $window,
             common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
@@ -55,13 +55,14 @@
         function canSave() { return vm.hasChanges && !vm.isSaving; }
 
         function getRequestedFixture() {
-            var val = $routeParams.id;
+            var fId = $routeParams.fixtureId;
+            var sId = $routeParams.seasonid;
 
-            return datacontext.fixture.getById(val)
+            return datacontext.fixture.getById(fId)
                 .then(function (data) {
                     vm.fixture = data;
                 }, function (error) {
-                    logError('Unable to get fixture ' + val);
+                    logError('Unable to get fixture ' + fId);
                 });
         }
 
