@@ -30,10 +30,9 @@
         Object.defineProperty(vm, 'canSave', { get: canSave });
 
         function activate() {
-            initLookups();
             onDestroy();
             onHasChanges();
-            common.activateController([datacontext.team.getAll(), getRequestedFixture()], controllerId);
+            common.activateController([loadTeams(), getRequestedFixture()], controllerId);
         }
 
         function cancel() {
@@ -44,6 +43,12 @@
         }
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
+        
+        function loadTeams() {
+            datacontext.team.getAll(false, 1, 25).then(function (data) {
+                vm.teams = data;
+            });
+        }
 
         function getRequestedFixture() {
            return vm.fixture = datacontext.fixture.create(); 

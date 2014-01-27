@@ -17,7 +17,7 @@
         var manager = emFactory.newManager();
         var primePromise;
         var $q = common.$q;
-        var repoNames = ['fixture', 'lookup', 'team', 'result'];
+        var repoNames = ['league', 'season', 'fixture', 'team', 'result', 'participation'];
         
         var service = {
             cancel: cancel,
@@ -28,10 +28,7 @@
             zStorage: zStorage,
             zStorageWip: zStorageWip
             // Repositories to be added on demand:
-            //      lookups
-            //      teams
-            //      fixtures
-            //      results
+            // leagues, seasons, teams, fixtures, results, participations
         };
 
         init();
@@ -100,12 +97,11 @@
             var storageEnabledAndHasData = zStorage.load(manager);
             primePromise = storageEnabledAndHasData ?
                 $q.when(log('Loading entities and metadata from local storage')) :
-                $q.all([service.lookup.getAll()]).then(extendMetadata);
+                $q.all([service.league.getAll(), service.season.getAll()]).then(extendMetadata);
 
             return primePromise.then(success);
            
             function success() {
-                service.lookup.setLookups();
                 zStorage.save();
                 log('Primed the data');
             }

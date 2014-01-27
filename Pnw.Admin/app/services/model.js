@@ -16,7 +16,8 @@
             result: 'Fixture',
             league: 'League',
             season: 'Season',
-            team: 'Team'
+            team: 'Team',
+            participation: 'Participation'
         };
 
         var service = {

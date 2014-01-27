@@ -244,10 +244,13 @@
     <Content Include="app\result\editresult.js" />
     <Content Include="app\result\results.html" />
     <Content Include="app\result\results.js" />
-    <Content Include="app\seasonteam\seasonteams.html" />
-    <Content Include="app\seasonteam\seasonteams.js" />
+    <Content Include="app\participation\seasonteams.html" />
+    <Content Include="app\participation\seasonteams.js" />
     <Content Include="app\season\seasons.html" />
     <Content Include="app\season\seasons.js" />
+    <Content Include="app\services\repository.participation.js" />
+    <Content Include="app\services\repository.season.js" />
+    <Content Include="app\services\repository.league.js" />
     <Content Include="app\services\datacontext.js" />
     <Content Include="app\services\directives.js" />
     <Content Include="app\services\entityManagerFactory.js" />
@@ -257,7 +260,7 @@
     <Content Include="app\services\repositories.js" />
     <Content Include="app\services\repository.abstract.js" />
     <Content Include="app\services\repository.fixture.js" />
-    <Content Include="app\services\repository.lookup.js" />
+    <Content Include="App_Data\repository.lookup.js" />
     <Content Include="app\services\repository.result.js" />
     <Content Include="app\services\repository.team.js" />
     <Content Include="app\services\routemediator.js" />
@@ -502,9 +505,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

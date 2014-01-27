@@ -1,9 +1,34 @@
-﻿<section id="leagues-view" class="mainbar" data-ng-controller="leagues as vm">
+﻿<section id="seasons-view" class="mainbar" data-ng-controller="seasons as vm">
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span12">
-                    ToDo:
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.seasons.length}}">
+                    </div>
+                    <div class="widget-content text-center text-info">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="s in vm.seasons" data-ng-click="vm.gotoSeason(s)" 
+                                    title="Go to season details">
+                                    <td>{{l.code}}</td>
+                                    <td>{{l.name}}</td>
+                                    <td>{{l.startDate}}</td>
+                                    <td>{{l.endDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>

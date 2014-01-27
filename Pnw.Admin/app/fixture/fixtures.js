@@ -45,7 +45,7 @@
         activate();
 
         function activate() {
-            var promises = [datacontext.team.getAll(), loadFixtures()];
+            var promises = [loadLeagues(), loadSeasons(), loadTeams(), getFixtures()];
             common.activateController(promises, controllerId)
                 .then(function () { log('Activated Fixtures View'); });
         }
@@ -94,43 +94,22 @@
             }
         }
 
-        function loadFixtures() {
-            getLeaguesAndSeasons()
-                //.then(getDefaultLeagueAndSeason)
-                .then(getFixtures);
+        function loadTeams() {
+            return datacontext.team.getAll().then(function(data) {
+                vm.teams = data;
+            });
         }
         
-        function getLeaguesAndSeasons() {
-            return $q.when(
-                (function() {
-                    var lookups = datacontext.lookup.lookupCachedData;
-                    vm.leagues = lookups.leagues;
-                    vm.seasons = lookups.seasons;
-                })());
+        function loadLeagues() {
+            return datacontext.league.getAll().then(function (data) {
+                 vm.leagues = data;
+            });
         }
         
-        function getDefaultLeagueAndSeason() {
-            return $q.when(
-                (function () {
-                    var defaultSeason = bootstrappedData.defaultSeason;
-                    var defaultLeagueId = defaultSeason.leagueId;
-                    var defaultSeasonId = defaultSeason.id;
-                    vm.leagues.some(function(l) {
-                        if (l.id === defaultLeagueId) {
-                            vm.selectedLeague = l;
-                            return true;
-                        }
-                        return false;
-                    });
-                    vm.seasons.some(function(s) {
-                        if (s.id === defaultSeasonId) {
-                            vm.selectedSeason = s;
-                            return true;
-                        }
-                        return false;
-                    });
-                    return vm.selectedSeason && vm.selectedSeason.id;
-                })());
+        function loadSeasons() {
+            return datacontext.season.getAll().then(function (data) {
+                vm.seasons = data;
+            });
         }
         
         function pageChanged(page) {

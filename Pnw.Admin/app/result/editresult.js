@@ -30,10 +30,10 @@
         Object.defineProperty(vm, 'canSave', { get: canSave });
 
         function activate() {
-            initLookups();
             onDestroy();
             onHasChanges();
-            common.activateController([datacontext.team.getAll(), getRequestedFixture()], controllerId);
+            common.activateController([datacontext.league.getAll(), datacontext.season.getAll(),
+                datacontext.team.getAll(), getRequestedFixture()], controllerId);
         }
 
         function cancel() {
@@ -59,13 +59,6 @@
         function goBack() { $window.history.back(); }
         
         function gotoFixtures() { $location.path('/fixtures'); }
-
-        function initLookups() {
-            var lookups = datacontext.lookup.lookupCachedData;
-            vm.leagues = lookups.leagues;
-            vm.seasons = lookups.seasons;
-            vm.teams = datacontext.team.getAllLocal();
-        }
 
         function onDestroy() {
             $scope.$on('$destroy', function () {

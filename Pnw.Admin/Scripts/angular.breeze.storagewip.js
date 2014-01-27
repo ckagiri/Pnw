@@ -63,6 +63,9 @@
             breezeVersion: breeze.version,
             appVersion: storeConfig.version,
             isLoaded: {
+                leagues: false,
+                seasons: false,
+                participations: false,
                 teams: false,
                 fixtures: false,
                 results: false
