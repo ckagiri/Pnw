@@ -4,10 +4,10 @@
     var controllerId = 'editfixture';
 
     angular.module('app').controller(controllerId,
-        ['$location', '$scope', '$routeParams', '$route', '$window',
+        ['$location', '$scope', '$routeParams', '$route', '$window', 'bootstrap.dialog',
             'common', 'config', 'datacontext', editfixture]);
 
-    function editfixture($location, $scope, $routeParams, $route, $window,
+    function editfixture($location, $scope, $routeParams, $route, $window, bsDialog,
             common, config, datacontext) {
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
@@ -23,14 +23,7 @@
         vm.leagues = [];
         vm.seasons = [];
         vm.teams = [];
-        //vm.matchStatuses = [
-        //    {key: '0', value: 'Scheduled'},
-        //    {key: '1', value: 'InProgress'},
-        //    {key: '2', value: 'Played'},
-        //    {key: '3', value: 'Cancelled'},
-        //    {key: '4', value: 'Abandoned'},
-        //    {key: '5', value: 'PostPoned'}
-        //];
+        vm.deleteFixture = deleteFixture;
         
         vm.matchStatuses = ['Scheduled', 'InProgress', 'Played', 'Cancelled', 'Abandoned', 'PostPoned'];
         
@@ -96,6 +89,24 @@
                 function (event, data) {
                     vm.hasChanges = data.hasChanges;
                 });
+        }
+        
+        function deleteFixture() {
+            return bsDialog.deleteDialog('Fixture')
+                .then(confirmDelete);
+
+            function confirmDelete() {
+                datacontext.markDeleted(vm.fixture);
+                vm.save().then(success, failed);
+
+                function success() {
+                    gotoFixtures();
+                }
+
+                function failed(error) {
+                    cancel(); // Makes the entity available to edit again
+                }
+            }
         }
 
         function save() {

@@ -74,13 +74,13 @@
                 }
             });
             
-            Object.defineProperty(Fixture.prototype, 'kickOffDateTime', {
+            Object.defineProperty(Fixture.prototype, 'kickOffDateOnly', {
                 get: function () {
                     var kickOff = this.kickOff;
                     if ((kickOff - nulloDate) === 0) {
                         kickOff = new Date();
                     }
-                    var value = moment.utc(kickOff).format('D/M/YYYY HH:mm');
+                    var value = moment.utc(kickOff).format('D/MMM/YYYY');
                     return value;
                 },
                 

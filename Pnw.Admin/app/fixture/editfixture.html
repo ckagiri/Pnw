@@ -17,9 +17,14 @@
                     <i class="icon-save"></i>Save
                 </button>
                 <span data-ng-show="vm.hasChanges"
-                    class="dissolve-animation ng-hide">
+                      class="dissolve-animation ng-hide">
                     <i class="icon-asterisk icon-asterisk-large"></i>
                 </span>
+                <button class="btn btn-danger" 
+                        data-ng-click="vm.deleteFixture()"
+                    data-ng-disabled="vm.fixture.canPredict">
+                    <i class="icon-trash"></i>Delete
+                </button> 
             </div>
             <div class="widget wgreen">
                 <div data-cc-widget-header title="Edit {{vm.fixture.title}}"></div>
@@ -30,8 +35,11 @@
                     </div>
                     <div>
                         <label>Kickoff</label>
-                        <input data-ng-model="vm.fixture.kickOffFormatted"
-                            placeholder="Kickoff time" />
+                        <input class="input-medium" data-ng-model="vm.fixture.kickOffDateOnly" data-ng-disabled="true"/>
+                    </div>
+                    <div style="display: inline-block;"
+                         data-ng-model="vm.fixture.kickOff">
+                        <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
                     </div>
                     <div>
                         <label>Home Team</label>
@@ -47,9 +55,11 @@
                     </div>
                     <div>
                         <label>Home Score</label>
-                        <input type="number" data-ng-model="vm.fixture.homeScore" class="input-mini"/>
+                        <input type="number" data-ng-model="vm.fixture.homeScore" class="input-mini" 
+                            data-ng-disabled="vm.fixture.matchStatus==='Scheduled'"/>
                         <label>Away Score</label>
-                        <input type="number" data-ng-model="vm.fixture.awayScore" class="input-mini"/>
+                        <input type="number" data-ng-model="vm.fixture.awayScore" 
+                            data-ng-disabled="vm.fixture.matchStatus==='Scheduled'"class="input-mini"/>
                     </div>
                     <div>
                         <label>Venue</label>

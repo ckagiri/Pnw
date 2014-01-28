@@ -29,7 +29,7 @@
             pageSize: 10
         };
         vm.pageChanged = pageChanged;
-        vm.refresh = function () { };
+        vm.refresh = refresh;
         vm.search = search;
         
         Object.defineProperty(vm.paging, 'pageCount', {
@@ -67,6 +67,10 @@
                     return data;
                 });
         }
+
+        function refresh() {
+            getFixtures(true);
+        }
         
         function getFixtureFilteredCount() {
             var seasonId = vm.selectedSeason ? vm.selectedSeason.id : 0;
@@ -77,7 +81,6 @@
         
         function getFixtureCount() {
             var seasonId = vm.selectedSeason ? vm.selectedSeason.id : 0;
-            
             return datacontext.fixture.getCount(seasonId).then(function (data) {
                 return vm.fixtureCount = data;
             });
