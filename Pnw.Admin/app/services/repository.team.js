@@ -61,7 +61,7 @@
             }
         
             return EntityQuery.from('Teams')
-               .select('id, name, code, tags, imageSource')
+               .select('id, name, code, tags, homeGround, imageSource')
                .orderBy(orderBy)
                .toType(entityName)
                .using(self.manager).execute()

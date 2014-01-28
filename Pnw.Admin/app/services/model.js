@@ -33,6 +33,7 @@
             registerSeason(metadataStore);
             registerFixture(metadataStore);
             registerTeam(metadataStore);
+            registerParticipation(metadataStore);
             
             modelValidation.createAndRegister(entityNames);
         }
@@ -56,6 +57,8 @@
         //#region Internal Methods        
         
         function registerFixture(metadataStore) {
+            var nulloDate = new Date(1900, 0, 1);
+
             metadataStore.registerEntityTypeCtor('Fixture', Fixture);
 
             function Fixture() {
@@ -68,6 +71,21 @@
                     var kickOff = this.kickOff;
                     var value = moment.utc(kickOff).format('ddd MMM DD, h:mm a');
                     return value;
+                }
+            });
+            
+            Object.defineProperty(Fixture.prototype, 'kickOffDateTime', {
+                get: function () {
+                    var kickOff = this.kickOff;
+                    if ((kickOff - nulloDate) === 0) {
+                        kickOff = new Date();
+                    }
+                    var value = moment.utc(kickOff).format('D/M/YYYY HH:mm');
+                    return value;
+                },
+                
+                set: function (value) {
+                    this.kickOff = moment.utc(value);
                 }
             });
             
@@ -140,6 +158,14 @@
                     return (this.league.code || "Unknown League") + ' ' + this.name;
                 },
             });
+        }
+        
+        function registerParticipation(metadataStore) {
+            metadataStore.registerEntityTypeCtor('Participation', Participation);
+
+            function Participation() {
+                this.isPartial = false;
+            }
         }
 
         //#endregion

@@ -10,6 +10,7 @@
         var $q = common.$q;
         var keyCodes = config.keyCodes;
         var vm = this;
+        var defaultSeason = bootstrappedData.defaultSeason;
         vm.title = 'Fixtures';
         vm.fixtures = [];
         vm.gotoFixture = gotoFixture;
@@ -25,7 +26,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 15
+            pageSize: 10
         };
         vm.pageChanged = pageChanged;
         vm.refresh = function () { };
@@ -45,20 +46,26 @@
         activate();
 
         function activate() {
-            var promises = [loadLeagues(), loadSeasons(), loadTeams(), getFixtures()];
-            common.activateController(promises, controllerId)
+            common.activateController([init()], controllerId)
                 .then(function () { log('Activated Fixtures View'); });
+        }
+
+        function init() {
+            return loadLeagues()
+                .then(loadSeasons)
+                .then(loadTeams)
+                .then(getFixtures);
         }
 
         function getFixtures(forceRemote) {
             var seasonId = vm.selectedSeason ? vm.selectedSeason.id : 0;
             return datacontext.fixture.getAll(forceRemote, seasonId, vm.paging.currentPage, vm.paging.pageSize, vm.nameSearch)
-                .then(function (data) {
+                .then(function(data) {
                     vm.fixtures = data;
                     getFixtureCount();
                     getFixtureFilteredCount();
                     return data;
-            });
+                });
         }
         
         function getFixtureFilteredCount() {
@@ -94,21 +101,39 @@
             }
         }
 
-        function loadTeams() {
-            return datacontext.team.getAll().then(function(data) {
+        function loadTeams () {
+            return datacontext.team.getAll().then(function (data) {
                 vm.teams = data;
             });
         }
         
         function loadLeagues() {
             return datacontext.league.getAll().then(function (data) {
-                 vm.leagues = data;
+                if (defaultSeason) {
+                    data.some(function (n) {
+                        if (n.id === defaultSeason.leagueId) {
+                            vm.selectedLeague = n;
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+               vm.leagues = data;
             });
         }
         
         function loadSeasons() {
             return datacontext.season.getAll().then(function (data) {
-                vm.seasons = data;
+                if (defaultSeason) {
+                    data.some(function(n) {
+                        if (n.id === defaultSeason.id) {
+                            vm.selectedSeason = n;
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+                return $q.when(vm.seasons = data);
             });
         }
         

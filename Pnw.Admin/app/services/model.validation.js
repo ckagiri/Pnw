@@ -33,7 +33,7 @@
         }
 
         function applyRequireReferenceValidators(metadataStore) {
-            var navigations = ['season'];
+            var navigations = ['homeTeam', 'awayTeam'];
             var entityType = metadataStore.getEntityType(entityNames.fixture);
 
             navigations.forEach(function (propertyName) {

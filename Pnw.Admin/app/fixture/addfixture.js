@@ -12,7 +12,7 @@
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
-
+        vm.season = null;
         vm.cancel = cancel;
         vm.goBack = goBack;
         vm.hasChanges = false;
@@ -23,7 +23,9 @@
         vm.leagues = [];
         vm.seasons = [];
         vm.teams = [];
+        vm.kickOff = new Date();
         vm.matchStatuses = ['Scheduled', 'InProgress', 'Played', 'Cancelled', 'Abandoned', 'PostPoned'];
+        vm.homeTeamChanged = onHomeTeamChanged;
 
         activate();
 
@@ -32,7 +34,7 @@
         function activate() {
             onDestroy();
             onHasChanges();
-            common.activateController([loadTeams(), getRequestedFixture()], controllerId);
+            common.activateController([init(), getRequestedFixture()], controllerId);
         }
 
         function cancel() {
@@ -42,12 +44,31 @@
             }
         }
 
+        function onHomeTeamChanged() {
+            var homeGround = '';
+            if (vm.fixture.homeTeam) {
+                homeGround = angular.copy(vm.fixture.homeTeam.homeGround);
+            }
+            vm.fixture.venue = homeGround;
+        }
+
         function canSave() { return vm.hasChanges && !vm.isSaving; }
         
-        function loadTeams() {
-            datacontext.team.getAll(false, 1, 25).then(function (data) {
-                vm.teams = data;
-            });
+        function init() {
+            var sId = $routeParams.seasonId;
+            return datacontext.team.getAll()
+                .then(function () {
+                    datacontext.season.getById(sId)
+                        .then(function (data) {
+                            vm.season = data;
+                            datacontext.participation.getAll()
+                                .then(function () {
+                                    vm.season.participationList.forEach(function (p) {
+                                        vm.teams.push(p.team);
+                                    });
+                                });
+                        });
+                });
         }
 
         function getRequestedFixture() {
@@ -57,13 +78,6 @@
         function goBack() { $window.history.back(); }
         
         function gotoFixtures() { $location.path('/fixtures'); }
-
-        function initLookups() {
-            var lookups = datacontext.lookup.lookupCachedData;
-            vm.leagues = lookups.leagues;
-            vm.seasons = lookups.seasons;
-            vm.teams = datacontext.team.getAllLocal();
-        }
 
         function onDestroy() {
             $scope.$on('$destroy', function () {
@@ -82,8 +96,12 @@
             if (!canSave()) { return $q.when(null); } // Must return a promise
 
             vm.isSaving = true;
+            vm.fixture.seasonId = vm.season.id;
+            vm.fixture.kickOff = vm.kickOff;
+            
             return datacontext.save().then(function (saveResult) {
                 vm.isSaving = false;
+                datacontext.fixture.calcIsScheduled();
             }, function (error) {
                 vm.isSaving = false;
             });

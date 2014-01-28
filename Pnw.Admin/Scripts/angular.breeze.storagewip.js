@@ -96,6 +96,9 @@
                 if (importMeta.breezeVersion === storeMeta.breezeVersion &&
                     importMeta.appVersion === storeMeta.appVersion) {
                     if (importMeta.isLoaded) {
+                        storeMeta.isLoaded.leagues = storeMeta.isLoaded.leagues || importMeta.isLoaded.leagues;
+                        storeMeta.isLoaded.seasons = storeMeta.isLoaded.seasons || importMeta.isLoaded.seasons;
+                        storeMeta.isLoaded.participations = storeMeta.isLoaded.participations || importMeta.isLoaded.participations;
                         storeMeta.isLoaded.teams = storeMeta.isLoaded.teams || importMeta.isLoaded.teams;
                         storeMeta.isLoaded.fixtures = storeMeta.isLoaded.fixtures || importMeta.isLoaded.fixtures;
                         storeMeta.isLoaded.results = storeMeta.isLoaded.results || importMeta.isLoaded.results;

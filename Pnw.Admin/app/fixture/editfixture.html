@@ -59,7 +59,8 @@
                     <div>
                         <label>MatchStatus</label>
                         <select data-ng-model="vm.fixture.matchStatus" data-ng-options="s for s in vm.matchStatuses" 
-                            class="input-medium">
+                            data-ng-disabled="vm.fixture.matchStatus !== 'Scheduled'"
+                                class="input-medium">
                         </select>
                     </div>
                     <div>

@@ -7,6 +7,7 @@
 
     function RepositoryParticipation(model, AbstractRepository, zStorage) {
         var entityName = model.entityNames.participation;
+        var orderBy = 'team.name';
         var EntityQuery = breeze.EntityQuery;
 
         function Ctor(mgr) {
@@ -17,6 +18,7 @@
             // Exposed data access functions
             this.getAll = getAll;
             this.getAllLocal = getAllLocal;
+            this.getBySeasonId = getBySeasonId;
         }
 
         AbstractRepository.extend(Ctor);
@@ -25,7 +27,7 @@
 
         function getAllLocal() {
             var self = this;
-            return self._getAllLocal(entityName);
+            return self._getAllLocal(entityName, orderBy);
         }
 
         function getAll(forceRemote) {
@@ -39,6 +41,7 @@
             
             return EntityQuery.from('Participations')
                 .select('teamId, seasonId')
+                .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
@@ -50,6 +53,17 @@
                 self.log('Retrieved [Participation Partials] from remote data source', participations.length, true);
                 return participations;
             }
+        }
+        
+        function getBySeasonId(seasonId) {
+            var self = this;
+            var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
+            var xs = EntityQuery.from(entityName)
+                    .where(predicate)
+                    .using(self.manager)
+                    .executeLocally();
+            var participations = xs;
+            return self.$q.when(participations);
         }
     }
 })();

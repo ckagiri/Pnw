@@ -12,7 +12,7 @@
         var vm = this;
         var logError = common.logger.getLogFn(controllerId, 'error');
         var $q = common.$q;
-
+        var season = null;
         vm.cancel = cancel;
         vm.goBack = goBack;
         vm.hasChanges = false;
@@ -41,7 +41,7 @@
         function activate() {
             onDestroy();
             onHasChanges();
-            common.activateController([loadTeams(), getRequestedFixture()], controllerId);
+            common.activateController([init(), getRequestedFixture()], controllerId);
         }
 
         function cancel() {
@@ -53,16 +53,26 @@
 
         function canSave() { return vm.hasChanges && !vm.isSaving; }
 
-        function loadTeams () {
-            datacontext.team.getAll(false, 1, 25).then(function(data) {
-                vm.teams = data;
-            });
+        function init() {
+            var sId = $routeParams.seasonId;
+            return datacontext.team.getAll()
+                .then(function (){
+                    datacontext.season.getById(sId)
+                        .then(function (data) {
+                            season = data;
+                            datacontext.participation.getAll()
+                                .then(function() {
+                                    season.participationList.forEach(function(p) {
+                                        vm.teams.push(p.team);
+                                    });
+                                });
+                        });
+                });
         }
 
         function getRequestedFixture() {
             var fId = $routeParams.fixtureId;
-            var sId = $routeParams.seasonid;
-
+           
             return datacontext.fixture.getById(fId)
                 .then(function (data) {
                     vm.fixture = data;

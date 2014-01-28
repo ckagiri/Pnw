@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DifferentFromAttribute.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="IAuditInfo.cs" />
     <Compile Include="League.cs" />
