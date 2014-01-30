@@ -30,8 +30,6 @@
                                     <tr>
                                         <th>Kickoff</th>
                                         <th>Home Team</th>
-                                        <th></th>
-                                        <th></th>
                                         <th>Away Team</th>
                                         <th>Prediction</th>
                                         <th>Actual Score</th>
@@ -42,14 +40,6 @@
                                     <tr data-ng-repeat="f in vm.fixtures">
                                         <td>{{f.kickOffFormatted}}</td>
                                         <td>{{f.homeTeam.name}}</td>
-                                        <td>
-                                            <img data-cc-img-person="{{f.homeTeamImageSource}}"
-                                                class="hidden-phone thumbnail img-polaroid user-pic" />
-                                        </td>
-                                        <td>
-                                            <img data-cc-img-person="{{f.awayTeamImageSource}}"
-                                                class="hidden-phone thumbnail img-polaroid user-pic" />
-                                        </td>
                                         <td>{{f.awayTeam.name}}</td>
                                         <td>
                                             <select data-ng-disabled="!f.isScheduled" data-ng-model="f.prediction.homeGoals" data-ng-options="goals for goals in vm.goalRange"
