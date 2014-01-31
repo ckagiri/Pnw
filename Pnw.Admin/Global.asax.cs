@@ -60,8 +60,8 @@ namespace Pnw.Admin
 
                                         var correctResultHomeWin = (fixture.HomeScore > fixture.AwayScore)
                                                                    && (prediction.HomeGoals > prediction.AwayGoals);
-                                        var correctResultAwayWin = (fixture.HomeScore > fixture.AwayScore)
-                                                                   && (prediction.HomeGoals > prediction.AwayGoals);
+                                        var correctResultAwayWin = (fixture.AwayScore > fixture.HomeScore)
+                                                                   && (prediction.AwayGoals > prediction.HomeGoals);
                                         var correctResultDraw = (fixture.HomeScore == fixture.AwayScore)
                                                                 && (prediction.HomeGoals == prediction.AwayGoals);
                                         var correctResult =

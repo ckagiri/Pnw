@@ -14,20 +14,20 @@ namespace Pnw.Web.Models
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
         }
-
         private readonly JsonSerializerSettings _serializerSettings;
 
         public User User { get; set; }
         public League DefaultLeague { get; set; }
         public Season DefaultSeason { get; set; }
         public DateTime CurrentDate { get; set; }
+        public bool IsUserAuthenticated { get; set; }
 
         public string UserJSON
         {
             get
             {
-                var defaultLeague = JsonConvert.SerializeObject(User, _serializerSettings);
-                return defaultLeague;
+                var user = JsonConvert.SerializeObject(User, _serializerSettings);
+                return user;
             }
         }
 
@@ -55,6 +55,15 @@ namespace Pnw.Web.Models
             {
                 var currentDate = JsonConvert.SerializeObject(CurrentDate, _serializerSettings);
                 return currentDate;
+            }
+        }
+
+        public string IsUserAuthenticatedJson
+        {
+            get
+            {
+                var isAuthenticated = JsonConvert.SerializeObject(IsUserAuthenticated, _serializerSettings);
+                return isAuthenticated;
             }
         }
     }

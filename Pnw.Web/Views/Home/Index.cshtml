@@ -43,12 +43,16 @@
 @section script
 {
     <script type="text/javascript">
+        //console.log(@Html.Raw(Model.UserJSON));
         angular.module('app').factory('bootstrappedData', function() {
-            return {
+            var data = {
                 defaultLeague: @Html.Raw(Model.DefaultLeagueJSON),
                 defaultSeason: @Html.Raw(Model.DefaultSeasonJSON),
-                currentDate: @Html.Raw(Model.CurrentDateJson)
-            };
+                currentDate: @Html.Raw(Model.CurrentDateJson),
+                user: @Html.Raw(Model.UserJSON)
+                };
+            data.user.isAuthenticated = @Html.Raw(Model.IsUserAuthenticatedJson);
+            return data;
         });
     </Script>
 }
@@ -83,3 +87,4 @@
 
 <script src="~/app/predict/fixtures.js"></script>
 <script src="~/app/predict/predictions.js"></script>
+<script src="~/app/leaderboard/leaderboard.js"></script>

@@ -6,10 +6,11 @@
     function fixtures($scope, bootstrappedData, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logError = getLogFn(controllerId, 'error');
         var $q = common.$q;
         var vm = this;
         var defaultSeason = bootstrappedData.defaultSeason;
-        var userId = bootstrappedData.userId;
+        var user = bootstrappedData.user;
         vm.leagues = [];
         vm.seasons = [];
         vm.fixtures = [];
@@ -38,6 +39,9 @@
         }
 
         function refresh() {
+            if (vm.predictionsToSubmit.length) {
+                vm.predictionsToSubmit = [];
+            }
             $q.all([getFixtures(true), getPredictions(true)])
                 .then(addPredictionToFixture);
         }
@@ -48,9 +52,11 @@
             var existing = null;
             var match = null;
             var validPrediction = common.isNumber(homePrediction) && common.isNumber(awayPrediction);
-            datacontext.prediction.getByUserAndFixtureId(userId, f.id).then(function (data) {
-                existing = data && data[0];
-            });
+            if (user.isAuthenticated) {
+                datacontext.prediction.getByUserAndFixtureId(user.id, f.id).then(function(data) {
+                    existing = data;
+                });
+            }
             vm.predictions.some(function (p) {
                 if (p.fixtureId === f.id) {
                     match = p;
@@ -63,7 +69,7 @@
                 match.awayGoals = f.prediction.awayGoals;
             }
             if (validPrediction && !match) {
-                var newOne = datacontext.prediction.create(userId, f);
+                var newOne = datacontext.prediction.create(user.id, f);
                 vm.predictions.push(newOne);
             }
             if (!validPrediction && match) {
@@ -103,7 +109,7 @@
                     }
                 }
             });
-            // datacontext.clean();
+            datacontext.clean();
         }
         
         function initLookups() {
@@ -122,7 +128,7 @@
         
         function getFixtures(forceRemote) {
             return datacontext.fixture.getAll(forceRemote).then(function (data) {
-                vm.fixtures = angular.copy(data);
+                vm.fixtures = data;
             });
         }
 
@@ -133,6 +139,10 @@
         }
         
         function submit() {
+            if(!user.isAuthenticated) {
+                logError("You must be logged in to submit predictions");
+                return $q.when(null);
+            }
             if (!canSubmit()) { return $q.when(null); } 
 
             vm.isSubmitting = true;

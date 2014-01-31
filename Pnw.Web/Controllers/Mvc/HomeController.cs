@@ -50,14 +50,23 @@ namespace Pnw.Web.Controllers.Mvc
                 Debug.WriteLine("Error bootstrapping data");
             }
 
-            if (user == null) { user = new User(); }
             if (defaultLeague == null) { defaultLeague = new League(); }
             if (defaultSeason == null) { defaultSeason = new Season(); }
 
-            bootstrapVm.User = user;
             bootstrapVm.DefaultLeague = defaultLeague;
             bootstrapVm.DefaultSeason = defaultSeason;
             bootstrapVm.CurrentDate = DateTime.Now;
+            
+            if (user == null)
+            {
+                user = new User();
+                bootstrapVm.IsUserAuthenticated = false;
+            }
+            else
+            {
+                bootstrapVm.IsUserAuthenticated = true;
+            }
+            bootstrapVm.User = user;
 
             return View("Index", bootstrapVm);
         }

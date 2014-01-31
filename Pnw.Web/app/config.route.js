@@ -50,7 +50,17 @@
                     title: 'your predictions',
                     settings: {
                         nav: 1,
-                        content: '<i class="icon-list"></i> Predictions'
+                        content: '<i class="icon-list-ol"></i> Predictions'
+                    }
+                }
+            }, {
+                url: '/leaderboard',
+                config: {
+                    templateUrl: 'app/leaderboard/leaderboard.html',
+                    title: 'leaderboard',
+                    settings: {
+                        nav: 1,
+                        content: '<i class="icon-trophy"></i> Leaderboard'
                     }
                 }
             }

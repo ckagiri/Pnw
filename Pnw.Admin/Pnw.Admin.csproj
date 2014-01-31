@@ -225,6 +225,8 @@
     <Content Include="app\config.exceptionHandler.js" />
     <Content Include="app\config.js" />
     <Content Include="app\config.route.js" />
+    <Content Include="app\participation\seasonteams.html" />
+    <Content Include="app\participation\seasonteams.js" />
     <Content Include="app\dashboard\dashboard.html" />
     <Content Include="app\dashboard\dashboard.js" />
     <Content Include="app\fixture\addfixture.html" />
@@ -238,15 +240,13 @@
     <Content Include="app\layout\sidebar.html" />
     <Content Include="app\layout\sidebar.js" />
     <Content Include="app\layout\widgetheader.html" />
-    <Content Include="app\league\leagues.html" />
+    <Content Include="app\season\seasons.html" />
     <Content Include="app\league\leagues.js" />
     <Content Include="app\result\editresult.html" />
     <Content Include="app\result\editresult.js" />
     <Content Include="app\result\results.html" />
     <Content Include="app\result\results.js" />
-    <Content Include="app\participation\seasonteams.html" />
-    <Content Include="app\participation\seasonteams.js" />
-    <Content Include="app\season\seasons.html" />
+    <Content Include="app\league\leagues.html" />
     <Content Include="app\season\seasons.js" />
     <Content Include="app\services\repository.participation.js" />
     <Content Include="app\services\repository.season.js" />
