@@ -13,7 +13,6 @@ namespace Pnw.Admin.Models
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 Formatting = Formatting.Indented,
-                //ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
         }
 
@@ -23,13 +22,14 @@ namespace Pnw.Admin.Models
         public League DefaultLeague { get; set; }
         public Season DefaultSeason { get; set; }
         public DateTime CurrentDate { get; set; }
+        public bool IsUserAuthenticated { get; set; }
 
         public string UserJSON
         {
             get
             {
-                var defaultLeague = JsonConvert.SerializeObject(User, _serializerSettings);
-                return defaultLeague;
+                var user = JsonConvert.SerializeObject(User, _serializerSettings);
+                return user;
             }
         }
 
@@ -57,6 +57,15 @@ namespace Pnw.Admin.Models
             {
                 var currentDate = JsonConvert.SerializeObject(CurrentDate, _serializerSettings);
                 return currentDate;
+            }
+        }
+
+        public string IsUserAuthenticatedJson
+        {
+            get
+            {
+                var isAuthenticated = JsonConvert.SerializeObject(IsUserAuthenticated, _serializerSettings);
+                return isAuthenticated;
             }
         }
     }

@@ -53,7 +53,7 @@
             }
 
             return EntityQuery.from('Fixtures')
-                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, homeTeamImageSource, awayTeamImageSource, homeScore, awayScore, matchStatus, venue')
+                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, homeTeamImageSource, awayTeamImageSource, homeScore, awayScore, canPredict, matchStatus, venue')
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()

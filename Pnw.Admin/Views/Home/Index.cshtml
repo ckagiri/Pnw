@@ -44,10 +44,14 @@
 {
     <script type="text/javascript">
         angular.module('app').factory('bootstrappedData', function() {
-            return {
+            var data = {
                 defaultLeague: @Html.Raw(Model.DefaultLeagueJSON),
-                defaultSeason: @Html.Raw(Model.DefaultSeasonJSON)
+                defaultSeason: @Html.Raw(Model.DefaultSeasonJSON),
+                currentDate: @Html.Raw(Model.CurrentDateJson),
+                user: @Html.Raw(Model.UserJSON)
             };
+            data.user.isAuthenticated = @Html.Raw(Model.IsUserAuthenticatedJson);
+            return data;
         });
     </Script>
 }
