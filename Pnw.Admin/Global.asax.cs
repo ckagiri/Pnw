@@ -69,7 +69,7 @@ namespace Pnw.Admin
 
                                         var spreadDiffPrediction = prediction.HomeGoals - prediction.AwayGoals;
                                         var spreadDiffFixture = fixture.HomeScore - fixture.AwayScore;
-                                        var spreadDiff = spreadDiffPrediction - spreadDiffFixture;
+                                        var spreadDiff = -(Math.Abs(spreadDiffPrediction - spreadDiffFixture));
 
                                         var accuracyDiffHome = Math.Abs(fixture.HomeScore - prediction.HomeGoals);
                                         var accuracyDiffAway = Math.Abs(fixture.AwayScore - prediction.AwayGoals);

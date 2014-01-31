@@ -17,14 +17,14 @@ namespace Pnw.Admin.Controllers.Mvc
         {
             var bootstrapVm = new BootstrapVm();
 
-            User user;
-            League defaultLeague;
-            Season defaultSeason;
+            User user = null;
+            League defaultLeague = null;
+            Season defaultSeason = null;
             var membership = (SimpleMembershipProvider)Membership.Provider;
             var membershipUser = membership.GetUser(User.Identity.Name, true);
             if(membershipUser == null || membershipUser.ProviderUserKey == null)
             {
-                user = null;
+                // do nothin
             }
             else
             {
@@ -49,7 +49,11 @@ namespace Pnw.Admin.Controllers.Mvc
                 defaultLeague = null;
                 defaultSeason = null;
             }
-            
+
+            if (user == null) { user = new User(); }
+            if (defaultLeague == null) { defaultLeague = new League(); }
+            if (defaultSeason == null) { defaultSeason = new Season(); }
+
             bootstrapVm.User = user;
             bootstrapVm.DefaultLeague = defaultLeague;
             bootstrapVm.DefaultSeason = defaultSeason;

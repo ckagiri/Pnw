@@ -53,8 +53,8 @@ namespace Pnw.Web.Models
         {
             get
             {
-                var defaultCurrentDate = JsonConvert.SerializeObject(CurrentDate, _serializerSettings);
-                return defaultCurrentDate;
+                var currentDate = JsonConvert.SerializeObject(CurrentDate, _serializerSettings);
+                return currentDate;
             }
         }
     }

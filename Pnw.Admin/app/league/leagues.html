@@ -1,9 +1,20 @@
-﻿<section id="seasons-view" class="mainbar" data-ng-controller="seasons as vm">
+﻿<section id="leagues-view" class="mainbar" data-ng-controller="leagues as vm">
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
+                <div class="form-search">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-info" data-ng-click="vm.refresh()">
+                            <i class="icon-refresh"></i><span>Refresh</span></a>
+                        <a class="btn btn-info" data-ng-click="vm.gotoFixture()">
+                            <i class="icon-plus"></i><span>Add League</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
                 <div class="widget wviolet">
-                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.seasons.length}}">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.leagues.length}}">
                     </div>
                     <div class="widget-content text-center text-info">
                         <table class="table table-condensed table-striped">
@@ -11,17 +22,13 @@
                                 <tr>
                                     <th>Code</th>
                                     <th>Name</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="s in vm.seasons" data-ng-click="vm.gotoSeason(s)" 
-                                    title="Go to season details">
+                                <tr data-ng-repeat="l in vm.leagues" data-ng-click="vm.gotoLeague(l)"
+                                    title="Go to league details">
                                     <td>{{l.code}}</td>
                                     <td>{{l.name}}</td>
-                                    <td>{{l.startDate}}</td>
-                                    <td>{{l.endDate}}</td>
                                 </tr>
                             </tbody>
                         </table>

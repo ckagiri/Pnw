@@ -134,7 +134,7 @@
                 url: '/seasonteams',
                 config: {
                     title: 'seasonteams',
-                    templateUrl: 'app/seasonteam/seasonteams.html',
+                    templateUrl: 'app/participation/seasonteams.html',
                     settings: {
                         nav: 7,
                         content: '<i class="icon-list"></i> Season-Teams'

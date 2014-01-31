@@ -7,10 +7,8 @@ namespace Pnw.Model
     {
         public int Id { get; set; }
         public int SeasonId { get; set; }
-        [Required]
         [DifferentFrom("AwayTeamId")]
         public int HomeTeamId { get; set; }
-        [Required]
         public int AwayTeamId { get; set; }
         [Required]
         public DateTime KickOff { get; set; }

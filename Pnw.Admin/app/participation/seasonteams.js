@@ -1,32 +1,82 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'seasonteams';
-    angular.module('app').controller(controllerId, ['$location', 'common', 'datacontext', seasonteams]);
+    angular.module('app').controller(controllerId, ['$location', 'bootstrappedData', 'common', 'datacontext', seasonteams]);
 
-    function seasonteams($location, common, datacontext) {
+    function seasonteams($location, bootstrappedData, common, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
-
+        var defaultSeason = bootstrappedData.defaultSeason;
         var vm = this;
-        vm.title = 'SeasonTeams';
+        
+        vm.title = 'Season Teams';
+        vm.leagues = [];
+        vm.seasons = [];
+        vm.selectedLeague = null;
+        vm.selectedSeason = null;
         vm.seasonteams = [];
-        vm.gotoSeasonTeams = gotoSeasonTeams;
+        vm.addSeasonTeams = addSeasonTeams;
 
         activate();
 
         function activate() {
-            var promises = [datacontext.team.getAll(), getSeasonTeams()];
-            common.activateController(promises, controllerId)
-                .then(function () { log('Activated SeasonTeams View'); });
+            common.activateController([init()], controllerId)
+                .then(function () { log('Activated Seasons View'); });
         }
-
-        function getSeasonTeams() {
-            return datacontext.seasonteam.getAll().then(function (data) {
-                return vm.seasonteams = data;
+        
+        function init() {
+            return loadLeagues()
+                .then(loadSeasons)
+                .then(loadTeams)
+                .then(getSeasonTeams);
+        }
+        
+        function loadLeagues() {
+            return datacontext.league.getAll().then(function (data) {
+                if (defaultSeason) {
+                    data.some(function (n) {
+                        if (n.id === defaultSeason.leagueId) {
+                            vm.selectedLeague = n;
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+                vm.leagues = data;
             });
         }
 
-        function gotoSeasonTeams(seasonteam) {
+        function loadSeasons() {
+            return datacontext.season.getAll().then(function (data) {
+                if (defaultSeason) {
+                    data.some(function (n) {
+                        if (n.id === defaultSeason.id) {
+                            vm.selectedSeason = n;
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+                vm.seasons = data;
+            });
+        }
+        
+        function loadTeams() {
+            return datacontext.team.getAll().then(function (data) {
+                // vm.teams = data;
+            });
+        }
+
+
+        function getSeasonTeams(forceRemote) {
+            return datacontext.participation.getAll().then(function() {
+                vm.selectedSeason.participationList.forEach(function(p) {
+                    vm.seasonteams.push(p.team);
+                });
+            });
+        }
+
+        function addSeasonTeams(seasonteam) {
             if (seasonteam && seasonteam.id) {
                 $location.path('/seasonteam/edit/' + seasonteam.id);
             }

@@ -467,7 +467,7 @@ namespace Pnw.DataAccess.Migrations
 
             if (!roles.RoleExists("User")) { roles.CreateRole("User"); }
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
             if (membership.GetUser("test1", false) == null)

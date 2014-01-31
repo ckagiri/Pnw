@@ -57,6 +57,7 @@ namespace Pnw.Web.Controllers.Mvc
             bootstrapVm.User = user;
             bootstrapVm.DefaultLeague = defaultLeague;
             bootstrapVm.DefaultSeason = defaultSeason;
+            bootstrapVm.CurrentDate = DateTime.Now;
 
             return View("Index", bootstrapVm);
         }

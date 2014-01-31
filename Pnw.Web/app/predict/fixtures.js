@@ -1,13 +1,15 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'fixtures';
-    angular.module('app').controller(controllerId, ['$scope', 'common', 'config', 'datacontext', fixtures]);
+    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData', 'common', 'config', 'datacontext', fixtures]);
 
-    function fixtures($scope, common, config, datacontext) {
+    function fixtures($scope, bootstrappedData, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var $q = common.$q;
         var vm = this;
+        var defaultSeason = bootstrappedData.defaultSeason;
+        var userId = bootstrappedData.userId;
         vm.leagues = [];
         vm.seasons = [];
         vm.fixtures = [];
@@ -31,7 +33,8 @@
             initLookups();
             onDestroy();
             common.activateController(promises, controllerId)
-                .then(addPredictionToFixture).then(console.log("hi"));
+                .then(addPredictionToFixture)
+                .then(console.log("hi"));
         }
 
         function refresh() {
@@ -45,7 +48,7 @@
             var existing = null;
             var match = null;
             var validPrediction = common.isNumber(homePrediction) && common.isNumber(awayPrediction);
-            datacontext.prediction.getByUserAndFixtureId(3, f.id).then(function (data) {
+            datacontext.prediction.getByUserAndFixtureId(userId, f.id).then(function (data) {
                 existing = data && data[0];
             });
             vm.predictions.some(function (p) {
@@ -60,7 +63,7 @@
                 match.awayGoals = f.prediction.awayGoals;
             }
             if (validPrediction && !match) {
-                var newOne = datacontext.prediction.create(3, f);
+                var newOne = datacontext.prediction.create(userId, f);
                 vm.predictions.push(newOne);
             }
             if (!validPrediction && match) {
@@ -100,7 +103,7 @@
                     }
                 }
             });
-            datacontext.clean();
+            // datacontext.clean();
         }
         
         function initLookups() {
@@ -119,7 +122,7 @@
         
         function getFixtures(forceRemote) {
             return datacontext.fixture.getAll(forceRemote).then(function (data) {
-                vm.fixtures = data;
+                vm.fixtures = angular.copy(data);
             });
         }
 

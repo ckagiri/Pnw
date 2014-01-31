@@ -10,7 +10,7 @@
         var $q = common.$q;
         var keyCodes = config.keyCodes;
         var vm = this;
-        var defaultSeason = bootstrappedData.defaultSeason;
+        var defaultSeason = undefined;
         vm.title = 'Fixtures';
         vm.fixtures = [];
         vm.gotoFixture = gotoFixture;
@@ -31,6 +31,8 @@
         vm.pageChanged = pageChanged;
         vm.refresh = refresh;
         vm.search = search;
+        
+        defaultSeason = bootstrappedData.defaultSeason;
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
@@ -136,7 +138,7 @@
                         return false;
                     });
                 }
-                return $q.when(vm.seasons = data);
+                vm.seasons = data;
             });
         }
         
