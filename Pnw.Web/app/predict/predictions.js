@@ -15,6 +15,7 @@
         vm.seasons = [];
         vm.fixtures = [];
         vm.predictions = [];
+        vm.summary = undefined;
         vm.title = 'predictions';
         vm.refresh = refresh;
 
@@ -24,8 +25,27 @@
             var promises = [getFixtures(), getPredictions()];
             initLookups();
             onDestroy();
-            common.activateController(promises, controllerId)
-                .then(console.log("hi"));
+            common.activateController(promises, controllerId).then(summarize).then(console.log("hi"));
+        }
+
+        function summarize() {
+            var summary = {
+                points: 0,
+                correctScorePoints: 0,
+                correctResultPoints: 0,
+                crossProductPoints: 0,
+                accuracyDifference: 0,
+                spreadDifference: 0
+            };
+            vm.summary = vm.predictions.reduce(function(accum, prediction) {
+                accum.points += prediction.points;
+                accum.correctScorePoints += prediction.correctScorePoints;
+                accum.correctResultPoints += prediction.correctResultPoints;
+                accum.crossProductPoints += prediction.crossProductPoints;
+                accum.accuracyDifference += prediction.accuracyDifference;
+                accum.spreadDifference += prediction.spreadDifference;
+                return accum;
+            }, summary);
         }
 
         function refresh() {

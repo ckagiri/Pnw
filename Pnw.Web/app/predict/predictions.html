@@ -21,8 +21,16 @@
                     <div class="widget wviolet">
                         <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.predictions.length}}" right-text="Page 1 of 1"></div>
                         <div class="widget-content user">
-                            <label>&sum;Points:7&nbsp;- &nbsp;CorrectScorePoints: 1&nbsp;&nbsp;CorrectResultPoints: 6&nbsp;</label>
-                            <label>&sum;CrossProductPoints: 3&nbsp;&nbsp;&sum;AccuracyDifference: -4&nbsp;&nbsp;&sum;SpreadDifference: -2</label>
+                            <label>
+                                &sum;Points: {{vm.summary.points}}&nbsp;-
+                                CorrectScorePoints: {{vm.summary.correctScorePoints}}&nbsp;
+                                CorrectResultPoints: {{vm.summary.correctResultPoints}}
+                            </label>
+                            <label>
+                                &sum;CrossProductPoints: {{vm.summary.crossProductPoints}}&nbsp;&nbsp;
+                                &sum;SpreadDifference: {{vm.summary.spreadDifference}}&nbsp;&nbsp;
+                                &sum;AccuracyDifference: {{vm.summary.accuracyDifference}}
+                            </label>
                             <br/>
                             <div data-ng-repeat="p in vm.predictions">
                                 <h6>KickOff: {{p.fixture.kickOffFormatted}}</h6>

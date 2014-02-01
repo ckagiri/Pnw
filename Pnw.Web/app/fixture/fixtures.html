@@ -6,7 +6,7 @@
                 <div class="form-search">
                     <div class="btn-group pull-left">
                         <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>January (0 points)</a>
+                        <a class="btn btn-info"><i class="icon-calendar"></i>January ( {{vm.totalPoints}} points)</a>
                         <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
                     </div>
                     <div class="btn-group pull-right ">
@@ -27,7 +27,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget wviolet">
-                        <div data-cc-widget-header title="Fixtures" subtitle="9" right-text="Page 1 of 1"></div>
+                        <div data-cc-widget-header title="Fixtures" subtitle="{{vm.fixtures.length}}" right-text="Page 1 of 1"></div>
                         <div class="widget-content text-center text-info">
                             <table class="table table-condensed table-striped">
                                 <thead>

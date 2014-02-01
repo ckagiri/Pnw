@@ -35,6 +35,7 @@
             onDestroy();
             common.activateController(promises, controllerId)
                 .then(addPredictionToFixture)
+                .then(calculateTotalPoints)
                 .then(console.log("hi"));
         }
 
@@ -44,6 +45,14 @@
             }
             $q.all([getFixtures(true), getPredictions(true)])
                 .then(addPredictionToFixture);
+        }
+
+        function calculateTotalPoints() {
+            var total = 0;
+            vm.totalPoints = vm.predictions.reduce(function (sum, prediction) {
+                sum += prediction.points;
+                return sum;
+            }, total);
         }
 
         function predictionChanged(f) {
