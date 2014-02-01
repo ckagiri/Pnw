@@ -2,10 +2,44 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span12">
-                    ToDo:
+                <a><span><b>EPL 2013-2014</b></span></a><p />
+                <div class="form-search">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
+                        <a class="btn btn-info"><i class="icon-calendar"></i>January</a>
+                        <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
+                    </div>
+                    <div class="btn-group pull-right ">
+                        <a class="btn btn-info" data-ng-click="vm.refresh()">
+                            <i class="icon-refresh"></i><span class="hidden-phone">Refresh</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget wviolet">
+                        <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.predictions.length}}" right-text="Page 1 of 1"></div>
+                        <div class="widget-content user">
+                            <label>&sum;Points:7&nbsp;- &nbsp;CorrectScorePoints: 1&nbsp;&nbsp;CorrectResultPoints: 6&nbsp;</label>
+                            <label>&sum;CrossProductPoints: 3&nbsp;&nbsp;&sum;AccuracyDifference: -4&nbsp;&nbsp;&sum;SpreadDifference: -2</label>
+                            <br/>
+                            <div data-ng-repeat="p in vm.predictions">
+                                <h6>KickOff: {{p.fixture.kickOffFormatted}}</h6>
+                                <h6>Fixture: {{p.fixture.homeTeam.name}} v {{p.fixture.awayTeam.name}}</h6>
+                                <h6>Prediction: {{p.homeGoals}} - {{p.awayGoals}}</h6>
+                                <h6><span data-ng-show="{{p.fixture.isScheduled}}">**</span>Result: {{p.fixture.homeScore}} - {{p.fixture.awayScore}} </h6>
+                                <small><span data-ng-show="{{p.fixture.isScheduled}}">**</span>Points: <b>{{p.points}}</b></small>&nbsp;&nbsp;
+                                <small>Spread Diff: {{p.spreadDifference}}</small>&nbsp;&nbsp;
+                                <small>Accuracy Diff: {{p.accuracyDifference}}</small>
+                                <br/><br/>
+                            </div>
+                        </div>
+                        <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div></div>
         </div>
     </section>
 </section>

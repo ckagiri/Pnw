@@ -36,7 +36,7 @@
             {
                 url: '/',
                 config: {
-                    templateUrl: 'app/predict/fixtures.html',
+                    templateUrl: 'app/fixture/fixtures.html',
                     title: 'predict fixtures',
                     settings: {
                         nav: 1,

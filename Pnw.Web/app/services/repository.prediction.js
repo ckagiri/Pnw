@@ -78,7 +78,7 @@
             }
 
             return EntityQuery.from('Predictions')
-                .select('id, userId, seasonId, fixtureId, homeGoals, awayGoals, points, fixtureDate, isProcessed')
+                //.select('id, userId, seasonId, fixtureId, homeGoals, awayGoals, points, fixtureDate, isProcessed')
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
@@ -86,6 +86,7 @@
 
             function querySucceeded(data) {
                 predictions = data.results;
+                self.zStorage.areItemsLoaded('predictions', true);
                 self.zStorage.save();
                 self.log('Retrieved [Prediction Partials] from remote data source', predictions.length, true);
                 return predictions;

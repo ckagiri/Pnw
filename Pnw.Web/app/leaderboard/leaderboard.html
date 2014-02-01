@@ -2,10 +2,46 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span12">
-                    ToDo:
+                <select><option>-- League/Tournament --</option></select><br/>
+                <select><option>-- Season/Year --</option></select><br/>
+                <select><option>-- Month --</option></select><br/>
+                <a class="btn btn-info" data-ng-click="vm.refresh()">
+                    <i class="icon-refresh"></i>
+                    <span>Refresh</span>
+                </a>
+            </div>
+            <div class="row-fluid">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}">
+                    </div>
+                    <div class="widget-content text-center text-info">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>UserName</th>
+                                    <th>Points</th>
+                                    <th>Csp</th>
+                                    <th>Crp</th>
+                                    <th>Cpp</th>
+                                    <th>Sd</th>
+                                    <th>Ad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="l in vm.leagues" data-ng-click="vm.gotoLeague(l)"
+                                    title="Go to league details">
+                                    <td>{{l.code}}</td>
+                                    <td>{{l.name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 </section>
