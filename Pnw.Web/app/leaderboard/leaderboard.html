@@ -3,8 +3,10 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <select><option>-- League/Tournament --</option></select><br/>
-                <select><option>-- Season/Year --</option></select><br/>
-                <select><option>-- Month --</option></select><br/>
+                <select data-ng-disabled="true" class="input-medium"></select><br/>
+                <div data-ng-show="false">
+                    <select class="input-medium" data-ng-disabled="true"></select><br/>
+                </div>
                 <a class="btn btn-info" data-ng-click="vm.refresh()">
                     <i class="icon-refresh"></i>
                     <span>Refresh</span>

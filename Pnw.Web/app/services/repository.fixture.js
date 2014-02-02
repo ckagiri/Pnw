@@ -19,8 +19,6 @@
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
-            this.getAllLocal = getAllLocal;
-            //this.getTopLocal = getTopLocal;
             this.getAll = getAll;
         }
 
@@ -36,15 +34,8 @@
             return this._getById(entityName, id, forceRemote);
         }
 
-        function getAllLocal() {
-            var self = this;
-            var predicate = Predicate.create('isScheduled', '==', true);
-            return self._getAllLocal(entityName, orderBy, predicate);
-        }
-
         function getAll(forceRemote) {
             var self = this;
-            var orderBy = 'kickOff, homeTeam.name';
             var fixtures = [];
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
@@ -69,14 +60,6 @@
                 self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
                 return fixtures;
             }
-        }
-
-        function getTopLocal() {
-            var self = this;
-            var predicate = Predicate.create('homeTeam.name', '==', 'Chelsea')
-                .and('isScheduled', '==', true);
-
-            return self._getAllLocal(entityName, orderBy, predicate);
         }
     }
 })();

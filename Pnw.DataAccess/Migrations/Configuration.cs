@@ -93,6 +93,7 @@ namespace Pnw.DataAccess.Migrations
                                {
                                    new Team
                                        {
+                                           Id = 21,
                                            Name = "Gor Mahia",
                                            Code = "GOR",
                                            HomeGround = "City Stadium",
@@ -101,6 +102,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 22,
                                            Name = "AFC Leopards",
                                            Code = "AFC",
                                            HomeGround = "Chui Stadium",
@@ -109,6 +111,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 23,
                                            Name = "Tusker",
                                            Code = "TUSK",
                                            HomeGround = "The Breweries",
@@ -117,6 +120,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 24,
                                            Name = "Sofapaka",
                                            Code = "SOFP",
                                            HomeGround = "Sofapaka Stadium",
@@ -125,6 +129,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 25,
                                            Name = "Ulinzi Stars",
                                            Code = "ULNZ",
                                            HomeGround = "Ulinzi Grounds",
@@ -137,6 +142,7 @@ namespace Pnw.DataAccess.Migrations
                                {
                                    new Team
                                        {
+                                           Id = 1,
                                            Name = "Manchester United",
                                            Code = "MANU",
                                            HomeGround = "Old Trafford",
@@ -145,6 +151,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 2,
                                            Name = "Manchester City",
                                            Code = "MANC",
                                            HomeGround = "Etihad",
@@ -154,6 +161,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 3,
                                            Name = "Chelsea",
                                            Code = "CHE",
                                            HomeGround = "Stamford Bridge",
@@ -162,6 +170,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 4,
                                            Name = "Arsenal",
                                            Code = "ARS",
                                            HomeGround = "Emirates",
@@ -170,6 +179,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 5,
                                            Name = "Tottenham Hotspur",
                                            Code = "TOTT",
                                            HomeGround = "White Hart Lane",
@@ -178,6 +188,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 6,
                                            Name = "Everton",
                                            Code = "EVE",
                                            HomeGround = "Goodison Park",
@@ -186,6 +197,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 7,
                                            Name = "Liverpool",
                                            Code = "LIV",
                                            HomeGround = "Anfield",
@@ -194,6 +206,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 8,
                                            Name = "West Bromwich Albion",
                                            Code = "WBA",
                                            HomeGround = "The Hawthorns",
@@ -202,6 +215,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 9,
                                            Name = "Swansea",
                                            Code = "SWA",
                                            HomeGround = "Liberty Stadium",
@@ -210,7 +224,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 10,
                                            Name = "West Ham United",
                                            Code = "WHU",
                                            HomeGround = "Boleyn Ground",
@@ -219,6 +233,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 11,
                                            Name = "Norwich City",
                                            Code = "NOR",
                                            HomeGround = "Carrow Road",
@@ -227,6 +242,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 12,
                                            Name = "Fulham",
                                            Code = "FUL",
                                            HomeGround = "Craven Cottage",
@@ -235,6 +251,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 13,
                                            Name = "Stoke City",
                                            Code = "STO",
                                            HomeGround = "Britannia Stadium",
@@ -243,6 +260,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
+                                           Id = 14,
                                            Name = "Southampton",
                                            Code = "SOU",
                                            HomeGround = "St. Marys",
@@ -251,7 +269,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 15,
                                            Name = "Aston Villa",
                                            Code = "AVIL",
                                            HomeGround = "Villa Park",
@@ -260,7 +278,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 16,
                                            Name = "Newcastle United",
                                            Code = "NUTD",
                                            HomeGround = "St. James' park",
@@ -269,7 +287,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 17,
                                            Name = "Sunderland",
                                            Code = "SUN",
                                            HomeGround = "Stadium Of Light",
@@ -278,7 +296,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 18,
                                            Name = "Hull City",
                                            Code = "HUC",
                                            HomeGround = "KC Stadium",
@@ -287,7 +305,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 19,
                                            Name = "Cardiff City",
                                            Code = "CAC",
                                            HomeGround = "Cardiff City Stadium",
@@ -296,7 +314,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-
+                                           Id = 20,
                                            Name = "Crystal Palace",
                                            Code = "CRP",
                                            HomeGround = "Selhurst Park",

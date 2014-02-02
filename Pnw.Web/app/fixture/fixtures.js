@@ -9,13 +9,14 @@
         var logError = getLogFn(controllerId, 'error');
         var $q = common.$q;
         var vm = this;
+        var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
         var user = bootstrappedData.user;
         vm.leagues = [];
         vm.seasons = [];
         vm.fixtures = [];
+        vm.filteredFixtures = [];
         vm.predictions = [];
-        vm.toSubmitCounter = 0;
         vm.title = 'Home';
         vm.isSubmitting = false;
         vm.goalRange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -26,17 +27,66 @@
         vm.homePredictionChanged = predictionChanged;
         vm.awayPredictionChanged = predictionChanged;
         vm.refresh = refresh;
+        vm.selectedLeague = undefined;
+        vm.selectedSeason = undefined;
+        vm.selectedMonth = undefined;
+        vm.paging = {
+            currentPage: 1,
+            maxPagesToShow: 5,
+            pageSize: 10
+        };
+        vm.pageChanged = pageChanged;
         
         activate();
 
         function activate() {
-            var promises = [getFixtures(), getPredictions()];
-            initLookups();
             onDestroy();
-            common.activateController(promises, controllerId)
+            common.activateController([init()], controllerId)
+                .then(console.log("Kagiri mambo bad!!"));
+        }
+
+        function init() {
+            initLookups();
+            getDefaults()
+                .then(getFixtures())
+                .then(getFilteredFixtures())
+                .then(getPredictions())
                 .then(addPredictionToFixture)
-                .then(calculateTotalPoints)
-                .then(console.log("hi"));
+                .then(calculateTotalPoints);
+        }
+
+        function getDefaults() {
+            vm.leagues.some(function (n) {
+                if (n.id === defaultLeague.id) {
+                    vm.selectedLeague = n;
+                    return true;
+                }
+                return false;
+            });
+            vm.seasons.some(function (n) {
+                if (n.id === defaultSeason.id) {
+                    vm.selectedSeason = n;
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        function logIt() {
+            var sd = moment.utc(defaultSeason.startDate),
+                ed = moment.utc(defaultSeason.endDate);
+
+            var from = sd.clone().startOf('month'),
+                end = ed.startOf('month').add('M', 1);
+
+            var counter = 0, months = [];
+            while (from.isBefore(end) && counter < 12) {
+                months.push(from.format('MMMM'));
+                from.add('M', 1);
+                counter += 1;
+            }
+          
+            console.log(months);
         }
 
         function refresh() {
@@ -45,6 +95,12 @@
             }
             $q.all([getFixtures(true), getPredictions(true)])
                 .then(addPredictionToFixture);
+        }
+        
+        function pageChanged(page) {
+            if (!page) { return; }
+            vm.paging.currentPage = page;
+            getFixtures();
         }
 
         function calculateTotalPoints() {
@@ -136,11 +192,19 @@
         }
         
         function getFixtures(forceRemote) {
-            return datacontext.fixture.getAll(forceRemote).then(function (data) {
-                vm.fixtures = data;
-            });
+            return datacontext.fixture.getAll(forceRemote)
+                .then(function (data) {
+                    vm.fixtures = data;
+                });
         }
 
+        function getFilteredFixtures() {
+            var currentPage = vm.paging.currentPage,
+                pageSize = vm.paging.pageSize;
+            
+            vm.filteredFixtures = vm.fixtures().slice(currentPage, currentPage + pageSize);
+        }
+        
         function getPredictions(forceRemote) {
             return datacontext.prediction.getAll(forceRemote).then(function (data) {
                 return vm.predictions = data;

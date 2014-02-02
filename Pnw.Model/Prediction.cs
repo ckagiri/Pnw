@@ -6,6 +6,7 @@ namespace Pnw.Model
     {
         public Guid Id { get; set; }
         public int UserId { get; set; }
+        public int LeagueId { get; set; }
         public int SeasonId { get; set; }
         public int FixtureId { get; set; }
         public int HomeGoals { get; set; }
