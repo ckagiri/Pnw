@@ -59,7 +59,7 @@
         function clean() {
             if (manager.hasChanges()) {
                 manager.rejectChanges();
-                logSuccess('Cleared changes', null, true);
+                //logSuccess('Cleared changes', null, false);
             }
         }
         

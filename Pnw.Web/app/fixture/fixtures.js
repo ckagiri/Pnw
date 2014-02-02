@@ -18,6 +18,7 @@
         vm.fixtures = [];
         vm.filteredFixtures = [];
         vm.predictions = [];
+        vm.months = [];
         vm.title = 'Home';
         vm.isSubmitting = false;
         vm.goalRange = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -39,10 +40,12 @@
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
-            pageIndex: 0,
-            maxPageIndex: 1,
-            months: []
+            index: 0,
+            maxIndex: 1,
+            prev: prev,
+            next: next
         };
+        vm.isBusy = false;
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
@@ -80,12 +83,38 @@
             var from = sd.clone().startOf('month'),
                 end = ed.startOf('month').add('M', 1);
 
-            var counter = 0, months = [];
+            var counter = 0;
             while (from.isBefore(end) && counter < 12) {
-                months.push(from.format('MMMM'));
+                vm.months.push(from.format('MMMM'));
                 from.add('M', 1);
                 counter += 1;
             }
+
+            vm.monthPager.index = vm.months.indexOf(vm.selectedMonth);
+            vm.monthPager.maxIndex = vm.months.length - 1;
+        }
+
+        function prev() {
+            if (vm.isBusy) return;
+            vm.isBusy = true;
+            vm.monthPager.index -= 1;
+            gotoMonthIndex();
+        }
+
+        function next() {
+            if (vm.isBusy) return;
+            vm.isBusy = true;
+            vm.monthPager.index += 1;
+            gotoMonthIndex();
+        }
+
+        function gotoMonthIndex() {
+                var i = vm.monthPager.index;
+                vm.selectedMonth = vm.months[i];
+                getFixtures()
+                    .then(calculateTotalPoints)
+                    .then(addPredictionToFixture)
+                    .then(vm.isBusy = false);
         }
 
         function getDefaults() {
@@ -197,6 +226,7 @@
                     }
                 }
             });
+            
             datacontext.clean();
         }
         

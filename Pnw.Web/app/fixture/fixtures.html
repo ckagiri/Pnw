@@ -2,12 +2,33 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <a><span><b>{{vm.selectedLeague.code}} {{vm.selectedSeason.name}}</b></span></a><p />
+                <!--<select><option>{{vm.selectedLeague.name}}</option>
+                    <option>Kenya Premier League </option>
+                    <option>Bundesliga </option>
+                    <option>World cup </option>
+                </select>-->
+                <a><span>
+                       <b>{{vm.selectedLeague.code}}&nbsp;{{vm.selectedSeason.name}}</b>
+                   </span></a><p />
                 <div class="form-search">
                     <div class="btn-group pull-left">
-                        <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
+                        <a class="btn btn-info" data-ng-show="vm.monthPager.index > 0"
+                           data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.prev()">
+                            <i class="icon-chevron-left"></i>
+                        </a>
+                        <a class="btn btn-info" data-ng-show="vm.monthPager.index <= 0"
+                           data-ng-disabled="true">
+                            <i class="icon-chevron-left"></i>
+                        </a>
                         <a class="btn btn-info"><i class="icon-calendar"></i>{{vm.selectedMonth}} ( {{vm.totalPoints}} points)</a>
-                        <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
+                        <a class="btn btn-info" data-ng-show="vm.monthPager.index < vm.monthPager.maxIndex"
+                           data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.next()">
+                            <i class="icon-chevron-right"></i>
+                        </a>
+                        <a class="btn btn-info" data-ng-show="vm.monthPager.index >= vm.monthPager.maxIndex"
+                           data-ng-disabled="true">
+                            <i class="icon-chevron-right"></i>
+                        </a>
                     </div>
                     <div class="btn-group pull-right ">
                         <a class="btn btn-info" data-ng-click="vm.refresh()">
