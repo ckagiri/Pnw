@@ -233,8 +233,8 @@
     <Content Include="app\layout\sidebar.js" />
     <Content Include="app\layout\topnav.html" />
     <Content Include="app\layout\widgetheader.html" />
-    <Content Include="app\predict\fixtures.html" />
-    <Content Include="app\predict\fixtures.js" />
+    <Content Include="app\fixture\fixtures.html" />
+    <Content Include="app\fixture\fixtures.js" />
     <Content Include="app\predict\predictions.html" />
     <Content Include="app\predict\predictions.js" />
     <Content Include="app\services\repository.prediction.js" />

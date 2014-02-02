@@ -11,6 +11,7 @@
         var vm = this;
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
+        var currentDate = bootstrappedData.currentDate;
         var user = bootstrappedData.user;
         vm.leagues = [];
         vm.seasons = [];
@@ -30,12 +31,29 @@
         vm.selectedLeague = undefined;
         vm.selectedSeason = undefined;
         vm.selectedMonth = undefined;
+        vm.totalPoints = 0;
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
             pageSize: 10
         };
         vm.pageChanged = pageChanged;
+        vm.monthPager = {
+            pageIndex: 0,
+            maxPageIndex: 1,
+            months: []
+        };
+        
+        Object.defineProperty(vm.paging, 'pageCount', {
+            get: function () {
+                var val = vm.fixtureCount / vm.paging.pageSize;
+                var pageCount = Math.floor(val);
+                if (!common.isNumber(val)) {
+                    pageCount += 1;
+                }
+                return pageCount;
+            }
+        });
         
         activate();
 
@@ -46,35 +64,18 @@
         }
 
         function init() {
-            initLookups();
-            getDefaults()
-                .then(getFixtures())
-                .then(getFilteredFixtures())
-                .then(getPredictions())
+            initLookups()
+                .then(getDefaults)
+                .then(getFixtures)
+                .then(getPredictions)
+                .then(calculateTotalPoints)
                 .then(addPredictionToFixture)
-                .then(calculateTotalPoints);
+                .then(initMonthPager);
         }
 
-        function getDefaults() {
-            vm.leagues.some(function (n) {
-                if (n.id === defaultLeague.id) {
-                    vm.selectedLeague = n;
-                    return true;
-                }
-                return false;
-            });
-            vm.seasons.some(function (n) {
-                if (n.id === defaultSeason.id) {
-                    vm.selectedSeason = n;
-                    return true;
-                }
-                return false;
-            });
-        }
-
-        function logIt() {
+        function initMonthPager() {
             var sd = moment.utc(defaultSeason.startDate),
-                ed = moment.utc(defaultSeason.endDate);
+               ed = moment.utc(defaultSeason.endDate);
 
             var from = sd.clone().startOf('month'),
                 end = ed.startOf('month').add('M', 1);
@@ -85,8 +86,24 @@
                 from.add('M', 1);
                 counter += 1;
             }
-          
-            console.log(months);
+        }
+
+        function getDefaults() {
+            vm.leagues.some(function(n) {
+                if (n.id === defaultLeague.id) {
+                    vm.selectedLeague = n;
+                    return true;
+                }
+                return false;
+            });
+            vm.seasons.some(function(n) {
+                if (n.id === defaultSeason.id) {
+                    vm.selectedSeason = n;
+                    return true;
+                }
+                return false;
+            });
+            vm.selectedMonth = moment.utc(currentDate).format('MMMM');
         }
 
         function refresh() {
@@ -105,10 +122,16 @@
 
         function calculateTotalPoints() {
             var total = 0;
-            vm.totalPoints = vm.predictions.reduce(function (sum, prediction) {
+            var xs = vm.predictions.filter(function(p) {
+                return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
+            });
+
+            var ys = xs.reduce(function (sum, prediction) {
                 sum += prediction.points;
                 return sum;
             }, total);
+
+            vm.totalPoints = ys;
         }
 
         function predictionChanged(f) {
@@ -155,7 +178,7 @@
         }
 
         function addPredictionToFixture() {
-            vm.fixtures.forEach(function (f) {
+            vm.filteredFixtures.forEach(function (f) {
                 var match = vm.predictions.filter(function (p) {
                     return p.fixtureId === f.id;
                 });
@@ -178,9 +201,11 @@
         }
         
         function initLookups() {
-            var lookups = datacontext.lookup.lookupCachedData;
-            vm.leagues = lookups.leagues;
-            vm.seasons = lookups.seasons;
+            return $q.when(function() {
+                var lookups = datacontext.lookup.lookupCachedData;
+                vm.leagues = lookups.leagues;
+                vm.seasons = lookups.seasons;
+            }());
         }
         
         function canSubmit() { return !vm.isSubmitting && vm.predictionsToSubmit.length; };
@@ -192,17 +217,23 @@
         }
         
         function getFixtures(forceRemote) {
-            return datacontext.fixture.getAll(forceRemote)
+            return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id)
                 .then(function (data) {
-                    vm.fixtures = data;
+                    vm.fixtures = data.filter(function (f) {
+                        return moment(f.kickOff).format('MMMM') === vm.selectedMonth;
+                    });
+                    vm.fixtureCount = vm.fixtures.length;
+                    getFilteredFixtures();
                 });
         }
 
         function getFilteredFixtures() {
-            var currentPage = vm.paging.currentPage,
+            var xs = vm.fixtures;
+            var currentPage = vm.paging.currentPage - 1,
                 pageSize = vm.paging.pageSize;
             
-            vm.filteredFixtures = vm.fixtures().slice(currentPage, currentPage + pageSize);
+            vm.filteredFixtures = xs.slice(currentPage, currentPage + pageSize);
+            vm.fixtureFilteredCount = vm.filteredFixtures.length;
         }
         
         function getPredictions(forceRemote) {

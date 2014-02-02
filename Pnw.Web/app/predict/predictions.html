@@ -19,7 +19,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget wviolet">
-                        <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.predictions.length}}" right-text="Page 1 of 1"></div>
+                        <div data-cc-widget-header title="{{vm.title}}" right-text="Page 1 of 1"></div>
                         <div class="widget-content user">
                             <label>
                                 &sum;Points: {{vm.summary.points}}&nbsp;-
@@ -31,6 +31,7 @@
                                 &sum;SpreadDifference: {{vm.summary.spreadDifference}}&nbsp;&nbsp;
                                 &sum;AccuracyDifference: {{vm.summary.accuracyDifference}}
                             </label>
+                             <label>#Predictions: {{vm.predictions.length}}</label>
                             <br/>
                             <div data-ng-repeat="p in vm.predictions">
                                 <h6>KickOff: {{p.fixture.kickOffFormatted}}</h6>

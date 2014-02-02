@@ -2,11 +2,11 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <a><span><b>EPL 2013-2014</b></span></a><p />
+                <a><span><b>{{vm.selectedLeague.code}} {{vm.selectedSeason.name}}</b></span></a><p />
                 <div class="form-search">
                     <div class="btn-group pull-left">
                         <a class="btn btn-info"><i class="icon-chevron-left"></i></a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>January ( {{vm.totalPoints}} points)</a>
+                        <a class="btn btn-info"><i class="icon-calendar"></i>{{vm.selectedMonth}} ( {{vm.totalPoints}} points)</a>
                         <a class="btn btn-info"><i class="icon-chevron-right"></i></a>
                     </div>
                     <div class="btn-group pull-right ">
@@ -25,9 +25,9 @@
                 </div>
             </div>
             <div class="row-fluid">
-                <div class="span12">
                     <div class="widget wviolet">
-                        <div data-cc-widget-header title="Fixtures" subtitle="{{vm.fixtures.length}}" right-text="Page 1 of 1"></div>
+                        <div data-cc-widget-header title="Fixtures"
+                            right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}"></div>
                         <div class="widget-content text-center text-info">
                             <table class="table table-condensed table-striped">
                                 <thead>
@@ -43,21 +43,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-ng-repeat="f in vm.fixtures">
+                                    <tr data-ng-repeat="f in vm.filteredFixtures">
                                         <td>{{f.kickOffFormatted}}</td>
                                         <td><img data-cc-img-person="{{f.homeTeam.imageSource}}" 
-                                            class="thumbnail img-polaroid user-pic hidden-phone"/></td>
+                                                 class="thumbnail img-polaroid user-pic hidden-phone"/></td>
                                         <td>{{f.homeTeam.name}}</td>
                                         <td><img data-cc-img-person="{{f.awayTeam.imageSource}}" 
                                                  class="thumbnail img-polaroid user-pic hidden-phone"/></td>
                                         <td>{{f.awayTeam.name}}</td>
                                         <td class="text-center">
                                             <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.homeGoals" data-ng-options="goals for goals in vm.goalRange"
-                                                data-ng-change="vm.homePredictionChanged(f)" class="input-mini">
+                                                    data-ng-change="vm.homePredictionChanged(f)" class="input-mini">
                                                 <option value="">-</option>
                                             </select>&nbsp;
                                             <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.awayGoals" data-ng-options="goals for goals in vm.goalRange"
-                                                data-ng-change="vm.awayPredictionChanged(f)" class="input-mini">
+                                                    data-ng-change="vm.awayPredictionChanged(f)" class="input-mini">
                                                 <option value="">-</option>
                                             </select>
                                         </td>
@@ -68,9 +68,23 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="widget-foot">
+                        <div class="clearfix"></div>
+                        <pagination boundary-links="true"
+                            on-select-page="vm.pageChanged(page)"
+                            total-items="vm.fixtureCount"
+                            items-per-page="vm.paging.pageSize"
+                            page="vm.paging.currentPage"
+                            max-size="vm.paging.maxPagesToShow"
+                            class="pagination-small"
+                            previous-text="Prev"
+                            next-text="Next"
+                            first-text="First"
+                            last-text="Last"></pagination>      
+                            <div class="clearfix"></div>
+                    </div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 </section>

@@ -34,17 +34,19 @@
             return this._getById(entityName, id, forceRemote);
         }
 
-        function getAll(forceRemote) {
+        function getAll(forceRemote, seasonId) {
             var self = this;
             var fixtures = [];
+            var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
-                fixtures = self._getAllLocal(entityName, orderBy);
+                fixtures = self._getAllLocal(entityName, orderBy, predicate);
                 return self.$q.when(fixtures);
             }
 
             return EntityQuery.from('Fixtures')
-                .select('id, seasonId, kickOff, homeTeamId, awayTeamId, homeTeamImageSource, awayTeamImageSource, homeScore, awayScore, canPredict, matchStatus, venue')
+                //.select('id, seasonId, kickOff, homeTeamId, awayTeamId, homeTeamImageSource, awayTeamImageSource, homeScore, awayScore, canPredict, matchStatus, venue')
+                .where(predicate)
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()

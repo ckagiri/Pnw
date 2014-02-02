@@ -64,7 +64,7 @@
         }
 
         function getFixtures(forceRemote) {
-            return datacontext.fixture.getAll(forceRemote).then(function (data) {
+            return datacontext.fixture.getAll(forceRemote, 1).then(function (data) {
                 vm.fixtures = data;
             });
         }
