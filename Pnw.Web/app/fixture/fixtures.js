@@ -95,17 +95,19 @@
         }
 
         function prev() {
-            if (vm.isBusy) return;
-            vm.isBusy = true;
-            vm.monthPager.index -= 1;
-            gotoMonthIndex();
+            if (!vm.isBusy) {
+                vm.isBusy = true;
+                vm.monthPager.index -= 1;
+                gotoMonthIndex();
+            }
         }
 
         function next() {
-            if (vm.isBusy) return;
-            vm.isBusy = true;
-            vm.monthPager.index += 1;
-            gotoMonthIndex();
+            if (!vm.isBusy) {
+                vm.isBusy = true;
+                vm.monthPager.index += 1;
+                gotoMonthIndex();
+            }
         }
 
         function gotoMonthIndex() {
@@ -166,14 +168,8 @@
         function predictionChanged(f) {
             var homePrediction = f.prediction.homeGoals;
             var awayPrediction = f.prediction.awayGoals;
-            var existing = null;
             var match = null;
             var validPrediction = common.isNumber(homePrediction) && common.isNumber(awayPrediction);
-            if (user.isAuthenticated) {
-                datacontext.prediction.getByUserAndFixtureId(user.id, f.id).then(function(data) {
-                    existing = data;
-                });
-            }
             vm.predictions.some(function (p) {
                 if (p.fixtureId === f.id) {
                     match = p;
@@ -182,8 +178,28 @@
                 return false;
             });
             if (validPrediction && match) {
-                match.homeGoals = f.prediction.homeGoals;
-                match.awayGoals = f.prediction.awayGoals;
+                // a hack to force evaluation
+                match.homeGoals = f.prediction.homeGoals + 1;
+                match.homeGoals -= 1;
+                match.awayGoals = f.prediction.awayGoals + 1; 
+                match.awayGoals -= 1;
+                
+                var origHomeGoals = match.entityAspect.originalValues.homeGoals,
+                    origAwayGoals = match.entityAspect.originalValues.awayGoals,
+                    setToUnchanged = false;
+                
+                if (origHomeGoals === f.prediction.homeGoals &&
+                    origAwayGoals === f.prediction.awayGoals) {
+                    setToUnchanged = true;
+                }
+                
+                if (setToUnchanged) {
+                    match.entityAspect.entityState = breeze.EntityState.Unchanged;
+                } else {
+                    if (!match.entityAspect.entityState.isAdded()) {
+                        match.entityAspect.entityState = breeze.EntityState.Modified;
+                    }
+                }
             }
             if (validPrediction && !match) {
                 var newOne = datacontext.prediction.create(user.id, f);
@@ -212,23 +228,20 @@
                 var match = vm.predictions.filter(function (p) {
                     return p.fixtureId === f.id;
                 });
-                var prediction = (match && match[0]) || { };
-                f.prediction = prediction;
-                f.prediction.homeGoals = prediction.homeGoals || null;
-                f.prediction.awayGoals = prediction.awayGoals || null;
-                f.prediction.points = prediction.points || null;
-                if(!!prediction.isProcessed) {
-                    f.prediction.isProcessed = true;
+                var prediction = match && match[0];
+                f.prediction = {};
+                if (prediction) {
+                    f.prediction.homeGoals = prediction.homeGoals == 0 ? 0 : prediction.homeGoals;
+                    f.prediction.awayGoals = prediction.awayGoals == 0 ? 0 : prediction.awayGoals;
+                    f.prediction.points = prediction.points === 0 ? 0 : prediction.points;
+                    f.prediction.isProcessed = prediction.isProcessed;
                 } else {
-                    if (f.prediction.isProcessed === false) {
-                        f.prediction.isProcessed = false;
-                    } else {
-                        f.prediction.isProcessed = null;
-                    }
+                    f.prediction.homeGoals = null;
+                    f.prediction.awayGoals = null;
+                    f.prediction.points = null;
+                    f.prediction.isProcessed = null;
                 }
             });
-            
-            datacontext.clean();
         }
         
         function initLookups() {
