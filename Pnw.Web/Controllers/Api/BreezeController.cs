@@ -75,7 +75,14 @@ namespace Pnw.Web.Controllers.Api
             return new { leagues, seasons };
         }
 
-        // Diagnostic
+        [HttpGet]
+        public IQueryable<object> Leaderboard(int leagueId, int seasonId)
+        {
+            var lb = _repository.Leaderboard(leagueId, seasonId, null, null);
+            return lb;
+        }
+
+            // Diagnostic
         [HttpGet]
         public string Ping()
         {

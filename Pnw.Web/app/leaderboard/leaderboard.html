@@ -2,10 +2,19 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <select><option>-- League/Tournament --</option></select><br/>
-                <select data-ng-disabled="true" class="input-medium"></select><br/>
-                <div data-ng-show="false">
-                    <select class="input-medium" data-ng-disabled="true"></select><br/>
+                <select data-ng-model="vm.selectedLeague" data-ng-options="l as l.name for l in vm.leagues"
+                            data-ng-change="vm.getSeasons()">
+                        <option value="">-- League/Tournament --</option>
+                    </select><br/>
+                <select data-ng-model="vm.selectedSeason"  data-ng-disabled=!vm.selectedSeason
+                    data-ng-options="s as s.name for s in vm.selectedLeague.seasons"
+                            data-ng-change="vm.getLeaderboard()"
+                            class="input-medium">
+                    </select><br/>      
+                <div data-ng-show="false" >
+                    <select class="input-medium" data-ng-disabled="true">
+                        <option value="">-- Select Month --</option>
+                    </select><br/>
                 </div>
                 <a class="btn btn-info" data-ng-click="vm.refresh()">
                     <i class="icon-refresh"></i>
@@ -22,18 +31,22 @@
                                 <tr>
                                     <th>UserName</th>
                                     <th>Points</th>
-                                    <th>Csp</th>
-                                    <th>Crp</th>
-                                    <th>Cpp</th>
-                                    <th>Sd</th>
-                                    <th>Ad</th>
+                                    <th>CorrectScorePoints</th>
+                                    <th>CorrectResultPoints</th>
+                                    <th>CrossProductPoints</th>
+                                    <th>SpreadDifference</th>
+                                    <th>AccuracyDifference</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="l in vm.leagues" data-ng-click="vm.gotoLeague(l)"
-                                    title="Go to league details">
-                                    <td>{{l.code}}</td>
-                                    <td>{{l.name}}</td>
+                                <tr data-ng-repeat="lb in vm.leaderboard" title="Go to user-prediction details">
+                                    <td>{{lb.userName}}</td>
+                                    <td>{{lb.points}}</td>
+                                    <td>{{lb.correctScorePoints}}</td>
+                                    <td>{{lb.correctResultPoints}}</td>
+                                    <td>{{lb.crossProductPoints}}</td>
+                                    <td>{{lb.spreadDifference}}</td>
+                                    <td>{{lb.accuracyDifference}}</td>
                                 </tr>
                             </tbody>
                         </table>

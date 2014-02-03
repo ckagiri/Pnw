@@ -200,9 +200,10 @@
         }
         
         function cancel() {
+            datacontext.clean();
             if (vm.predictionsToSubmit.length) {
                 vm.predictionsToSubmit = [];
-                activate();
+                getPredictions().then(addPredictionToFixture);
             }
         }
 
@@ -267,9 +268,13 @@
         }
         
         function getPredictions(forceRemote) {
-            return datacontext.prediction.getAll(forceRemote).then(function (data) {
-                return vm.predictions = data;
-            });
+            if (user.isAuthenticated) {
+                return datacontext.prediction.getAll(forceRemote, user.id).then(function(data) {
+                    return vm.predictions = data;
+                });
+            } else {
+                return $q.when([]);
+            }
         }
         
         function submit() {

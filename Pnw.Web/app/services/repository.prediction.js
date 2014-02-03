@@ -67,18 +67,20 @@
                 return self.$q.when(false);
         }
 
-        function getAll(forceRemote) {
+        function getAll(forceRemote, userId) {
             var self = this;
             var orderBy = 'fixtureDate, points';
             var predictions = [];
+            var predicate = breeze.Predicate.create('userId', '==', userId);
 
             if (self.zStorage.areItemsLoaded('predictions') && !forceRemote) {
-                predictions = self._getAllLocal(entityName, orderBy);
+                predictions = self._getAllLocal(entityName, orderBy, predicate);
                 return self.$q.when(predictions);
             }
 
             return EntityQuery.from('Predictions')
                 //.select('id, userId, seasonId, fixtureId, homeGoals, awayGoals, points, fixtureDate, isProcessed')
+                .where(predicate)
                 .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()

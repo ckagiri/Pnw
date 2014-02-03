@@ -17,7 +17,7 @@
         var manager = emFactory.newManager();
         var primePromise;
         var $q = common.$q;
-        var repoNames = ['fixture', 'lookup', 'team', 'result', 'prediction'];
+        var repoNames = ['fixture', 'lookup', 'team', 'result', 'prediction', 'leaderboard'];
         
         var service = {
             clean: clean,
@@ -138,6 +138,8 @@
                 ['Result', 'Results', 'Fixtures'].forEach(function (r) {
                     set(r, fixtureEntityName);
                 });
+                
+                //set('Leaderboard', 'Leaderboard');
 
                 function set(resourceName, entityName) {
                     metadataStore.setEntityTypeForResourceName(resourceName, entityName);

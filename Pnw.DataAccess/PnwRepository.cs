@@ -65,5 +65,26 @@ namespace Pnw.DataAccess
         {
             get { return Context.Fixtures; }
         }
+
+        public IQueryable<object> Leaderboard(int leagueId, int? seasonId, int? year, int? monthId)
+        {
+            var query = (from p in Context.Predictions
+                         group p by p.UserId into g
+                         let @group = g.FirstOrDefault()
+                         where @group != null
+                         join u in Context.Users on @group.UserId equals  u.Id
+                         select new
+                                    {
+                                        UserName = u.Username,
+                                        UserId = @group.UserId,
+                                        Points = g.Sum(p => p.Points),
+                                        CorrectScorePoints = g.Sum(p => p.CorrectScorePoints),
+                                        CorrectResultPoints = g.Sum(p => p.CorrectResultPoints),
+                                        CrossProductPoints = g.Sum(p => p.CrossProductPoints),
+                                        SpreadDifference = g.Sum(p => p.SpreadDifference),
+                                        AccuracyDifference = g.Sum(p => p.AccuracyDifference)
+                                    });
+            return query;
+        }
     }
 }

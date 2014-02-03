@@ -16,7 +16,8 @@
             league: 'League',
             season: 'Season',
             team: 'Team',
-            prediction: 'Prediction'
+            prediction: 'Prediction',
+            leaderboard: 'Leaderboard'
         };
 
         var service = {
@@ -39,8 +40,8 @@
         function createNullos(manager) {
             var unchanged = breeze.EntityState.Unchanged;
 
-            createNullo(entityNames.league);
-            createNullo(entityNames.season);
+            //createNullo(entityNames.league);
+            //createNullo(entityNames.season);
 
             function createNullo(entityName, values) {
                 var initialValues = values || { name: ' [Select a ' + entityName.toLowerCase() + ']' };
