@@ -7,6 +7,7 @@ namespace Pnw.Model
     {
         public int Id { get; set; }
         public int SeasonId { get; set; }
+        public int LeagueId { get; set; }
         [DifferentFrom("AwayTeamId")]
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
@@ -23,6 +24,7 @@ namespace Pnw.Model
         public string AwayTeamImageSource { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
+        public League League { get; set; }
         public Season Season { get; set; }
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }

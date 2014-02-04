@@ -25,6 +25,11 @@ namespace Pnw.DataAccess
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
 
+            modelBuilder.Entity<Season>()
+                .HasRequired(s => s.League)
+                .WithMany(l => l.Seasons)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Fixture>()
                 .HasRequired(f => f.HomeTeam)
                 .WithMany()

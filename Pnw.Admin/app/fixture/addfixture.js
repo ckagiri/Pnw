@@ -97,6 +97,7 @@
 
             vm.isSaving = true;
             vm.fixture.seasonId = vm.season.id;
+            vm.fixture.leagueId = vm.season.leagueId;
             vm.fixture.kickOff = vm.kickOff;
             
             return datacontext.save().then(function (saveResult) {

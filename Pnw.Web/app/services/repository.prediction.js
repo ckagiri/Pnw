@@ -36,6 +36,7 @@
                 fixtureId: fixture.id,
                 fixtureDate: fixture.kickOff,
                 seasonId: fixture.seasonId,
+                leagueId: fixture.leagueId,
                 homeGoals: fixture.prediction.homeGoals,
                 awayGoals: fixture.prediction.awayGoals,
             };

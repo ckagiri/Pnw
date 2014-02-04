@@ -351,7 +351,7 @@ namespace Pnw.DataAccess.Migrations
         private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
             var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
-
+            var eplLeague = leagues.First(l => l.Code == "EPL");
             var manunited = teams.First(t => t.Code == "MANU");
             var mancity = teams.First(t => t.Code == "MANC");
             var arsenal = teams.First(t => t.Code == "ARS");
@@ -373,6 +373,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = manunited.Id,
                                               AwayTeamId = chelsea.Id,
                                               Venue = manunited.HomeGround,
@@ -387,6 +388,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = mancity.Id,
                                               AwayTeamId = arsenal.Id,
                                               Venue = mancity.HomeGround,
@@ -401,6 +403,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = everton.Id,
                                               AwayTeamId = liverpool.Id,
                                               Venue = everton.HomeGround,
@@ -411,8 +414,8 @@ namespace Pnw.DataAccess.Migrations
                                           },
                                       new Fixture
                                           {
-
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = spurs.Id,
                                               AwayTeamId = newcastle.Id,
                                               Venue = spurs.HomeGround,
@@ -424,6 +427,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = chelsea.Id,
                                               AwayTeamId = spurs.Id,
                                               Venue = chelsea.HomeGround,
@@ -435,6 +439,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = arsenal.Id,
                                               AwayTeamId = manunited.Id,
                                               Venue = arsenal.HomeGround,
@@ -446,6 +451,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = liverpool.Id,
                                               AwayTeamId = mancity.Id,
                                               Venue = liverpool.HomeGround,
@@ -457,6 +463,7 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
+                                              League = eplLeague,
                                               HomeTeamId = newcastle.Id,
                                               AwayTeamId = everton.Id,
                                               Venue = newcastle.HomeGround,
