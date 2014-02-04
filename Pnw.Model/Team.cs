@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,5 +21,11 @@ namespace Pnw.Model
         public ICollection<Fixture> Fixtures { get; set; }
         public ICollection<Participation> ParticipationList { get; set; }
         public string ImageSource { get; set; }
+        public ClubOrCountry Type { get; set; }
+    }
+
+    public enum ClubOrCountry
+    {
+        Club, Country
     }
 }

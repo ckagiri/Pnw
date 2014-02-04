@@ -16,7 +16,6 @@
         vm.selectedLeague = null;
         vm.selectedSeason = null;
         vm.seasonteams = [];
-        vm.selectedTeams = [];
         vm.addSeasonTeams = addSeasonTeams;
         vm.teams = [];
         vm.teamFilteredCount = [];
@@ -30,6 +29,11 @@
             pageSize: 10
         };
         vm.pageChanged = pageChanged;
+        vm.allSelected = false;
+        vm.selectedTeams = selectedTeams;
+        vm.toggleAllSelected = toggleAllSelected;
+        vm.selectAll = selectAll;
+        vm.deselectAll = deselectAll;
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
@@ -91,11 +95,13 @@
                         getTeamCount();
                     }
                     getTeamFilteredCount();
-                    return data;
+                    data.forEach(function(n) {
+                        angular.extend(n, { selected: false });
+                    });
                 }
             );
         }
-        
+       
         function pageChanged(page) {
             if (!page) { return; }
             vm.paging.currentPage = page;
@@ -131,6 +137,24 @@
                 vm.teamSearch = '';
             }
             getTeams();
+        }
+        
+        function selectedTeams() {
+            vm.teams.filter(function (n) {
+                return n.selected === true;
+            });
+        }
+
+        function toggleAllSelected() {
+            vm.teams.forEach(function (n) {
+                n.selected = vm.allSelected;
+            });
+        }
+
+        function deselectAll() {
+            vm.teams.forEach(function (n) {
+                n.selected = false;
+            });
         }
     }
 })();

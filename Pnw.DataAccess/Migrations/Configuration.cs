@@ -373,8 +373,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = manunited,
-                                              AwayTeam = chelsea,
+                                              HomeTeamId = manunited.Id,
+                                              AwayTeamId = chelsea.Id,
                                               Venue = manunited.HomeGround,
                                               KickOff = day1,
                                               HomeScore = 2,
@@ -387,8 +387,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = mancity,
-                                              AwayTeam = arsenal,
+                                              HomeTeamId = mancity.Id,
+                                              AwayTeamId = arsenal.Id,
                                               Venue = mancity.HomeGround,
                                               KickOff = day2,
                                               HomeScore = 2,
@@ -401,8 +401,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = everton,
-                                              AwayTeam = liverpool,
+                                              HomeTeamId = everton.Id,
+                                              AwayTeamId = liverpool.Id,
                                               Venue = everton.HomeGround,
                                               KickOff = day3,
                                               HomeTeamImageSource = "everton1.png",
@@ -413,8 +413,8 @@ namespace Pnw.DataAccess.Migrations
                                           {
 
                                               Season = eplSeason,
-                                              HomeTeam = spurs,
-                                              AwayTeam = newcastle,
+                                              HomeTeamId = spurs.Id,
+                                              AwayTeamId = newcastle.Id,
                                               Venue = spurs.HomeGround,
                                               KickOff = day4,
                                               HomeTeamImageSource = "tottenham1.png",
@@ -424,8 +424,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = chelsea,
-                                              AwayTeam = spurs,
+                                              HomeTeamId = chelsea.Id,
+                                              AwayTeamId = spurs.Id,
                                               Venue = chelsea.HomeGround,
                                               KickOff = day5,
                                               HomeTeamImageSource = "chelsea1.png",
@@ -435,8 +435,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = arsenal,
-                                              AwayTeam = manunited,
+                                              HomeTeamId = arsenal.Id,
+                                              AwayTeamId = manunited.Id,
                                               Venue = arsenal.HomeGround,
                                               KickOff = day6.AddHours(3),
                                               HomeTeamImageSource = "arsenal1.png",
@@ -446,8 +446,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = liverpool,
-                                              AwayTeam = mancity,
+                                              HomeTeamId = liverpool.Id,
+                                              AwayTeamId = mancity.Id,
                                               Venue = liverpool.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "liverpool1.png",
@@ -457,8 +457,8 @@ namespace Pnw.DataAccess.Migrations
                                       new Fixture
                                           {
                                               Season = eplSeason,
-                                              HomeTeam = newcastle,
-                                              AwayTeam = everton,
+                                              HomeTeamId = newcastle.Id,
+                                              AwayTeamId = everton.Id,
                                               Venue = newcastle.HomeGround,
                                               KickOff = day6.AddHours(6),
                                               HomeTeamImageSource = "newcastle1.png",
