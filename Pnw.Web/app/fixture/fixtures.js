@@ -142,6 +142,7 @@
                 vm.predictionsToSubmit = [];
             }
             $q.all([getFixtures(true), getPredictions(true)])
+                .then(calculateTotalPoints)
                 .then(addPredictionToFixture);
         }
         
@@ -152,17 +153,14 @@
         }
 
         function calculateTotalPoints() {
-            var total = 0;
-            var xs = vm.predictions.filter(function(p) {
+            var total = vm.predictions.filter(function (p) {
                 return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
-            });
-
-            var ys = xs.reduce(function (sum, prediction) {
+            }).reduce(function (sum, prediction) {
                 sum += prediction.points;
                 return sum;
-            }, total);
+            }, 0);
 
-            vm.totalPoints = ys;
+            vm.totalPoints = total;
         }
 
         function predictionChanged(f) {
@@ -206,6 +204,11 @@
                 vm.predictions.push(newOne);
             }
             if (!validPrediction && match) {
+                if (match.entityAspect.entityState.isAdded()) {
+                    match.entityAspect.setDeleted();
+                } else {
+                    match.entityAspect.setUnchanged();
+                }
                 var index = vm.predictions.indexOf(match);
                 vm.predictions.splice(index, 1);
             }
@@ -235,7 +238,8 @@
                     f.prediction.awayGoals = prediction.awayGoals == 0 ? 0 : prediction.awayGoals;
                     f.prediction.points = prediction.points === 0 ? 0 : prediction.points;
                     f.prediction.isProcessed = prediction.isProcessed;
-                } else {
+                }
+                else {
                     f.prediction.homeGoals = null;
                     f.prediction.awayGoals = null;
                     f.prediction.points = null;
@@ -299,12 +303,11 @@
 
             vm.isSubmitting = true;
             return datacontext.save().then(function (saveResult) {
-                getPredictions().then(function () {
+                getPredictions().then(function() {
                     addPredictionToFixture();
                     vm.predictionsToSubmit = [];
                     vm.isSubmitting = false;
                 });
-                
             }, function (error) {
                 getPredictions().then(function () {
                     addPredictionToFixture();
