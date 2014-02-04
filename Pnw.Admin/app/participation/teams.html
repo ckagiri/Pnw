@@ -16,8 +16,8 @@
                         <a class="btn btn-info" data-ng-click="vm.refresh()">
                             <i class="icon-refresh"></i><span>Refresh</span></a>
                         <a class="btn btn-info"
-                           data-ng-disabled ="!vm.selectedSeason" data-ng-click="vm.gotoFixture()">
-                            <i class="icon-plus"></i><span>Add Season-Team</span>
+                           data-ng-disabled ="!vm.selectedSeason" data-ng-click="vm.addSeasonTeams()">
+                            <i class="icon-plus"></i><span>Add Season-Teams</span>
                         </a>
                     </div>
                 </div>
@@ -50,6 +50,12 @@
                     </div>
                 </div>
             </div>
+            <a class="btn btn-info" data-ng-click="vm.cancel()">
+                <i class="icon-undo"></i><span>Cancel</span>
+            </a>
+            <a class="btn btn-info" data-ng-click="vm.save()">
+                <i class="icon-save"></i><span>Save</span>
+            </a>
         </div>
     </section>
 </section>

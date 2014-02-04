@@ -225,8 +225,10 @@
     <Content Include="app\config.exceptionHandler.js" />
     <Content Include="app\config.js" />
     <Content Include="app\config.route.js" />
-    <Content Include="app\participation\seasonteams.html" />
-    <Content Include="app\participation\seasonteams.js" />
+    <Content Include="app\participation\addteams.html" />
+    <Content Include="app\participation\addteams.js" />
+    <Content Include="app\participation\teams.html" />
+    <Content Include="app\participation\teams.js" />
     <Content Include="app\dashboard\dashboard.html" />
     <Content Include="app\dashboard\dashboard.js" />
     <Content Include="app\fixture\addfixture.html" />

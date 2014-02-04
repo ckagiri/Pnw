@@ -134,9 +134,18 @@
                 url: '/seasonteams',
                 config: {
                     title: 'seasonteams',
-                    templateUrl: 'app/participation/seasonteams.html',
+                    templateUrl: 'app/participation/teams.html',
                     settings: {
                         nav: 7,
+                        content: '<i class="icon-list"></i> Season-Teams'
+                    }
+                }
+            }, {
+                url: '/seasonteams/add/:seasonId',
+                config: {
+                    title: 'addteams',
+                    templateUrl: 'app/participation/addteams.html',
+                    settings: {
                         content: '<i class="icon-list"></i> Season-Teams'
                     }
                 }

@@ -1,0 +1,67 @@
+﻿<section id="seasonteams-view" class="mainbar" data-ng-controller="addteams as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="form-search">
+                    <label>{{vm.selectedLeague.code}} {{vm.selectedSeason.name}} <b>({{vm.seasonteams.length}})</b></label>       
+                    <div>
+                        <button class="btn btn-info"
+                                data-ng-click="vm.goBack()">
+                            <i class="icon-hand-left"></i>Back
+                        </button>
+                        <button class="btn btn-info"
+                                data-ng-click="vm.cancel()"
+                                data-ng-disabled="!vm.canSave">
+                            <i class="icon-undo"></i>Cancel
+                        </button>
+                        <button class="btn btn-info" 
+                                data-ng-click="vm.addTeams()">
+                            <i class="icon-plus"></i>Add Teams ({{vm.selectedTeams.length}})
+                        </button> 
+                                            <input class="input-xlarge search-query pull-right"
+                        data-ng-model="vm.teamSearch"
+                        data-ng-keyup="vm.search($event)"
+                        placeholder="search team by name, code or tags" />        
+
+                    </div>  
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="{{vm.title}}" subtitle="{{vm.teamFilteredCount}} / {{vm.teamCount}}" right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}">
+                    </div>
+                    <div class="widget-content text-center text-info">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"/>&nbsp;Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="s in vm.teams" 
+                                    title="Go to season details">
+                                    <td><input type="checkbox"/>&nbsp;{{s.name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                        <pagination boundary-links="true"
+                            on-select-page="vm.pageChanged(page)"
+                            total-items="vm.teamFilteredCount"
+                            items-per-page="vm.paging.pageSize"
+                            page="vm.paging.currentPage"
+                            max-size="vm.paging.maxPagesToShow"
+                            class="pagination-small"
+                            previous-text="Prev"
+                            next-text="Next"
+                            first-text="First"
+                            last-text="Last"></pagination>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

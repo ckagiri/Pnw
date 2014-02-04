@@ -114,7 +114,8 @@
         }
 
         function _namePredicate(filterValue) {
-            return Predicate.create('name', 'contains', filterValue);
+            return Predicate.create('name', 'contains', filterValue)
+                .or('code', 'contains', filterValue).or('tags', 'contains', filterValue);
         }
     }
 })();

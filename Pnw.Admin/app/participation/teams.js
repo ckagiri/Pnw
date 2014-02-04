@@ -77,9 +77,8 @@
         }
 
         function addSeasonTeams(seasonteam) {
-            if (seasonteam && seasonteam.id) {
-                $location.path('/seasonteam/edit/' + seasonteam.id);
-            }
+            var seasonId = vm.selectedSeason.id;
+            $location.path('/seasonteams/add/' + seasonId);
         }
     }
 })();
