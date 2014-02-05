@@ -16,7 +16,7 @@
                         </button>
                         <button class="btn btn-info" 
                                 data-ng-click="vm.addTeams()">
-                            <i class="icon-plus"></i>Add Teams ({{vm.selectedTeams.length}})
+                            <i class="icon-plus"></i>Add Teams ({{vm.getSelectedTeams().length}})
                         </button> 
                                             <input class="input-xlarge search-query pull-right"
                         data-ng-model="vm.teamSearch"
@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="t in vm.teams">
-                                    <td><input type="checkbox" data-ng-model="t.selected" data-ng-change="vm.toggleSelected(t)"/>&nbsp;{{t.name}}</td>
+                                    <td><input type="checkbox" data-ng-disabled ="!t.canPick" data-ng-model="t.selected" data-ng-change="vm.toggleSelected(t)"/>&nbsp;{{t.name}}</td>
                                 </tr>
                             </tbody>
                         </table>

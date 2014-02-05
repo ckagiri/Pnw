@@ -9,6 +9,7 @@
         var defaultSeason = bootstrappedData.defaultSeason;
         var keyCodes = config.keyCodes;
         var vm = this;
+        var setupDone = false;
         
         vm.title = 'Teams';
         vm.leagues = [];
@@ -54,7 +55,8 @@
             return loadLeagues()
                 .then(loadSeasons)
                 .then(getTeams)
-                .then(getSeasonTeams);
+                .then(getSeasonTeams)
+                .then(setup);
         }
         
         function loadLeagues() {
@@ -98,8 +100,8 @@
                     }
                     getTeamFilteredCount();
                     data.forEach(function(n) {
-                        var found =false;
-                        if(!found) {
+                        var found = false;
+                        if (!found) {
                             var match;
                             vm.selectedTeams.some(function(t) {
                                 if (t.id === n.id) {
@@ -111,16 +113,40 @@
                             found = !!match;
                         }
                         if (!found) {
-                             n.selected = false;
-                        } 
-                        else {
+                            n.selected = false;
+                        } else {
                             n.selected = true;
                         }
+                        
+                        if (isSeasonTeam(n)) {
+                            n.canPick = false;
+                        } else {
+                            n.canPick = true;
+                        }
                     });
-                }
-            );
+                });
         }
-       
+
+        function setup() {
+            vm.seasonteams.forEach(function (n) {
+                n.canPick = false;
+                n.selected = true;
+                vm.selectedTeams.push(n);
+            });
+        }
+
+        function isSeasonTeam(n) {
+            var match;
+            vm.seasonteams.some(function (t) {
+                if (t.id === n.id) {
+                    match = t;
+                    return true;
+                }
+                return false;
+            });
+            return !!match;
+        }
+      
         function pageChanged(page) {
             if (!page) { return; }
             vm.allSelected = false;
@@ -158,16 +184,21 @@
         }
         
         function getSelectedTeams() {
-            return vm.selectedTeams;
+            var xs = vm.selectedTeams.filter(function (x) {
+                return x.canPick;
+            });
+            return xs;
         }
 
         function toggleAllSelected() {
             
             var reqTeams = vm.teams.filter(function (t) {
-                return !t.selected === vm.allSelected;
+                return !(t.selected === vm.allSelected) && t.canPick;
             });
             
-            vm.teams.forEach(function (n) {
+            vm.teams.filter(function (t) {
+                return t.canPick;
+            }).forEach(function (n) {
                 n.selected = vm.allSelected;
             });
 
