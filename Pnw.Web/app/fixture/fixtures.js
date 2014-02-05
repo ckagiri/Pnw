@@ -207,10 +207,8 @@
                 if (match.entityAspect.entityState.isAdded()) {
                     match.entityAspect.setDeleted();
                 } else {
-                    match.entityAspect.setUnchanged();
+                    match.entityAspect.entityState = breeze.EntityState.Unchanged;
                 }
-                var index = vm.predictions.indexOf(match);
-                vm.predictions.splice(index, 1);
             }
             vm.predictionsToSubmit = vm.predictions.filter(function(p) {
                 return p.entityAspect.entityState.isAdded() || p.entityAspect.entityState.isModified();
