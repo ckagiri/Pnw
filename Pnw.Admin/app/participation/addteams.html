@@ -16,7 +16,7 @@
                         </button>
                         <button class="btn btn-info" 
                                 data-ng-click="vm.addTeams()">
-                            <i class="icon-plus"></i>Add Teams ({{vm.selectedTeams().length}})
+                            <i class="icon-plus"></i>Add Teams ({{vm.selectedTeams.length}})
                         </button> 
                                             <input class="input-xlarge search-query pull-right"
                         data-ng-model="vm.teamSearch"
@@ -34,12 +34,13 @@
                         <table class="table table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox"/>&nbsp;Name</th>
+                                    <th><input type="checkbox" 
+                                        data-ng-model="vm.allSelected" data-ng-change="vm.toggleAllSelected()"/>&nbsp;Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="t in vm.teams">
-                                    <td><input type="checkbox" data-ng-model="t.selected"/>&nbsp;{{t.name}}</td>
+                                    <td><input type="checkbox" data-ng-model="t.selected" data-ng-change="vm.toggleSelected(t)"/>&nbsp;{{t.name}}</td>
                                 </tr>
                             </tbody>
                         </table>

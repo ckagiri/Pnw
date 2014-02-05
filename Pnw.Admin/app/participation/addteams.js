@@ -28,11 +28,13 @@
             maxPagesToShow: 5,
             pageSize: 10
         };
+        vm.addSeasonTeams = addSeasonTeams;
         vm.pageChanged = pageChanged;
         vm.allSelected = false;
-        vm.selectedTeams = selectedTeams;
+        vm.selectedTeams = [];
+        vm.getSelectedTeams = getSelectedTeams;
         vm.toggleAllSelected = toggleAllSelected;
-        vm.selectAll = selectAll;
+        vm.toggleSelected = toggleSelected;
         vm.deselectAll = deselectAll;
         
         Object.defineProperty(vm.paging, 'pageCount', {
@@ -96,7 +98,24 @@
                     }
                     getTeamFilteredCount();
                     data.forEach(function(n) {
-                        angular.extend(n, { selected: false });
+                        var found =false;
+                        if(!found) {
+                            var match;
+                            vm.selectedTeams.some(function(t) {
+                                if (t.id === n.id) {
+                                    match = t;
+                                    return true;
+                                }
+                                return false;
+                            });
+                            found = !!match;
+                        }
+                        if (!found) {
+                             n.selected = false;
+                        } 
+                        else {
+                            n.selected = true;
+                        }
                     });
                 }
             );
@@ -104,6 +123,7 @@
        
         function pageChanged(page) {
             if (!page) { return; }
+            vm.allSelected = false;
             vm.paging.currentPage = page;
             getTeams();
         }
@@ -118,7 +138,6 @@
             vm.teamFilteredCount = datacontext.team.getFilteredCount(vm.teamSearch);
         }
 
-
         function getSeasonTeams(forceRemote) {
             return datacontext.participation.getAll().then(function() {
                 vm.selectedSeason.participationList.forEach(function(p) {
@@ -126,29 +145,64 @@
                 });
             });
         }
-
-        function addSeasonTeams() {
-            var seasonId = vm.selectedSeason.id;
-            $location.path('/seasonteams/add/' + seasonId);
-        }
-        
+       
         function search($event) {
             if ($event.keyCode === keyCodes.esc) {
                 vm.teamSearch = '';
             }
             getTeams();
         }
+
+        function addSeasonTeams() {
+            
+        }
         
-        function selectedTeams() {
-            vm.teams.filter(function (n) {
-                return n.selected === true;
-            });
+        function getSelectedTeams() {
+            return vm.selectedTeams;
         }
 
         function toggleAllSelected() {
+            
+            var reqTeams = vm.teams.filter(function (t) {
+                return !t.selected === vm.allSelected;
+            });
+            
             vm.teams.forEach(function (n) {
                 n.selected = vm.allSelected;
             });
+
+            reqTeams.forEach(function (n) {
+                selectOrDeselectTeam(n);
+            });
+        }
+        
+        function toggleSelected(t) {
+            selectOrDeselectTeam(t);
+        }
+
+        function selectOrDeselectTeam(n) {
+            var found = !!vm.selectedTeams.length;
+
+            if (found) {
+                var match;
+                vm.selectedTeams.some(function (t) {
+                    if (t.id === n.id) { 
+                        match = t;
+                        return true;
+                    }
+                    return false;
+                });
+                found = !!match;
+            }
+
+            if (!found) {
+                vm.selectedTeams.push(n);
+            } else {
+                var index = vm.selectedTeams.indexOf(n);
+                if (index > -1) {
+                    vm.selectedTeams.splice(index, 1);
+                }
+            }
         }
 
         function deselectAll() {
