@@ -2,9 +2,9 @@
     'use strict';
     var controllerId = 'fixtures';
     angular.module('app').controller(controllerId,
-        ['$location', '$routeParams', 'bootstrappedData', 'common', 'config', 'datacontext', fixtures]);
+        ['$location', 'bootstrappedData', 'common', 'config', 'datacontext', fixtures]);
 
-    function fixtures($location, $routeParams, bootstrappedData, common, config, datacontext) {
+    function fixtures($location, bootstrappedData, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var $q = common.$q;
@@ -49,7 +49,7 @@
 
         function activate() {
             common.activateController([init()], controllerId)
-                .then(function () { log('Activated Fixtures View'); });
+                .then(function() { log('Activated Fixtures View'); });
         }
 
         function init() {

@@ -36,7 +36,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 10
+            pageSize: 3
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {

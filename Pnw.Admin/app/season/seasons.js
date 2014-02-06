@@ -12,6 +12,8 @@
         vm.title = 'Seasons';
         vm.seasons = [];
         vm.gotoSeason = gotoSeason;
+        vm.getSeasons = getSeasons;
+        vm.refresh = refresh;
 
         activate();
 
@@ -39,16 +41,20 @@
             });
         }
         
-        function getSeasons() {
-            return datacontext.season.getAll().then(function (data) {
-                return vm.seasons = vm.selectedLeague.seasons;
+        function getSeasons(forceRemote) {
+            return datacontext.season.getAll(forceRemote).then(function (data) {
+                return vm.seasons = vm.selectedLeague && vm.selectedLeague.seasons;
             });
         }
 
         function gotoSeason(season) {
             if (season && season.id) {
-                $location.path('/season/edit/' + season.id);
+                $location.path('/season/' + season.id);
             }
+        }
+
+        function refresh() {
+            getSeasons(true);
         }
     }
 })();

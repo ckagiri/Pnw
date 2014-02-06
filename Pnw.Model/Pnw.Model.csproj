@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Pnw.TestConsole\bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -47,6 +47,7 @@
     <Compile Include="DifferentFromAttribute.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="IAuditInfo.cs" />
+    <Compile Include="LeaderBoard.cs" />
     <Compile Include="League.cs" />
     <Compile Include="Membership.cs" />
     <Compile Include="OAuthMembership.cs" />

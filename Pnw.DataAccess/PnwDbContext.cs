@@ -65,6 +65,7 @@ namespace Pnw.DataAccess
             modelBuilder.Configurations.Add(new MembershipConfiguration());
         }
 
+        public DbSet<LeaderBoard> LeaderBoard { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -92,20 +93,22 @@ namespace Pnw.DataAccess
         private void ApplyRules()
         {
             // Approach via @julielerman: http://bit.ly/123661P
-            foreach (var entry in this.ChangeTracker.Entries()
-                        .Where(
-                             e => e.Entity is IAuditInfo &&
-                            (e.State == EntityState.Added) ||
-                            (e.State == EntityState.Modified)))
+            var entries = this.ChangeTracker.Entries()
+                .Where(e => e.Entity is IAuditInfo &&
+                    (e.State == EntityState.Added) ||
+                    (e.State == EntityState.Modified));
+            foreach (var entry in entries)
             {
-                var e = (IAuditInfo)entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                var e = entry.Entity as IAuditInfo;
+                if (e != null)
                 {
-                    e.CreatedOn = DateTime.Now;
-                }
+                    if (entry.State == EntityState.Added)
+                    {
+                        e.CreatedOn = DateTime.Now;
+                    }
 
-                e.ModifiedOn = DateTime.Now;
+                    e.ModifiedOn = DateTime.Now;
+                }
             }
         }
 

@@ -1,0 +1,59 @@
+﻿<section class="mainbar" data-ng-controller="seasondetail as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <button class="btn btn-info"
+                        data-ng-click="vm.goBack()">
+                    <i class="icon-hand-left"></i>Back
+                </button>
+                <button class="btn btn-info"
+                        data-ng-click="vm.cancel()"
+                        data-ng-disabled="!vm.canSave">
+                    <i class="icon-undo"></i>Cancel
+                </button>
+                <button class="btn btn-info"
+                        data-ng-click="vm.save()"
+                        data-ng-disabled="!vm.canSave">
+                    <i class="icon-save"></i>Save
+                </button>
+                <button class="btn btn-danger" 
+                   data-ng-click="">
+                    <i class="icon-trash"></i>Delete
+                </button> 
+                <span data-ng-show="vm.hasChanges"
+                      class="dissolve-animation ng-hide">
+                    <i class="icon-asterisk icon-asterisk-large"></i>
+                </span>
+            </div>
+            <div class="widget wgreen">
+                <div data-cc-widget-header title="Edit {{vm.season.name || 'New ' + vm.selectedLeague.code + ' Season'}}"></div>
+                <div class="widget-content user">
+                    <div>
+                        <div>
+                            <label>League</label>
+                            <input class="uneditable-input input-large" data-ng-disabled="true" data-ng-model="vm.selectedLeague.name"
+                                   data-z-validate
+                                placeholder="Name" />
+                        </div>
+                        <div>
+                            <label>Name</label>
+                            <input data-ng-model="vm.season.name"
+                                   data-z-validate
+                                   placeholder="Name" />
+                        </div>
+                        <div>
+                            <label>StartDate</label>
+                            <input data-ng-model="vm.season.startDate"
+                                   data-z-validate placeholder="dd/MM/yyyy" value="{{vm.season.startDate}}" />
+                        </div>
+                        <div>
+                            <label>EndDate</label>
+                            <input data-ng-model="vm.season.endDate"
+                                   data-z-validate placeholder="dd/MM/yyyy" value="{{vm.season.endDate}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

@@ -104,13 +104,13 @@
                 }
 
                 function failed(error) {
-                    cancel(); // Makes the entity available to edit again
+                    cancel(); 
                 }
             }
         }
 
         function save() {
-            if (!canSave()) { return $q.when(null); } // Must return a promise
+            if (!canSave()) { return $q.when(null); } 
 
             vm.isSaving = true;
             return datacontext.save().then(function (saveResult) {

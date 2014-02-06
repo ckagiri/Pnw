@@ -102,6 +102,13 @@
                     settings: {}
                 }
             }, {
+                url: '/season/:id',
+                config: {
+                    templateUrl: 'app/season/seasondetail.html',
+                    title: 'season',
+                    settings: {}
+                }
+            }, {
                 url: '/workinprogress',
                 config: {
                     templateUrl: 'app/wip/wip.html',

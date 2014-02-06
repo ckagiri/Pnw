@@ -17,6 +17,7 @@
             this.manager = mgr;
             this.zStorage = zStorage;
             // Exposed data access functions
+            this.create = create;
             this.getById = getById;
             this.getAll = getAll;
             this.getAllLocal = getAllLocal;
@@ -25,6 +26,10 @@
         AbstractRepository.extend(Ctor);
 
         return Ctor;
+        
+        function create(leagueId) {
+            return this.manager.createEntity(entityName, { leagueId: leagueId });
+        }
         
         function getById(id, forceRemote) {
             return this._getById(entityName, id, forceRemote);

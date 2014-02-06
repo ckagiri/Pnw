@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -13,6 +14,7 @@ namespace Pnw.Model
             ParticipationList = new Collection<Participation>();
         }
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

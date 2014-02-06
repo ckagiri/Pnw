@@ -10,8 +10,8 @@
                     <div class="btn-group pull-right">
                         <a class="btn btn-info" data-ng-click="vm.refresh()">
                             <i class="icon-refresh"></i><span>Refresh</span></a>
-                        <a class="btn btn-info"
-                            data-ng-disabled="!vm.selectedLeague" data-ng-click="vm.gotoFixture()">
+                        <a class="btn btn-info" href="#/season/new?leagueId={{vm.selectedLeague.id}}"
+                            data-ng-disabled="!vm.selectedLeague">
                             <i class="icon-plus"></i><span>Add Season</span>
                         </a>
                     </div>

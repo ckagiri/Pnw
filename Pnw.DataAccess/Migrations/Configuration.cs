@@ -324,7 +324,7 @@ namespace Pnw.DataAccess.Migrations
                                };
 
             var teams = kplTeams.Concat(eplTeams).ToArray();
-            context.Teams.AddOrUpdate(p => p.Code, teams);
+            context.Teams.AddOrUpdate(p => p.Name, teams);
 
             return teams;
         }

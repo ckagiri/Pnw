@@ -250,6 +250,8 @@
     <Content Include="app\result\results.js" />
     <Content Include="app\league\leagues.html" />
     <Content Include="app\season\seasons.js" />
+    <Content Include="app\season\seasondetail.html" />
+    <Content Include="app\season\seasondetail.js" />
     <Content Include="app\services\repository.participation.js" />
     <Content Include="app\services\repository.season.js" />
     <Content Include="app\services\repository.league.js" />
