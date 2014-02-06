@@ -149,7 +149,7 @@
         function pageChanged(page) {
             if (!page) { return; }
             vm.paging.currentPage = page;
-            getFixtures();
+            getFixtures().then(addPredictionToFixture);
         }
 
         function calculateTotalPoints() {
@@ -207,6 +207,10 @@
                 if (match.entityAspect.entityState.isAdded()) {
                     match.entityAspect.setDeleted();
                 } else {
+                    if (match.entityAspect.entityState.isModified()) {
+                        match.homeGoals = match.entityAspect.originalValues.homeGoals;
+                        match.awayGoals = match.entityAspect.originalValues.awayGoals;
+                    }
                     match.entityAspect.entityState = breeze.EntityState.Unchanged;
                 }
             }
@@ -275,10 +279,11 @@
 
         function getFilteredFixtures() {
             var xs = vm.fixtures;
-            var currentPage = vm.paging.currentPage - 1,
+            var currentPage = vm.paging.currentPage,
                 pageSize = vm.paging.pageSize;
+            var start = (currentPage - 1) * pageSize;
             
-            vm.filteredFixtures = xs.slice(currentPage, currentPage + pageSize);
+            vm.filteredFixtures = xs.slice(start, start + pageSize);
             vm.fixtureFilteredCount = vm.filteredFixtures.length;
         }
         
