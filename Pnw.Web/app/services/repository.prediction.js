@@ -68,11 +68,11 @@
                 return self.$q.when(false);
         }
 
-        function getAll(forceRemote, userId) {
+        function getAll(forceRemote, userId, seasonId) {
             var self = this;
             var orderBy = 'fixtureDate, points';
             var predictions = [];
-            var predicate = breeze.Predicate.create('userId', '==', userId);
+            var predicate = breeze.Predicate.create('userId', '==', userId).and('seasonId','==', seasonId);
 
             if (self.zStorage.areItemsLoaded('predictions') && !forceRemote) {
                 predictions = self._getAllLocal(entityName, orderBy, predicate);

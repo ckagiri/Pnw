@@ -318,7 +318,7 @@
         
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
-                return datacontext.prediction.getAll(forceRemote, user.id).then(function(data) {
+                return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function (data) {
                     return vm.predictions = data;
                 });
             } else {

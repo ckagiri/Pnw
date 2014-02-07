@@ -71,7 +71,7 @@
 
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
-                return datacontext.prediction.getAll(forceRemote, user.id).then(function (data) {
+                return datacontext.prediction.getAll(forceRemote, user.id, 1).then(function (data) {
                     return vm.predictions = data;
                 });
             } else {
