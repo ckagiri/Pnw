@@ -16,9 +16,29 @@ namespace Pnw.Model
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsTournament { get; set; }
+        public Region Region { get; set; }
+        public ParticipantType ParticipantType { get; set; }
 
         [JsonIgnore] 
         [IgnoreDataMember] 
         public ICollection<Season> Seasons { get; set; }
+    }
+
+    public enum Region
+    {
+        None,
+        World,
+        Europe,
+        Africa,
+        SouthAmerica,
+        Asia,
+        Australia,
+    }
+
+    public enum ParticipantType
+    {
+        Club,
+        Country,
+        ClubOrCountry
     }
 }

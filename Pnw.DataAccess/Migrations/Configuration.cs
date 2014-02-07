@@ -35,13 +35,22 @@ namespace Pnw.DataAccess.Migrations
                               {
                                   new League
                                       {
+                                          Name = "World Cup",
+                                          Code = "WC",
+                                          Region = Region.World,
+                                          IsTournament = true
+                                      },
+                                  new League
+                                      {
                                           Name = "English Premier League",
-                                          Code = "EPL"
+                                          Code = "EPL",
+                                          Region = Region.Europe
                                       },
                                   new League
                                       {
                                           Name = "Tusker Premier League",
-                                          Code = "KPL"
+                                          Code = "KPL",
+                                          Region = Region.Africa
                                       }
                               };
 
@@ -80,8 +89,18 @@ namespace Pnw.DataAccess.Migrations
                                              Name = "2013 - 2014",
                                          }
                                  };
+            var worldcupSeason = new[]
+                                     {
+                                         new Season
+                                             {
+                                                 League =leagues.First(l => l.Code == "WC"),
+                                                 StartDate = new DateTime(2014, 6, 12),
+                                                 EndDate = new DateTime(2014, 7, 13),
+                                                 Name = "WC 2014"
+                                             }
+                                     };
 
-            var seasons = eplSeasons.Concat(kplSeasons).ToArray();
+            var seasons = eplSeasons.Concat(kplSeasons).Concat(worldcupSeason).ToArray();
             context.Seasons.AddOrUpdate(p => new {p.LeagueId, p.Name}, seasons);
 
             return seasons;

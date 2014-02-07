@@ -100,6 +100,7 @@ namespace Pnw.DataAccess
             foreach (var entry in entries)
             {
                 var e = entry.Entity as IAuditInfo;
+                // hack 
                 if (e != null)
                 {
                     if (entry.State == EntityState.Added)

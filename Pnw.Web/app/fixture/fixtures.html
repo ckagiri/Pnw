@@ -49,8 +49,9 @@
                     <div class="widget wviolet">
                         <div data-cc-widget-header title="Fixtures"
                             right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}"></div>
-                        <div class="widget-content text-center text-info">
-                            <table class="table table-condensed table-striped">
+                        <div class="widget-content text-center text-info" data-ng-switch="!!vm.fixtures.length">
+                            <div data-ng-switch-when="false">No Fixtures Yet</div>
+                            <table class="table table-condensed table-striped" data-ng-switch-when="true">
                                 <thead>
                                     <tr>
                                         <th>Kickoff</th>
