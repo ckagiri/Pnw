@@ -70,8 +70,8 @@ namespace Pnw.Web.Controllers.Api
         [HttpGet]
         public object Lookups()
         {
-            var leagues = _repository.Leagues;
-            var seasons = _repository.Seasons;
+            var leagues = _repository.Leagues.OrderBy(n => n.Region).ThenBy(n => n.Name);
+            var seasons = _repository.Seasons.OrderByDescending(n => n.StartDate);
             return new { leagues, seasons };
         }
 

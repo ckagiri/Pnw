@@ -29,6 +29,7 @@
                         <table class="table table-condensed table-striped">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>UserName</th>
                                     <th>Points</th>
                                     <th>CorrectScorePoints</th>
@@ -40,6 +41,7 @@
                             </thead>
                             <tbody>
                                 <tr data-ng-repeat="lb in vm.leaderboard" title="Go to user-prediction details">
+                                    <td>{{$index + 1}}</td>
                                     <td>{{lb.userName}}</td>
                                     <td>{{lb.points}}</td>
                                     <td>{{lb.correctScorePoints}}</td>

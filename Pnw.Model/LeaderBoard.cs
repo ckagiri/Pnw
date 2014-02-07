@@ -13,6 +13,7 @@
         public int CrossProductPoints { get; set; }
         public int SpreadDifference { get; set; }
         public int AccuracyDifference { get; set; }
+        // lastpred
         public int LastBetTimestamp { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Breeze.ContextProvider;
 using Breeze.ContextProvider.EF6;
 using Newtonsoft.Json.Linq;
@@ -69,10 +70,12 @@ namespace Pnw.DataAccess
         public IQueryable<object> Leaderboard(int leagueId, int? seasonId, int? year, int? monthId)
         {
             var query = (from p in Context.Predictions
-                         group p by p.UserId into g
+                         group p by p.UserId
+                         into g
                          let @group = g.FirstOrDefault()
                          where @group != null
-                         join u in Context.Users on @group.UserId equals  u.Id
+                         join u in Context.Users on @group.UserId equals u.Id
+                         let lastPrediction = g.OrderByDescending(n => n.FixtureDate).FirstOrDefault()
                          select new
                                     {
                                         UserName = u.Username,
@@ -82,8 +85,34 @@ namespace Pnw.DataAccess
                                         CorrectResultPoints = g.Sum(p => p.CorrectResultPoints),
                                         CrossProductPoints = g.Sum(p => p.CrossProductPoints),
                                         SpreadDifference = g.Sum(p => p.SpreadDifference),
-                                        AccuracyDifference = g.Sum(p => p.AccuracyDifference)
-                                    });
+                                        AccuracyDifference = g.Sum(p => p.AccuracyDifference),
+                                        LastBetTimestamp =
+                             lastPrediction != null ? lastPrediction.CreatedOn : DateTime.Now
+                                    })
+                .AsEnumerable()
+                .Select((v, i) => new
+                                      {
+                                          Id = i + 1,
+                                          v.UserName,
+                                          v.UserId,
+                                          v.Points,
+                                          v.CorrectScorePoints,
+                                          v.CorrectResultPoints,
+                                          v.CrossProductPoints,
+                                          v.SpreadDifference,
+                                          v.AccuracyDifference,
+                                          v.LastBetTimestamp
+                                      })
+                .OrderByDescending(n => n.Points)
+                .ThenByDescending(n => n.CorrectScorePoints)
+                .ThenByDescending(n => n.CorrectResultPoints)
+                .ThenByDescending(n => n.CrossProductPoints)
+                .ThenByDescending(n => n.SpreadDifference)
+                .ThenByDescending(n => n.AccuracyDifference)
+                .ThenBy(n => n.LastBetTimestamp)
+                .Take(20)
+                .AsQueryable();
+
             return query;
         }
     }

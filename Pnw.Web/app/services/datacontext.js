@@ -131,7 +131,7 @@
                     set(r, fixtureEntityName);
                 });
                 
-                //set('Leaderboard', 'Leaderboard');
+                set('LeaderBoard', 'LeaderBoard');
 
                 function set(resourceName, entityName) {
                     metadataStore.setEntityTypeForResourceName(resourceName, entityName);

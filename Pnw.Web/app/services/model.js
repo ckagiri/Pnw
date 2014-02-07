@@ -17,7 +17,7 @@
             season: 'Season',
             team: 'Team',
             prediction: 'Prediction',
-            leaderboard: 'Leaderboard'
+            leaderboard: 'LeaderBoard'
         };
 
         var service = {

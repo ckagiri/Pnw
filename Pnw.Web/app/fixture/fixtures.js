@@ -36,7 +36,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 3
+            pageSize: 5
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
@@ -117,6 +117,10 @@
                     .then(calculateTotalPoints)
                     .then(addPredictionToFixture)
                     .then(vm.isBusy = false);
+        }
+        
+        function getTrackCounts() {
+            
         }
 
         function getDefaults() {

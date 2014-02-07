@@ -3,15 +3,17 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <!--<select><option>{{vm.selectedLeague.name}}</option>
-                    <option>Kenya Premier League </option>
-                    <option>Bundesliga </option>
-                    <option>World cup </option>
-                </select>-->
+                        <option>Kenya Premier League </option>
+                        <option>Bundesliga </option>
+                        <option>World cup </option>
+                    </select>-->
+                <select ng-model="vm.selectedLeague" 
+                    ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']"></select>
                 <a><span>
-                       <b>{{vm.selectedLeague.code}}&nbsp;{{vm.selectedSeason.name}}</b>
+                       <b>&nbsp;{{vm.selectedLeague.seasons[0].name}}</b>
                    </span></a><p />
                 <div class="form-search">
-                    <div class="btn-group pull-left">
+                    <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
                         <a class="btn btn-info" data-ng-show="vm.monthPager.index > 0"
                            data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.prev()">
                             <i class="icon-chevron-left"></i>
@@ -20,13 +22,27 @@
                            data-ng-disabled="true">
                             <i class="icon-chevron-left"></i>
                         </a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>{{vm.selectedMonth}} ( {{vm.totalPoints}} points)</a>
+                        <a class="btn btn-info"><i class="icon-calendar"></i>
+                            <span>{{vm.selectedMonth}} ({{vm.totalPoints}}) 
+                                point{{vm.totalPoints === 1 ? '' : 's'}}</span>
+                        </a>
                         <a class="btn btn-info" data-ng-show="vm.monthPager.index < vm.monthPager.maxIndex"
                            data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.next()">
                             <i class="icon-chevron-right"></i>
                         </a>
                         <a class="btn btn-info" data-ng-show="vm.monthPager.index >= vm.monthPager.maxIndex"
                            data-ng-disabled="true">
+                            <i class="icon-chevron-right"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group pull-left" data-ng-show="vm.selectedLeague.isTournament">
+                        <a class="btn btn-info" data-ng-disabled="true">
+                            <i class="icon-chevron-left"></i>
+                        </a>
+                        <a class="btn btn-info"><i class="icon-calendar"></i>
+                            <span>{{vm.totalPoints}} point{{vm.totalPoints === 1 ? '' : 's'}}</span>
+                        </a>
+                        <a class="btn btn-info" data-ng-disabled="true">
                             <i class="icon-chevron-right"></i>
                         </a>
                     </div>
@@ -56,9 +72,10 @@
                                     <tr>
                                         <th>Kickoff</th>
                                         <th></th>
-                                        <th class="text-center">Home Team</th>
+                                        <th class="text-center" colspan="2">
+                                            Match
+                                        </th>
                                         <th></th>
-                                        <th class="text-center">Away Team</th>
                                         <th>Prediction</th>
                                         <th>Actual Score</th>
                                         <th>Points</th>

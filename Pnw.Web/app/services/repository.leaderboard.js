@@ -8,7 +8,6 @@
     function RepositoryLeaderboard(model, AbstractRepository, zStorage) {
         var entityName = model.entityNames.leaderboard;
         var EntityQuery = breeze.EntityQuery;
-        var orderBy = 'points desc';
         var Predicate = breeze.Predicate;
 
         function Ctor(mgr) {
@@ -27,16 +26,15 @@
         function get(forceRemote, leagueId, seasonId) {
             var self = this;
             var leaderboard = [];
-
+            //var predicate
             //if (self.zStorage.areItemsLoaded('leaderboard') && !forceRemote) {
-            //    leaderboard = self._getAllLocal(entityName, orderBy);
+            //    leaderboard = self._getAllLocal(entityName, null, predicate);
             //    return self.$q.when(leaderboard);
             //}
 
             return EntityQuery.from('Leaderboard')
                 .withParameters({ leagueId: leagueId, seasonId: seasonId })
-                .orderBy(orderBy)
-                //.toType(entityName)
+                .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
 
