@@ -237,6 +237,7 @@
     <Content Include="app\fixture\fixtures.js" />
     <Content Include="app\predict\predictions.html" />
     <Content Include="app\predict\predictions.js" />
+    <Content Include="app\services\cache.js" />
     <Content Include="app\services\repository.leaderboard.js" />
     <Content Include="app\services\repository.prediction.js" />
     <Content Include="app\services\datacontext.js" />

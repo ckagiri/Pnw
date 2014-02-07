@@ -7,7 +7,7 @@
                         <option>Bundesliga </option>
                         <option>World cup </option>
                     </select>-->
-                <select ng-model="vm.selectedLeague" 
+                <select ng-model="vm.selectedLeague" data-ng-change="vm.leagueChanged()"
                     ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']"></select>
                 <a><span>
                        <b>&nbsp;{{vm.selectedLeague.seasons[0].name}}</b>

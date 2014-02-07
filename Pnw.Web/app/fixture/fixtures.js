@@ -1,18 +1,20 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'fixtures';
-    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData', 'common', 'config', 'datacontext', fixtures]);
+    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData','cache', 'common', 'config', 'datacontext', fixtures]);
 
-    function fixtures($scope, bootstrappedData, common, config, datacontext) {
+    function fixtures($scope, bootstrappedData, cache, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
         var $q = common.$q;
-        var vm = this;
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
         var currentDate = bootstrappedData.currentDate;
         var user = bootstrappedData.user;
+        var stateKey = { filter: 'public.fixtures.filter' };
+        var vm = this;
+
         vm.leagues = [];
         vm.seasons = [];
         vm.fixtures = [];
@@ -26,6 +28,7 @@
         vm.submitPredictions = submit;
         vm.predictionsToSubmit = [];
         vm.cancel = cancel;
+        vm.leagueChanged = onLeagueChanged;
         vm.homePredictionChanged = predictionChanged;
         vm.awayPredictionChanged = predictionChanged;
         vm.refresh = refresh;
@@ -69,6 +72,7 @@
         function init() {
             initLookups()
                 .then(getDefaults)
+                .then(restoreFilter)
                 .then(getFixtures)
                 .then(getPredictions)
                 .then(calculateTotalPoints)
@@ -77,8 +81,8 @@
         }
 
         function initMonthPager() {
-            var sd = moment.utc(defaultSeason.startDate),
-               ed = moment.utc(defaultSeason.endDate);
+            var sd = moment.utc(vm.selectedSeason.startDate),
+               ed = moment.utc(vm.selectedSeason.endDate);
 
             var from = sd.clone().startOf('month'),
                 end = ed.startOf('month').add('M', 1);
@@ -118,11 +122,27 @@
                     .then(addPredictionToFixture)
                     .then(vm.isBusy = false);
         }
-        
-        function getTrackCounts() {
-            
+
+        function restoreFilter() {
+            var cached = cache.get(stateKey.filter);
+            if (!cached) { return; }
+            vm.selectedLeague = cached.selectedLeague;
+            vm.selectedSeason = cached.selectedSeason;
         }
 
+        function onLeagueChanged() {
+            if (!vm.isBusy) {
+                vm.isBusy = true;
+                vm.selectedSeason = vm.selectedLeague.seasons[0];
+                getFixtures()
+                    .then(getPredictions)
+                    .then(calculateTotalPoints)
+                    .then(addPredictionToFixture)
+                    .then(initMonthPager);
+                vm.isBusy = false;
+            }
+        }
+        
         function getDefaults() {
             vm.leagues.some(function(n) {
                 if (n.id === defaultLeague.id) {
@@ -266,6 +286,11 @@
         
         function onDestroy() {
             $scope.$on('$destroy', function () {
+                var fixtureFilter = {
+                    selectedLeague: vm.selectedLeague,
+                    selectedSeason: vm.selectedSeason,
+                };
+                cache.put(stateKey.filter, fixtureFilter);
                 datacontext.cancel();
             });
         }
