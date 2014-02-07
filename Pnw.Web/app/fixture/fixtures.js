@@ -221,7 +221,7 @@
         }
         
         function cancel() {
-            datacontext.clean();
+            datacontext.cancel();
             if (vm.predictionsToSubmit.length) {
                 vm.predictionsToSubmit = [];
                 getPredictions().then(addPredictionToFixture);

@@ -20,7 +20,6 @@
         var repoNames = ['fixture', 'lookup', 'team', 'result', 'prediction', 'leaderboard'];
         
         var service = {
-            clean: clean,
             cancel: cancel,
             markDeleted: markDeleted,
             save: save,
@@ -55,14 +54,7 @@
                 logSuccess('Canceled changes', null, true);
             }
         }
-        
-        function clean() {
-            if (manager.hasChanges()) {
-                manager.rejectChanges();
-                //logSuccess('Cleared changes', null, false);
-            }
-        }
-        
+       
         function defineLazyLoadedRepos() {
             repoNames.forEach(function (name) {
                 Object.defineProperty(service, name, {

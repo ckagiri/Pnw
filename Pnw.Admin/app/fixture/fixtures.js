@@ -2,15 +2,17 @@
     'use strict';
     var controllerId = 'fixtures';
     angular.module('app').controller(controllerId,
-        ['$location', 'bootstrappedData', 'common', 'config', 'datacontext', fixtures]);
+        ['$location', '$scope', 'bootstrappedData', 'cache', 'common', 'config', 'datacontext', fixtures]);
 
-    function fixtures($location, bootstrappedData, common, config, datacontext) {
+    function fixtures($location, $scope, bootstrappedData, cache, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var $q = common.$q;
         var keyCodes = config.keyCodes;
-        var vm = this;
+        var stateKey = { filter: 'admin.fixtures.filter' };
         var defaultSeason = undefined;
+        var vm = this;
+        
         vm.title = 'Fixtures';
         vm.fixtures = [];
         vm.gotoFixture = gotoFixture;
@@ -48,6 +50,7 @@
         activate();
 
         function activate() {
+            onDestroy();
             common.activateController([init()], controllerId)
                 .then(function() { log('Activated Fixtures View'); });
         }
@@ -55,8 +58,26 @@
         function init() {
             return loadLeagues()
                 .then(loadSeasons)
+                .then(restoreFilter)
                 .then(loadTeams)
                 .then(getFixtures);
+        }
+        
+        function onDestroy() {
+            $scope.$on('$destroy', function () {
+                var fixtureFilter = {
+                    selectedLeague: vm.selectedLeague,
+                    selectedSeason: vm.selectedSeason,
+                };
+                cache.put(stateKey.filter, fixtureFilter);
+            });
+        }
+        
+        function restoreFilter() {
+            var cached = cache.get(stateKey.filter);
+            if (!cached) { return; }
+            vm.selectedLeague = cached.selectedLeague;
+            vm.selectedSeason = cached.selectedSeason;
         }
 
         function getFixtures(forceRemote) {

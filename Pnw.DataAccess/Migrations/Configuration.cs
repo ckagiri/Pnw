@@ -38,7 +38,8 @@ namespace Pnw.DataAccess.Migrations
                                           Name = "World Cup",
                                           Code = "WC",
                                           Region = Region.World,
-                                          IsTournament = true
+                                          IsTournament = true,
+                                          ParticipantType = ParticipantType.Country
                                       },
                                   new League
                                       {

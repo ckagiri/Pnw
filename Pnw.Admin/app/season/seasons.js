@@ -1,12 +1,13 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'seasons';
-    angular.module('app').controller(controllerId, ['$location','bootstrappedData', 'common', 'datacontext', seasons]);
+    angular.module('app').controller(controllerId, ['$location','$scope', 'bootstrappedData', 'cache', 'common', 'datacontext', seasons]);
 
-    function seasons($location,bootstrappedData, common, datacontext) {
+    function seasons($location, $scope, bootstrappedData, cache, common, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var defaultSeason = bootstrappedData.defaultSeason;
+        var stateKey = { filter: 'admin.seasons.filter' };
         var vm = this;
         
         vm.title = 'Seasons';
@@ -18,12 +19,20 @@
         activate();
 
         function activate() {
+            onDestroy();
             common.activateController([init()], controllerId)
                 .then(function () { log('Activated Seasons View'); });
         }
 
         function init() {
-            return loadLeagues().then(getSeasons);
+            return loadLeagues().then(restoreFilter).then(getSeasons);
+        }
+        
+        function onDestroy() {
+            $scope.$on('$destroy', function() {
+                var seasonFilter = { selectedLeague: vm.selectedLeague};
+                cache.put(stateKey.filter, seasonFilter);
+            });
         }
         
         function loadLeagues() {
@@ -39,6 +48,12 @@
                 }
                 vm.leagues = data;
             });
+        }
+
+        function restoreFilter() {
+            var cached = cache.get(stateKey.filter);
+            if (!cached) { return; }
+            vm.selectedLeague = cached.selectedLeague;
         }
         
         function getSeasons(forceRemote) {
