@@ -48,7 +48,7 @@ namespace Pnw.DataAccess.Migrations
                                       },
                                   new League
                                       {
-                                          Name = "Tusker Premier League",
+                                          Name = "Kenya Premier League",
                                           Code = "KPL",
                                           Region = Region.Africa
                                       }
@@ -116,7 +116,7 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Gor Mahia",
                                            Code = "GOR",
                                            HomeGround = "City Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
@@ -125,7 +125,7 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "AFC Leopards",
                                            Code = "AFC",
                                            HomeGround = "Chui Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
@@ -134,7 +134,7 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Tusker",
                                            Code = "TUSK",
                                            HomeGround = "The Breweries",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
@@ -143,7 +143,7 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Sofapaka",
                                            Code = "SOFP",
                                            HomeGround = "Sofapaka Stadium",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
@@ -152,7 +152,7 @@ namespace Pnw.DataAccess.Migrations
                                            Name = "Ulinzi Stars",
                                            Code = "ULNZ",
                                            HomeGround = "Ulinzi Grounds",
-                                           Tags = "TPL|Tusker Premier League|Kenya|East Africa",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        }
                                };
