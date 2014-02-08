@@ -76,11 +76,15 @@
 
             if (self.zStorage.areItemsLoaded('predictions') && !forceRemote) {
                 predictions = self._getAllLocal(entityName, orderBy, predicate);
+            }
+            
+            if (predictions.length) {
                 return self.$q.when(predictions);
             }
 
             return EntityQuery.from('Predictions')
                 //.select('id, userId, seasonId, fixtureId, homeGoals, awayGoals, points, fixtureDate, isProcessed')
+                .withParameters({ userId: userId, seasonId: seasonId })
                 .where(predicate)
                 .orderBy(orderBy)
                 .toType(entityName)

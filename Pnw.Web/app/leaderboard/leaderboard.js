@@ -18,7 +18,7 @@
         vm.leaderboard = [];
         vm.selectedLeague = undefined;
         vm.selectedSeason = undefined;
-        vm.getSeasons = function() { };
+        vm.leagueChanged = onLeagueChanged;
         vm.getLeaderboard = function () { };
         vm.refresh = refresh;
         
@@ -51,10 +51,15 @@
 
         function getLeaderBoard(forceRemote) {
             var leagueId = vm.selectedLeague.id;
-            var seasonId = vm.selectedSeason.id;
+            var seasonId = (vm.selectedSeason && vm.selectedSeason.id) || 0;
             return datacontext.leaderboard.get(forceRemote, leagueId, seasonId).then(function(data) {
                 vm.leaderboard = data;
             });
+        }
+
+        function onLeagueChanged() {
+            vm.selectedSeason = vm.selectedLeague.seasons[0];
+            getLeaderBoard();
         }
         
         function initLookups() {

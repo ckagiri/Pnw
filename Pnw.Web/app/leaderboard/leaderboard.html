@@ -2,15 +2,14 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <select data-ng-model="vm.selectedLeague" data-ng-options="l as l.name for l in vm.leagues"
-                            data-ng-change="vm.getSeasons()">
-                        <option value="">-- League/Tournament --</option>
-                    </select><br/>
+                <select ng-model="vm.selectedLeague" data-ng-change="vm.leagueChanged()"
+                        data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
+                </select><br/>
                 <select data-ng-model="vm.selectedSeason"  data-ng-disabled=!vm.selectedSeason
-                    data-ng-options="s as s.name for s in vm.selectedLeague.seasons"
-                            data-ng-change="vm.getLeaderboard()"
-                            class="input-medium">
-                    </select><br/>      
+                        data-ng-options="s as s.name for s in vm.selectedLeague.seasons"
+                        data-ng-change="vm.getLeaderboard()"
+                        class="input-medium">
+                </select><br/>      
                 <div data-ng-show="false" >
                     <select class="input-medium" data-ng-disabled="true">
                         <option value="">-- Select Month --</option>
@@ -23,10 +22,11 @@
             </div>
             <div class="row-fluid">
                 <div class="widget wviolet">
-                    <div data-cc-widget-header title="{{vm.title}}">
+                    <div data-cc-widget-header title="{{vm.title}} (Top 20)">
                     </div>
-                    <div class="widget-content text-center text-info">
-                        <table class="table table-condensed table-striped">
+                    <div class="widget-content text-center text-info" data-ng-switch="!!vm.leaderboard.length">
+                        <div data-ng-switch-when="false">No Data</div>
+                        <table class="table table-condensed table-striped" data-ng-switch-when="true">
                             <thead>
                                 <tr>
                                     <th>#</th>

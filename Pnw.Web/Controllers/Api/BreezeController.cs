@@ -56,15 +56,9 @@ namespace Pnw.Web.Controllers.Api
         }
 
         [HttpGet]
-        public IQueryable<Prediction> Predictions()
+        public IQueryable<Prediction> Predictions(int userId, int seasonId)
         {
-            return _repository.Predictions;
-        }
-
-        [HttpGet]
-        public IQueryable<Prediction> Predictions(int userId)
-        {
-            return _repository.Predictions.Where(p => p.UserId == userId);
+            return _repository.Predictions.Where(p => p.UserId == userId && p.SeasonId == seasonId);
         }
 
         [HttpGet]

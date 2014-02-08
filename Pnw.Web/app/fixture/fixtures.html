@@ -2,11 +2,6 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <!--<select><option>{{vm.selectedLeague.name}}</option>
-                        <option>Kenya Premier League </option>
-                        <option>Bundesliga </option>
-                        <option>World cup </option>
-                    </select>-->
                 <select ng-model="vm.selectedLeague" data-ng-change="vm.leagueChanged()"
                     ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']"></select>
                 <a><span>

@@ -70,6 +70,7 @@ namespace Pnw.DataAccess
         public IQueryable<object> Leaderboard(int leagueId, int? seasonId, int? year, int? monthId)
         {
             var query = (from p in Context.Predictions
+                         where p.LeagueId == leagueId && p.SeasonId == seasonId
                          group p by p.UserId
                          into g
                          let @group = g.FirstOrDefault()
