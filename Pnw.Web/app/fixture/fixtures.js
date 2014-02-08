@@ -39,7 +39,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 5
+            pageSize: 10
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
@@ -73,14 +73,16 @@
             initLookups()
                 .then(getDefaults)
                 .then(restoreFilter)
+                .then(initMonthPager)
                 .then(getFixtures)
                 .then(getPredictions)
                 .then(calculateTotalPoints)
-                .then(addPredictionToFixture)
-                .then(initMonthPager);
+                .then(addPredictionToFixture);
         }
 
         function initMonthPager() {
+            vm.selectedMonth = moment.utc(currentDate).format('MMMM');
+
             var sd = moment.utc(vm.selectedSeason.startDate),
                ed = moment.utc(vm.selectedSeason.endDate);
 
@@ -88,13 +90,19 @@
                 end = ed.startOf('month').add('M', 1);
 
             var counter = 0;
+            vm.months = [];
             while (from.isBefore(end) && counter < 12) {
                 vm.months.push(from.format('MMMM'));
                 from.add('M', 1);
                 counter += 1;
             }
 
-            vm.monthPager.index = vm.months.indexOf(vm.selectedMonth);
+            var ix = vm.months.indexOf(vm.selectedMonth);
+            if (ix < 0) {
+                vm.selectedMonth = moment.utc(ed).format('MMMM');
+                ix = vm.months.indexOf(vm.selectedMonth);
+            }
+            vm.monthPager.index = ix;
             vm.monthPager.maxIndex = vm.months.length - 1;
         }
 
@@ -134,11 +142,11 @@
             if (!vm.isBusy) {
                 vm.isBusy = true;
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
-                getFixtures()
+                $q.when(initMonthPager())
+                    .then(getFixtures)
                     .then(getPredictions)
                     .then(calculateTotalPoints)
-                    .then(addPredictionToFixture)
-                    .then(initMonthPager);
+                    .then(addPredictionToFixture);
                 vm.isBusy = false;
             }
         }

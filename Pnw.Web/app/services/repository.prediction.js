@@ -78,7 +78,8 @@
                 predictions = self._getAllLocal(entityName, orderBy, predicate);
             }
             
-            if (predictions.length) {
+            // passing an explicit false means you know what you're doing
+            if (predictions.length || forceRemote === false) {
                 return self.$q.when(predictions);
             }
 

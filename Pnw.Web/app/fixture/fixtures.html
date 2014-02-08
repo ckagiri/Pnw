@@ -2,10 +2,11 @@
     <section class="matter">
         <div class="container-fluid">
             <div class="row-fluid">
-                <select ng-model="vm.selectedLeague" data-ng-change="vm.leagueChanged()"
-                    ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']"></select>
+                <select data-ng-model="vm.selectedLeague" data-ng-change="vm.leagueChanged()"
+                        data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
+                </select>
                 <a><span>
-                       <b>&nbsp;{{vm.selectedLeague.seasons[0].name}}</b>
+                       <b>&nbsp;{{vm.selectedSeason.name}}</b>
                    </span></a><p />
                 <div class="form-search">
                     <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
