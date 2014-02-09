@@ -230,7 +230,7 @@
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
                 if (!vm.selectedSeason.isPartial) {
-                    return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
+                    return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         vm.predictions = data.filter(function(p) {
                             return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
                         });
@@ -240,6 +240,7 @@
                 }
             }
             vm.predictions = [];
+            vm.predictionCount = 0;
             return $q.when(false);
         }
 

@@ -363,7 +363,7 @@
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
                 if (!vm.selectedSeason.isPartial) {
-                    return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
+                    return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         return vm.predictions = data;
                     });
                 }
