@@ -7,7 +7,7 @@
                     data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
                 </select>
                 <a><span>
-                    <b>&nbsp;{{vm.selectedSeason.name}}</b>
+                    <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>
                 </span></a>
                 <p />
                 <div class="form-search">

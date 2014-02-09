@@ -103,8 +103,8 @@
             if (!vm.isBusy) {
                 vm.isBusy = true;
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
-                getFixtures()
-                    .then(initMonthPager)
+                $q.when(initMonthPager())
+                    .then(getFixtures)
                     .then(getPredictions)
                     .then(summarize);
                 vm.isBusy = false;
@@ -126,6 +126,7 @@
                 }
                 return false;
             });
+            if (!vm.selectedLeague) { vm.selectedLeague = vm.leagues[0]; }
         }
         
         function prev() {

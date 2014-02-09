@@ -10,7 +10,7 @@
         var $q = common.$q;
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
-        var currentDate = bootstrappedData.currentDate;
+        var currentDate = bootstrappedData.currentDate || new Date();
         var user = bootstrappedData.user;
         var stateKey = { filter: 'public.fixtures.filter' };
         var vm = this;
@@ -39,7 +39,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 10
+            pageSize: 3
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
@@ -65,8 +65,7 @@
 
         function activate() {
             onDestroy();
-            common.activateController([init()], controllerId)
-                .then(console.log("Kagiri mambo bad!!"));
+            common.activateController([init()], controllerId);
         }
 
         function init() {
@@ -75,6 +74,8 @@
                 .then(restoreFilter)
                 .then(initMonthPager)
                 .then(getFixtures)
+                .then(getStartingPage)
+                .then(getFilteredFixtures)
                 .then(getPredictions)
                 .then(calculateTotalPoints)
                 .then(addPredictionToFixture);
@@ -123,12 +124,13 @@
         }
 
         function gotoMonthIndex() {
-                var i = vm.monthPager.index;
-                vm.selectedMonth = vm.months[i];
-                getFixtures()
-                    .then(calculateTotalPoints)
-                    .then(addPredictionToFixture)
-                    .then(vm.isBusy = false);
+            var i = vm.monthPager.index;
+            vm.selectedMonth = vm.months[i];
+            getFixtures()
+                .then(getFilteredFixtures)
+                .then(calculateTotalPoints)
+                .then(addPredictionToFixture)
+                .then(vm.isBusy = false);
         }
 
         function restoreFilter() {
@@ -144,10 +146,12 @@
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
                 $q.when(initMonthPager())
                     .then(getFixtures)
+                    .then(getStartingPage)
+                    .then(getFilteredFixtures)
                     .then(getPredictions)
                     .then(calculateTotalPoints)
-                    .then(addPredictionToFixture);
-                vm.isBusy = false;
+                    .then(addPredictionToFixture)
+                    .then(vm.isBusy = false);
             }
         }
         
@@ -167,6 +171,7 @@
                 return false;
             });
             vm.selectedMonth = moment.utc(currentDate).format('MMMM');
+            if (!vm.selectedLeague) { vm.selectedLeague = vm.leagues[0]; }
         }
 
         function refresh() {
@@ -174,6 +179,7 @@
                 vm.predictionsToSubmit = [];
             }
             $q.all([getFixtures(true), getPredictions(true)])
+            .then(getFilteredFixtures)
                 .then(calculateTotalPoints)
                 .then(addPredictionToFixture);
         }
@@ -181,7 +187,7 @@
         function pageChanged(page) {
             if (!page) { return; }
             vm.paging.currentPage = page;
-            getFixtures().then(addPredictionToFixture);
+            getFixtures().then(getFilteredFixtures).then(addPredictionToFixture);
         }
 
         function calculateTotalPoints() {
@@ -310,12 +316,34 @@
                         return moment(f.kickOff).format('MMMM') === vm.selectedMonth;
                     });
                     vm.fixtureCount = vm.fixtures.length;
-                    getFilteredFixtures();
                 });
+        }
+
+        function getStartingPage() {
+            var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10), 
+                mCurrentDate = parseInt(moment(currentDate).format('M'), 10), 
+                dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
+
+            var reqFixture = undefined;
+            vm.fixtures.some(function(f) {
+                var yKickOff = parseInt(moment(f.kickOff).format('YYYY'), 10),
+                    mKickOff = parseInt(moment(f.kickOff).format('M'), 10),
+                    dKickOff = parseInt(moment(f.kickOff).format('D'), 10);
+                if (yKickOff >= yCurrentDate && mKickOff >= mCurrentDate && dKickOff >= dCurrentDate) {
+                    reqFixture = f;
+                    return true;
+                }
+                return false;
+            });
+            if (reqFixture) {
+                var ix = vm.fixtures.indexOf(reqFixture);
+                vm.paging.currentPage = Math.ceil(ix / vm.paging.pageSize);
+            }
         }
 
         function getFilteredFixtures() {
             var xs = vm.fixtures;
+
             var currentPage = vm.paging.currentPage,
                 pageSize = vm.paging.pageSize;
             var start = (currentPage - 1) * pageSize;
