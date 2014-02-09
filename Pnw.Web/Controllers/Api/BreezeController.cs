@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Http;
 using Breeze.ContextProvider;
 using Breeze.WebApi2;
@@ -32,8 +35,14 @@ namespace Pnw.Web.Controllers.Api
         }
 
         [HttpGet]
-        public IQueryable<Team> Teams()
+        public IQueryable<Team> Teams(int? seasonId)
         {
+            if (seasonId != null)
+            {
+                return _repository.Participations
+                    .Where(p => p.SeasonId == seasonId.Value)
+                    .Select(p => p.Team);
+            }
             return _repository.Teams;
         }
 

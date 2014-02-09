@@ -41,6 +41,10 @@
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
                 fixtures = self._getAllLocal(entityName, orderBy, predicate);
+            }
+            
+            // passing an explicit false means you know what you're doing
+            if (fixtures.length || forceRemote === false) {
                 return self.$q.when(fixtures);
             }
 

@@ -17,6 +17,7 @@
 
         vm.leagues = [];
         vm.seasons = [];
+        vm.teams = [];
         vm.fixtures = [];
         vm.filteredFixtures = [];
         vm.predictions = [];
@@ -39,7 +40,7 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 3
+            pageSize: 10
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
@@ -73,6 +74,7 @@
                 .then(getDefaults)
                 .then(restoreFilter)
                 .then(initMonthPager)
+                .then(loadTeams)
                 .then(getFixtures)
                 .then(getStartingPage)
                 .then(getFilteredFixtures)
@@ -145,6 +147,7 @@
                 vm.isBusy = true;
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
                 $q.when(initMonthPager())
+                    .then(loadTeams)
                     .then(getFixtures)
                     .then(getStartingPage)
                     .then(getFilteredFixtures)
@@ -178,7 +181,7 @@
             if (vm.predictionsToSubmit.length) {
                 vm.predictionsToSubmit = [];
             }
-            $q.all([getFixtures(true), getPredictions(true)])
+            $q.all([loadTeams(), getFixtures(true), getPredictions(true)])
             .then(getFilteredFixtures)
                 .then(calculateTotalPoints)
                 .then(addPredictionToFixture);
@@ -310,13 +313,18 @@
         }
         
         function getFixtures(forceRemote) {
-            return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id)
-                .then(function (data) {
-                    vm.fixtures = data.filter(function (f) {
-                        return moment(f.kickOff).format('MMMM') === vm.selectedMonth;
+            if (!vm.selectedSeason.isPartial) {
+                return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id)
+                    .then(function(data) {
+                        vm.fixtures = data.filter(function(f) {
+                            return moment(f.kickOff).format('MMMM') === vm.selectedMonth;
+                        });
+                        vm.fixtureCount = vm.fixtures.length;
                     });
-                    vm.fixtureCount = vm.fixtures.length;
-                });
+            }
+            vm.fixtures = [];
+            vm.fixtureCount = 0;
+            return $q.when(false);
         }
 
         function getStartingPage() {
@@ -354,14 +362,23 @@
         
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
-                return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function (data) {
-                    return vm.predictions = data;
-                });
-            } else {
-                return $q.when([]);
+                if (!vm.selectedSeason.isPartial) {
+                    return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
+                        return vm.predictions = data;
+                    });
+                }
             }
+            vm.predictions = [];
+            return $q.when(false);
         }
-        
+
+        function loadTeams() {
+            if (vm.selectedSeason.isPartial) {
+                return datacontext.team.getBySeason(vm.selectedSeason);
+            }
+            return $q.when(false);
+        }
+
         function submit() {
             if(!user.isAuthenticated) {
                 logError("You must be logged in to submit predictions");

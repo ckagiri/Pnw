@@ -24,6 +24,7 @@
             this.getAll = getAll;
             this.getFilteredCount = getFilteredCount;
             this.getAllLocal = getAllLocal;
+            this.getBySeason = getBySeason;
         }
 
         AbstractRepository.extend(Ctor);
@@ -55,9 +56,10 @@
 
             if (self.zStorage.areItemsLoaded('teams') && !forceRemote) {
                 // Get the page of teams from local cache
-                return self.$q.when(getByPage());
+                var teams = self._getAllLocal(entityName, orderBy);
+                return self.$q.when(teams);
             }
-        
+            
             return EntityQuery.from('Teams')
                .select('id, name, code, tags, imageSource')
                .orderBy(orderBy)
@@ -70,7 +72,7 @@
                 self.zStorage.areItemsLoaded('teams', true);
                 self.zStorage.save();
                 self.log('Retrieved [Team Partials] from remote data source', data.results.length, true);
-                return data;
+                return data.results;
             }
         }
         
@@ -85,17 +87,38 @@
             return teams.length;
         }
         
-        function getAllLocal(includeNullo) {
+        function getAllLocal() {
             var self = this,
                 predicate = null;
-            if (includeNullo) {
-                predicate = this._predicates.isNullo;
-            } 
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
         function _namePredicate(filterValue) {
             return Predicate.create('name', 'contains', filterValue);
+        }
+        
+        function getBySeason(season) {
+            var self = this;
+
+            return EntityQuery.from('Teams')
+                .withParameters({ seasonId: season.id })
+                .select('id, name, code, tags, imageSource')
+                .orderBy(orderBy)
+                .toType(entityName)
+                .using(self.manager).execute()
+                .to$q(querySucceeded, self._queryFailed);
+
+            function querySucceeded(data) {
+                var teams = data.results;
+                self._setIsPartialTrue(teams);
+                if (teams.length) {
+                    season.isPartial = false;
+                }
+                self.zStorage.areItemsLoaded('teams', true);
+                self.zStorage.save();
+                self.log('Retrieved [Team Partials] from remote data source', teams.length, true);
+                return teams;
+            }
         }
     }
 })();

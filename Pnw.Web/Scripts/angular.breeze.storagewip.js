@@ -65,7 +65,7 @@
             isLoaded: {
                 teams: false,
                 fixtures: false,
-                predictions: false,
+                predictions: false
             }
         };
 
@@ -95,7 +95,6 @@
                     if (importMeta.isLoaded) {
                         storeMeta.isLoaded.teams = storeMeta.isLoaded.teams || importMeta.isLoaded.teams;
                         storeMeta.isLoaded.fixtures = storeMeta.isLoaded.fixtures || importMeta.isLoaded.fixtures;
-                        storeMeta.isLoaded.results = storeMeta.isLoaded.results || importMeta.isLoaded.results;
                         storeMeta.isLoaded.predictions = storeMeta.isLoaded.predictions || importMeta.isLoaded.predictions;
                     }
                     return data[1];

@@ -33,7 +33,7 @@
             registerSeason(metadataStore);
             registerFixture(metadataStore);
             registerTeam(metadataStore);
-            
+
             modelValidation.createAndRegister(entityNames);
         }
         
@@ -121,7 +121,7 @@
             metadataStore.registerEntityTypeCtor('Season', Season);
 
             function Season() {
-                this.isPartial = false;
+                this.isPartial = true;
             }
 
             Object.defineProperty(Season.prototype, 'fullName', {

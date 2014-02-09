@@ -67,6 +67,7 @@
                 .then(getDefaults)
                 .then(restoreFilter)
                 .then(initMonthPager)
+                .then(loadTeams)
                 .then(getFixtures)
                 .then(getPredictions)
                 .then(summarize);
@@ -104,6 +105,7 @@
                 vm.isBusy = true;
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
                 $q.when(initMonthPager())
+                    .then(loadTeams)
                     .then(getFixtures)
                     .then(getPredictions)
                     .then(summarize);
@@ -207,27 +209,40 @@
                 cache.put(stateKey.filter, predictionFilter);
             });
         }
+        
+        function loadTeams() {
+            if (vm.selectedSeason.isPartial) {
+                return datacontext.team.getBySeason(vm.selectedSeason);
+            }
+            return $q.when(false);
+        }
 
         function getFixtures(forceRemote) {
-            return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id).then(function (data) {
-                vm.fixtures = data;
-            });
+            if (!vm.selectedSeason.isPartial) {
+                return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id).then(function(data) {
+                    vm.fixtures = data;
+                });
+            }
+            vm.fixtures = [];
+            return $q.when(false);
         }
 
         function getPredictions(forceRemote) {
             if (user.isAuthenticated) {
-                return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function (data) {
-                    vm.predictions = data.filter(function (p) {
-                        return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
+                if (!vm.selectedSeason.isPartial) {
+                    return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
+                        vm.predictions = data.filter(function(p) {
+                            return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
+                        });
+                        vm.predictionCount = vm.predictions.length;
+                        getFilteredPredictions();
                     });
-                    vm.predictionCount = vm.predictions.length;
-                    getFilteredPredictions();
-                });
-            } else {
-                return $q.when([]);
+                }
             }
+            vm.predictions = [];
+            return $q.when(false);
         }
-        
+
         function getFilteredPredictions() {
             var xs = vm.predictions;
             var currentPage = vm.paging.currentPage,
