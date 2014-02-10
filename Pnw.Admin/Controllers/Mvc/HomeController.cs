@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using Pnw.Admin.Filters;
 using Pnw.Admin.Models;
 using Pnw.DataAccess;
@@ -11,8 +12,10 @@ using Membership = System.Web.Security.Membership;
 namespace Pnw.Admin.Controllers.Mvc
 {
     [InitializeSimpleMembership]
+    [Authorize]
     public class HomeController : Controller
     {
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             var bootstrapVm = new BootstrapVm();

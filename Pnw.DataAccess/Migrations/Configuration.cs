@@ -519,7 +519,6 @@ namespace Pnw.DataAccess.Migrations
             {
                 membership.CreateUserAndAccount("test1", "123456");
             }
-
             if (!roles.GetRolesForUser("test1").Contains("Admin"))
             {
                 roles.AddUsersToRoles(new[] { "test1" }, new[] { "Admin" });
@@ -550,6 +549,16 @@ namespace Pnw.DataAccess.Migrations
             if (!roles.GetRolesForUser("test4").Contains("User"))
             {
                 roles.AddUsersToRoles(new[] { "test4" }, new[] { "User" });
+            }
+
+            if (membership.GetUser("test5", false) == null)
+            {
+                membership.CreateUserAndAccount("test5", "123456");
+            }
+
+            if (!roles.GetRolesForUser("test5").Contains("Admin"))
+            {
+                roles.AddUsersToRoles(new[] { "test5" }, new[] { "Admin" });
             }
         }
     }
