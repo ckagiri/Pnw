@@ -194,9 +194,8 @@
 
         function initLookups() {
             return $q.when(function () {
-                var lookups = datacontext.lookup.lookupCachedData;
-                vm.leagues = lookups.leagues;
-                vm.seasons = lookups.seasons;
+                vm.leagues = datacontext.league.getAllLocal();
+                vm.seasons = datacontext.season.getAllLocal();
             }());
         }
 

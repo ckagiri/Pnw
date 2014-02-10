@@ -239,6 +239,7 @@
     <Content Include="app\predict\predictions.js" />
     <Content Include="app\services\cache.js" />
     <Content Include="app\services\repository.leaderboard.js" />
+    <Content Include="app\services\repository.league.js" />
     <Content Include="app\services\repository.prediction.js" />
     <Content Include="app\services\datacontext.js" />
     <Content Include="app\services\directives.js" />
@@ -249,7 +250,7 @@
     <Content Include="app\services\repositories.js" />
     <Content Include="app\services\repository.abstract.js" />
     <Content Include="app\services\repository.fixture.js" />
-    <Content Include="app\services\repository.lookup.js" />
+    <Content Include="app\services\repository.season.js" />
     <Content Include="app\services\repository.team.js" />
     <Content Include="app\services\routemediator.js" />
     <Content Include="Content\bootstrap-responsive.css" />

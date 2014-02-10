@@ -76,11 +76,10 @@
 
             if (self.zStorage.areItemsLoaded('predictions') && !forceRemote) {
                 predictions = self._getAllLocal(entityName, orderBy, predicate);
-            }
-            
-            // passing an explicit false means you know what you're doing
-            if (predictions.length || forceRemote === false) {
-                return self.$q.when(predictions);
+                // passing an explicit false means you know what you're doing
+                if (predictions.length || forceRemote === false) {
+                    return self.$q.when(predictions);
+                }
             }
 
             return EntityQuery.from('Predictions')
