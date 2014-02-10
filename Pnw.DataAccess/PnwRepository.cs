@@ -102,8 +102,10 @@ namespace Pnw.DataAccess
                          let lastPrediction = g.OrderByDescending(n => n.FixtureDate).FirstOrDefault()
                          select new
                                     {
+                                        @group.UserId, 
+                                        @group.LeagueId, 
+                                        @group.SeasonId,
                                         UserName = u.Username,
-                                        UserId = @group.UserId,
                                         Points = g.Sum(p => p.Points),
                                         CorrectScorePoints = g.Sum(p => p.CorrectScorePoints),
                                         CorrectResultPoints = g.Sum(p => p.CorrectResultPoints),
@@ -117,8 +119,10 @@ namespace Pnw.DataAccess
                 .Select((v, i) => new
                                       {
                                           Id = i + 1,
+                                          v.UserId, 
+                                          v.LeagueId, 
+                                          v.SeasonId,
                                           v.UserName,
-                                          v.UserId,
                                           v.Points,
                                           v.CorrectScorePoints,
                                           v.CorrectResultPoints,

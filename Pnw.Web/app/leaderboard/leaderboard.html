@@ -37,10 +37,11 @@
                                     <th>CrossProductPoints</th>
                                     <th>SpreadDifference</th>
                                     <th>AccuracyDifference</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-ng-repeat="lb in vm.leaderboard">
+                                <tr data-ng-repeat="lb in vm.leaderboard" title="Go to user's predictions">
                                     <td>{{$index + 1}}</td>
                                     <td>{{lb.userName}}</td>
                                     <td>{{lb.points}}</td>
@@ -49,6 +50,7 @@
                                     <td>{{lb.crossProductPoints}}</td>
                                     <td>{{lb.spreadDifference}}</td>
                                     <td>{{lb.accuracyDifference}}</td>
+                                    <td><a href="#/predictions?userId={{lb.userId}}&leagueId={{lb.leagueId}}&seasonId={{lb.seasonId}}">GotoPredictions</a></td>
                                 </tr>
                             </tbody>
                         </table>

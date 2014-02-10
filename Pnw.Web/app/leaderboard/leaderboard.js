@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'leaderboard';
-    angular.module('app').controller(controllerId, ['bootstrappedData', 'common', 'datacontext', leaderboard]);
+    angular.module('app').controller(controllerId, ['$location', 'bootstrappedData', 'common', 'datacontext', leaderboard]);
 
-    function leaderboard(bootstrappedData, common, datacontext) {
+    function leaderboard($location, bootstrappedData, common, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var defaultLeague = bootstrappedData.defaultLeague;
@@ -20,6 +20,7 @@
         vm.selectedSeason = undefined;
         vm.leagueChanged = onLeagueChanged;
         vm.getLeaderboard = function () { };
+        vm.gotoPredictions = gotoPredictions;
         vm.refresh = refresh;
         
         activate();
@@ -67,6 +68,12 @@
                 vm.leagues = datacontext.league.getAllLocal();
                 vm.seasons = datacontext.season.getAllLocal();
             }());
+        }
+
+        function gotoPredictions(lb) {
+            if (lb && lb.userId && lb.leagueId && lb.seasonId) {
+                $location.path('/predictions?userId=' + lb.userId + '&leagueId=' + lb.leagueId + '&seasonId=' + lb.seasonId);
+            }
         }
 
         function refresh() {

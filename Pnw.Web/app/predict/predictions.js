@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'predictions';
-    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData', 'cache', 'common', 'config', 'datacontext', predictions]);
+    angular.module('app').controller(controllerId, ['$route', '$routeParams', '$scope', 'bootstrappedData', 'cache', 'common', 'config', 'datacontext', predictions]);
 
-    function predictions($scope, bootstrappedData, cache, common, config, datacontext) {
+    function predictions($route, $routeParams, $scope, bootstrappedData, cache, common, config, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
@@ -73,11 +73,15 @@
                 .then(summarize);
         }
         
-        function restoreFilter() {
-            var cached = cache.get(stateKey.filter);
-            if (!cached) { return; }
-            vm.selectedLeague = cached.selectedLeague;
-            vm.selectedSeason = cached.selectedSeason;
+        function restoreFilter(restore) {
+            if (restore) {
+                var cached = cache.get(stateKey.filter);
+                if (!cached) {
+                    return;
+                }
+                vm.selectedLeague = cached.selectedLeague;
+                vm.selectedSeason = cached.selectedSeason;
+            }
         }
 
         function summarize() {
@@ -114,21 +118,44 @@
         }
         
         function getDefaults() {
-            vm.leagues.some(function (n) {
-                if (n.id === defaultLeague.id) {
-                    vm.selectedLeague = n;
-                    return true;
-                }
+            var userId = parseInt($route.current.params.userId, 10);
+            var leagueId = parseInt($route.current.params.leagueId, 10);
+            var seasonId = parseInt($route.current.params.seasonId, 10);
+
+            if (userId && leagueId && seasonId) {
+                vm.selectedLeague = getSelectedLeague(leagueId);
+                vm.selectedSeason = getSelectedSeason(seasonId);
+                user = { isAuthenticated: true, id: userId }; // todo: find elegant alternative 
                 return false;
-            });
-            vm.seasons.some(function (n) {
-                if (n.id === defaultSeason.id) {
-                    vm.selectedSeason = n;
-                    return true;
-                }
-                return false;
-            });
+            } else {
+                vm.selectedLeague = getSelectedLeague(defaultLeague.id);
+                vm.selectedSeason = getSelectedSeason(defaultSeason.id);
+            }
+
             if (!vm.selectedLeague) { vm.selectedLeague = vm.leagues[0]; }
+            return true;
+
+            function getSelectedLeague(id) {
+                vm.leagues.some(function (n) {
+                    if (n.id === id) {
+                        vm.selectedLeague = n;
+                        return true;
+                    }
+                    return false;
+                });
+                return vm.selectedLeague;
+            }
+
+            function getSelectedSeason(id) {
+                vm.seasons.some(function (n) {
+                    if (n.id === id) {
+                        vm.selectedSeason = n;
+                        return true;
+                    }
+                    return false;
+                });
+                return vm.selectedSeason;
+            }
         }
         
         function prev() {
