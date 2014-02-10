@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Breeze.ContextProvider;
 using Breeze.ContextProvider.EF6;
@@ -16,11 +17,33 @@ namespace Pnw.DataAccess
             _contextProvider = new EFContextProvider<PnwDbContext>();
 
         private PnwDbContext Context { get { return _contextProvider.Context; } }
+        
+        public PnwRepository()
+        {
+            _contextProvider.BeforeSaveEntitiesDelegate = BeforeSaveEntities;
+        }
 
         public string Metadata
         {
             get { return _contextProvider.Metadata(); }
         }
+
+        private Dictionary<Type, List<EntityInfo>> BeforeSaveEntities(Dictionary<Type, List<EntityInfo>> saveMap)
+        {
+            // Validate entities
+            foreach (var type in saveMap.Keys)
+            {
+                if (type == typeof(Prediction))
+                {
+                    foreach (var predictionEntityInfo in saveMap[type])
+                    {
+                        var prediction = ((Prediction)predictionEntityInfo.Entity);
+                    }
+                }
+            }
+            return saveMap;
+        }
+
 
         public SaveResult SaveChanges(JObject saveBundle)
         {
