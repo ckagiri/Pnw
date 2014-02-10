@@ -71,6 +71,7 @@ namespace Pnw.DataAccess.Migrations
                                              StartDate = now.AddDays(-14),
                                              EndDate = now.AddDays(91),
                                              Name = "2013 - 2014",
+                                             IsReady = true
                                          },
                                      new Season
                                          {

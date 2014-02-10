@@ -344,7 +344,7 @@
             });
             if (reqFixture) {
                 var ix = vm.fixtures.indexOf(reqFixture);
-                vm.paging.currentPage = Math.ceil(ix / vm.paging.pageSize);
+                vm.paging.currentPage = Math.ceil((ix + 1)/ vm.paging.pageSize);
             }
         }
 

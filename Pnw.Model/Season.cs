@@ -19,6 +19,7 @@ namespace Pnw.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int LeagueId { get; set; }
+        public bool IsReady { get; set; }
 
         [JsonIgnore]
         [IgnoreDataMember] 

@@ -39,6 +39,13 @@ namespace Pnw.Web.Controllers.Api
         {
             if (seasonId != null)
             {
+                var season = _repository.Seasons.FirstOrDefault(s => s.Id == seasonId.Value);
+                if (season == null || !season.IsReady)
+                {
+                    var emptyList = new List<Team>();
+                    return emptyList.AsQueryable();
+                }
+                
                 return _repository.Participations
                     .Where(p => p.SeasonId == seasonId.Value)
                     .Select(p => p.Team);
