@@ -52,14 +52,13 @@
             var fixtures = [];
 
             if (self.zStorage.areItemsLoaded('fixtures') && !forceRemote) {
-                //fixtures = self._getAllLocal(entityName, orderBy, predicate);
                 return self.$q.when(getByPage());
             }
 
             return EntityQuery.from('Fixtures')
                 .select('id, seasonId, leagueId, kickOff, homeTeamId, awayTeamId, matchStatus, venue, canPredict')
                 .orderBy(orderBy)
-                .toType('Fixture')
+                .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
 
