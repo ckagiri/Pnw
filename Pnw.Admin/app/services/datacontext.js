@@ -75,13 +75,13 @@
         
         function listenForStorageEvents() {
             $rootScope.$on(config.events.storage.storeChanged, function (event, data) {
-                log('Updated local storage', data, true);
+                log('Updated local storage', data, false);
             });
             $rootScope.$on(config.events.storage.wipChanged, function (event, data) {
-                log('Updated WIP', data, true);
+                log('Updated WIP', data, false);
             });
             $rootScope.$on(config.events.storage.error, function (event, data) {
-                logError('Error with local storage. ' + data.activity, data, true);
+                logError('Error with local storage. ' + data.activity, data, false);
             });
         }
 
@@ -96,14 +96,14 @@
             // grab it. otherwise get from 'resources'
             var storageEnabledAndHasData = zStorage.load(manager);
             primePromise = storageEnabledAndHasData ?
-                $q.when(log('Loading entities and metadata from local storage')) :
+                $q.when(log('Loading entities and metadata from local storage', null, false)) :
                 $q.all([service.league.getAll(true), service.season.getAll(true)]).then(extendMetadata);
 
             return primePromise.then(success);
            
             function success() {
                 zStorage.save();
-                log('Primed the data');
+                log('Primed the data', null, false);
             }
 
             function extendMetadata() {

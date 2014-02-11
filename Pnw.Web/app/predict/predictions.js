@@ -7,6 +7,7 @@
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
+        var logSuccess = getLogFn(controllerId, 'success');
         var $q = common.$q;
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
@@ -216,7 +217,7 @@
 
         function refresh() {
             return $q.all([getFixtures(true), getPredictions(true)])
-                .then(summarize);
+                .then(summarize).then(logSuccess("Refresh Successful", null, true));
         }
 
         function initLookups() {

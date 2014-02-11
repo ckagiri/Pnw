@@ -19,8 +19,7 @@
         activate();
 
         function activate() {
-            common.activateController([init()], controllerId)
-                .then(function () { log('Activated HowToPlay View'); });
+            common.activateController([init()], controllerId);
         }
 
         function init() {

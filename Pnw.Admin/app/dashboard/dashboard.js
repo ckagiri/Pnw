@@ -13,8 +13,7 @@
         activate();
 
         function activate() {
-            common.activateController([], controllerId)
-                .then(function () { log('Activated Dashboard View'); });
+            common.activateController([], controllerId);
         }
     }
 })();

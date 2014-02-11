@@ -54,7 +54,7 @@
                 seasons = data.results;
                 self.zStorage.areItemsLoaded('seasons', true);
                 self.zStorage.save();
-                self.log('Retrieved [Season Partials] from remote data source', seasons.length, true);
+                self.log('Retrieved [Season Partials] from remote data source', seasons.length, false);
                 return seasons;
             }
         }

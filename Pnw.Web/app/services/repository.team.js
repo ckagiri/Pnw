@@ -71,7 +71,7 @@
                 self._setIsPartialTrue(data.results);
                 self.zStorage.areItemsLoaded('teams', true);
                 self.zStorage.save();
-                self.log('Retrieved [Team Partials] from remote data source', data.results.length, true);
+                self.log('Retrieved [Team Partials] from remote data source', data.results.length, false);
                 return data.results;
             }
         }
@@ -116,7 +116,7 @@
                 }
                 self.zStorage.areItemsLoaded('teams', true);
                 self.zStorage.save();
-                self.log('Retrieved [Team Partials] from remote data source', teams.length, true);
+                self.log('Retrieved [Team Partials] from remote data source', teams.length, false);
                 return teams;
             }
         }

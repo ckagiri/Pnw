@@ -26,7 +26,7 @@
         activate();
 
         function activate() {
-            logSuccess('Pnw Admin loaded!', null, true);
+            logSuccess('Pnw Web loaded!', null, true);
             common.activateController([], controllerId).then(function () {
                 vm.showSplash = false;
             });

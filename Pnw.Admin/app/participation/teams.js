@@ -20,8 +20,7 @@
         activate();
 
         function activate() {
-            common.activateController([init()], controllerId)
-                .then(function () { log('Activated Seasons View'); });
+            common.activateController([init()], controllerId);
         }
         
         function init() {

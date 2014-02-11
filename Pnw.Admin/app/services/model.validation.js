@@ -29,7 +29,7 @@
             // Step 2) Tell breeze about it
             Validator.register(requireReferenceValidator);
             // Step 3) Later we will apply them to the properties/entites via applyValidators
-            log('Validators created and registered', null, serviceId, false);
+            log('Validators created and registered', null, false);
         }
 
         function applyRequireReferenceValidators(metadataStore) {

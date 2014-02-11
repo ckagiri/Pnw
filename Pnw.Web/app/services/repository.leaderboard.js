@@ -42,7 +42,7 @@
                 leaderboard = data.results;
                 self.zStorage.areItemsLoaded('leaderboard', true);
                 self.zStorage.save();
-                self.log('Retrieved [Leaderboard] from remote data source', leaderboard.length, true);
+                self.log('Retrieved [Leaderboard] from remote data source', leaderboard.length, false);
                 return leaderboard;
             }
         }

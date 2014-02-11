@@ -62,7 +62,7 @@
                 }
                 self.zStorage.areItemsLoaded('fixtures', true);
                 self.zStorage.save();
-                self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, true);
+                self.log('Retrieved [Fixture Partials] from remote data source', fixtures.length, false);
                 return fixtures;
             }
         }

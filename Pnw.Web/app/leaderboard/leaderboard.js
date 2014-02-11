@@ -6,6 +6,8 @@
     function leaderboard($location, bootstrappedData, common, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logError = getLogFn(controllerId, 'error');
+        var logSuccess = getLogFn(controllerId, 'success');
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
         var currentDate = bootstrappedData.currentDate;
@@ -28,8 +30,7 @@
         function activate() {
             initLookups();
             getDefaults();
-            common.activateController([getLeaderBoard()], controllerId)
-                .then(function () { log('Activated Leaderboard View'); });
+            common.activateController([getLeaderBoard()], controllerId);
         }
         
         function getDefaults() {
@@ -77,7 +78,7 @@
         }
 
         function refresh() {
-            getLeaderBoard(true);
+            getLeaderBoard(true).then(logSuccess("Refresh Successful", null, true));
         }
     }
 })();

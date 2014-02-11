@@ -7,6 +7,7 @@
         var vm = this;
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var keyCodes = config.keyCodes;
 
         vm.teams = [];
@@ -38,8 +39,7 @@
         activate();
 
         function activate() {
-            common.activateController([getTeams()], controllerId)
-                .then(function () { log('Activated Teams View'); });
+            common.activateController([getTeams()], controllerId);
         }
         
         function gotoTeam(team) {

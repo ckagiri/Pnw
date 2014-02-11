@@ -16,8 +16,7 @@
 
         function activate() {
             var promises = [datacontext.team.getAll(), getLeagues()];
-            common.activateController(promises, controllerId)
-                .then(function () { log('Activated Leagues View'); });
+            common.activateController(promises, controllerId);
         }
 
         function getLeagues() {

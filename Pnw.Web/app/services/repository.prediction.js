@@ -95,7 +95,7 @@
                 predictions = data.results;
                 self.zStorage.areItemsLoaded('predictions', true);
                 self.zStorage.save();
-                self.log('Retrieved [Prediction Partials] from remote data source', predictions.length, true);
+                self.log('Retrieved [Prediction Partials] from remote data source', predictions.length, false);
                 return predictions;
             }
         }

@@ -51,8 +51,7 @@
 
         function activate() {
             onDestroy();
-            common.activateController([init()], controllerId)
-                .then(function() { log('Activated Fixtures View'); });
+            common.activateController([init()], controllerId);
         }
 
         function init() {

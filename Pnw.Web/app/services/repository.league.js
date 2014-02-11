@@ -54,7 +54,7 @@
                 leagues = data.results;
                 self.zStorage.areItemsLoaded('leagues', true);
                 self.zStorage.save();
-                self.log('Retrieved [League Partials] from remote data source', leagues.length, true);
+                self.log('Retrieved [League Partials] from remote data source', leagues.length, false);
                 return leagues;
             }
         }
