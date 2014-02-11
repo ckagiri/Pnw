@@ -20,7 +20,7 @@
         vm.seasons = [];
         vm.selectedLeague = null;
         vm.selectedSeason = null;
-        vm.getSeasons = getSeasons;
+        vm.leagueChanged = onLeagueChanged;
         vm.getFixtures = getFixtures;
         vm.fixtureCount = 0;
         vm.fixtureFilteredCount = 0;
@@ -109,12 +109,13 @@
             });
         }
 
-        function getSeasons() {
-            vm.selectedSeason = null;
+        function onLeagueChanged() {
+            vm.selectedSeason = vm.selectedLeague.seasons[0];
             vm.fixtures = [];
             vm.fixtureCount = 0;
             vm.fixtureFilteredCount = 0;
             vm.seasons = vm.selectedLeague.seasons;
+            getFixtures();
         }
         
         function gotoFixture(fixture) {

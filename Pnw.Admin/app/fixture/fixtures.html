@@ -4,7 +4,7 @@
             <div class="row-fluid">
                 <div class="form-search">
                     <select data-ng-model="vm.selectedLeague" data-ng-options="l as l.name for l in vm.leagues"
-                        data-ng-change="vm.getSeasons()">
+                        data-ng-change="vm.leagueChanged()">
                         <option value="">-- Select League --</option>
                     </select>
                     <select data-ng-model="vm.selectedSeason" data-ng-options="s as s.name for s in vm.selectedLeague.seasons"

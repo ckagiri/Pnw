@@ -19,7 +19,7 @@
         vm.seasons = [];
         vm.selectedLeague = null;
         vm.selectedSeason = null;
-        vm.getSeasons = getSeasons;
+        vm.leagueChanged = onLeagueChanged;
         vm.getResults = getResults;
         vm.resultCount = 0;
         vm.resultFilteredCount = 0;
@@ -78,12 +78,13 @@
             vm.selectedSeason = cached.selectedSeason;
         }
         
-        function getSeasons() {
-            vm.selectedSeason = null;
+        function onLeagueChanged() {
+            vm.selectedSeason = vm.selectedLeague.seasons[0];
             vm.results = [];
             vm.resultCount = 0;
             vm.resultFilteredCount = 0;
             vm.seasons = vm.selectedLeague.seasons;
+            getResults();
         }
         
         function getResults(forceRemote) {

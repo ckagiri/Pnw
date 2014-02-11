@@ -26,7 +26,12 @@
         
         Object.defineProperty(vm.paging, 'pageCount', {
             get: function () {
-                return Math.floor(vm.teamFilteredCount / vm.paging.pageSize) + 1;
+                var val = vm.teamFilteredCount / vm.paging.pageSize;
+                var pageCount = Math.floor(val);
+                if (!common.isNumber(val)) {
+                    pageCount += 1;
+                }
+                return pageCount;
             }
         });
 
