@@ -63,6 +63,16 @@
                         content: '<i class="icon-trophy"></i> Leaderboard'
                     }
                 }
+            }, {
+                url: '/howtoplay',
+                config: {
+                    templateUrl: 'app/general/howtoplay.html',
+                    title: 'How To Play',
+                    settings: {
+                        nav: 1,
+                        content: '<i class="icon-book"></i> How To Play'
+                    }
+                }
             }
         ];
     }

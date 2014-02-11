@@ -265,7 +265,6 @@
     <Content Include="app\services\repository.abstract.js" />
     <Content Include="app\services\repository.fixture.js" />
     <Content Include="app\services\cache.js" />
-    <Content Include="App_Data\repository.lookup.js" />
     <Content Include="app\services\repository.result.js" />
     <Content Include="app\services\repository.team.js" />
     <Content Include="app\services\routemediator.js" />
@@ -510,7 +509,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
