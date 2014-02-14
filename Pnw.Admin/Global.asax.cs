@@ -41,8 +41,8 @@ namespace Pnw.Admin
                     {
                         using (var context = new PnwDbContext())
                         {
-                            var results = context.Fixtures.Where
-                                (f => f.MatchStatus != MatchStatus.Scheduled && f.CanPredict).ToArray();
+                            var results = context.Fixtures.Where(f => f.MatchStatus != MatchStatus.Scheduled 
+                                && f.MatchStatus != MatchStatus.InProgress && f.CanPredict).ToArray();
                             if (!results.Any()) 
                                 return;
                             using (var scope = new TransactionScope(

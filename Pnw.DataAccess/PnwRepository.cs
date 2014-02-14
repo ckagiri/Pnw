@@ -38,6 +38,16 @@ namespace Pnw.DataAccess
                     foreach (var predictionEntityInfo in saveMap[type])
                     {
                         var prediction = ((Prediction)predictionEntityInfo.Entity);
+                        var fixture = _contextProvider.Context.Fixtures.FirstOrDefault(f => f.Id == prediction.FixtureId);
+                        if(fixture != null)
+                        {
+                            if(fixture.MatchStatus != MatchStatus.Scheduled)
+                            {
+                                var error = new EFEntityError(predictionEntityInfo, "Invalid", "Match is not in scheduled mode",
+                                                              "HomeGoals");
+                                throw new EntityErrorsException(new[] {error});
+                            }
+                        }
                     }
                 }
             }

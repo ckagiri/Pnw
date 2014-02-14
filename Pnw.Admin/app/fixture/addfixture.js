@@ -92,6 +92,13 @@
                 });
         }
 
+        function convertToUtc(dt) {
+            var localDate = new Date(dt);
+            var localTime = localDate.getTime();
+            var localOffset = localDate.getTimezoneOffset() * 60000;
+            return new Date(localTime + localOffset);
+        }
+
         function save() {
             if (!canSave()) { return $q.when(null); } // Must return a promise
 

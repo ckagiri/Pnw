@@ -107,6 +107,10 @@
     <Compile Include="Configuration\OAuthMembershipConfiguration.cs" />
     <Compile Include="Configuration\RoleConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="Migrations\201402141456344_Initial.cs" />
+    <Compile Include="Migrations\201402141456344_Initial.Designer.cs">
+      <DependentUpon>201402141456344_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PnwDbContext.cs">
       <SubType>Code</SubType>
@@ -132,6 +136,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201402141456344_Initial.resx">
+      <DependentUpon>201402141456344_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

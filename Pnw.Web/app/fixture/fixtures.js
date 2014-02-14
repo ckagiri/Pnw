@@ -395,11 +395,8 @@
                     vm.isSubmitting = false;
                 });
             }, function (error) {
-                getPredictions().then(function () {
-                    addPredictionToFixture();
-                    vm.predictionsToSubmit = [];
-                    vm.isSubmitting = false;
-                });
+                cancel();
+                vm.isSubmitting = false;
             });
         }
     }

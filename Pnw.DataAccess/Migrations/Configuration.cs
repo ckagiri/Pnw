@@ -6,14 +6,15 @@ using Membership = System.Web.Security.Membership;
 namespace Pnw.DataAccess.Migrations
 {
     using System;
+    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public sealed class Configuration : DbMigrationsConfiguration<PnwDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<Pnw.DataAccess.PnwDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = true;
         }
 
@@ -25,7 +26,6 @@ namespace Pnw.DataAccess.Migrations
 
 
             AddTeamsToSeason(context, leagues, seasons, teams);
-            //AddFixturesToSeason(context, leagues, seasons, teams);
             SeedMembership(context);
         }
 
@@ -106,7 +106,7 @@ namespace Pnw.DataAccess.Migrations
                                      };
 
             var seasons = eplSeasons.Concat(kplSeasons).Concat(worldcupSeason).ToArray();
-            context.Seasons.AddOrUpdate(p => new {p.LeagueId, p.Name}, seasons);
+            context.Seasons.AddOrUpdate(p => new { p.LeagueId, p.Name }, seasons);
 
             return seasons;
         }
@@ -321,7 +321,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "SWA",
                                            HomeGround = "Liberty Stadium",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "swansea.png"
+                                           ImageSource = "swansea_city.png"
                                        },
                                    new Team
                                        {
@@ -337,7 +337,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "NOR",
                                            HomeGround = "Carrow Road",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "english_premier_league.png"
+                                           ImageSource = "norwich_city.png"
                                        },
                                    new Team
                                        {
@@ -361,7 +361,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "SOU",
                                            HomeGround = "St. Marys",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "english_premier_league.png"
+                                           ImageSource = "southampton.png"
                                        },
                                    new Team
                                        {
@@ -393,7 +393,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "HUC",
                                            HomeGround = "KC Stadium",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "english_premier_league.png"
+                                           ImageSource = "hull_city.png"
                                        },
                                    new Team
                                        {
@@ -401,7 +401,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "CAC",
                                            HomeGround = "Cardiff City Stadium",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "english_premier_league.png"
+                                           ImageSource = "cardiff_city.png"
                                        },
                                    new Team
                                        {
@@ -409,7 +409,7 @@ namespace Pnw.DataAccess.Migrations
                                            Code = "CRP",
                                            HomeGround = "Selhurst Park",
                                            Tags = "EPL|England|UK",
-                                           ImageSource = "english_premier_league.png"
+                                           ImageSource = "crystal_palace.png"
                                        }
                                };
             # endregion
@@ -634,148 +634,18 @@ namespace Pnw.DataAccess.Migrations
             var teamsWc = teams.Skip(36).ToList();
 
             teamsKpl.ForEach(t => kplSeason.ParticipationList.Add(
-                new Participation {Season = kplSeason, Team = t}));
+                new Participation { Season = kplSeason, Team = t }));
             teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
-                new Participation {Season = eplSeason, Team = t}));
+                new Participation { Season = eplSeason, Team = t }));
             teamsWc.ForEach(t => wcSeason.ParticipationList.Add(
-                new Participation { Season = wcSeason, Team = t}));
+                new Participation { Season = wcSeason, Team = t }));
 
             var participations = eplSeason.ParticipationList
                 .Concat(kplSeason.ParticipationList)
                 .Concat(wcSeason.ParticipationList).ToArray();
 
-            context.Participations.AddOrUpdate(p => new {p.SeasonId, p.TeamId}, participations);
+            context.Participations.AddOrUpdate(p => new { p.SeasonId, p.TeamId }, participations);
         }
-
-        #region fixtures
-        private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
-        {
-            var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
-            var eplLeague = leagues.First(l => l.Code == "EPL");
-            var manunited = teams.First(t => t.Code == "MANU");
-            var mancity = teams.First(t => t.Code == "MANC");
-            var arsenal = teams.First(t => t.Code == "ARS");
-            var liverpool = teams.First(t => t.Code == "LIV");
-            var spurs = teams.First(t => t.Code == "TOTT");
-            var everton = teams.First(t => t.Code == "EVE");
-            var newcastle = teams.First(t => t.Code == "NUTD");
-            var chelsea = teams.First(t => t.Code == "CHE");
-
-            var now = DateTime.Now;
-            var day1 = now.AddDays(-4).AddHours(-3);
-            var day2 = now.AddDays(-4);
-            var day3 = now.AddHours(10);
-            var day4 = now.AddHours(15);
-            var day5 = now.AddDays(7);
-            var day6 = now.AddDays(7).AddHours(3);
-            var eplFixtures = new[]
-                                  {
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = manunited.Id,
-                                              AwayTeamId = chelsea.Id,
-                                              Venue = manunited.HomeGround,
-                                              KickOff = day1,
-                                              HomeScore = 2,
-                                              AwayScore = 2,
-                                              MatchStatus = MatchStatus.Played,
-                                              HomeTeamImageSource = "manu1.png",
-                                              AwayTeamImageSource = "chelsea2.png",
-                                              CanPredict = false
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = mancity.Id,
-                                              AwayTeamId = arsenal.Id,
-                                              Venue = mancity.HomeGround,
-                                              KickOff = day2,
-                                              HomeScore = 2,
-                                              AwayScore = 3,
-                                              MatchStatus = MatchStatus.Played,
-                                              HomeTeamImageSource = "mancity1.png",
-                                              AwayTeamImageSource = "arsenal2.png",
-                                              CanPredict = false
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = everton.Id,
-                                              AwayTeamId = liverpool.Id,
-                                              Venue = everton.HomeGround,
-                                              KickOff = day3,
-                                              HomeTeamImageSource = "everton1.png",
-                                              AwayTeamImageSource = "liverpool2.png",
-                                              CanPredict = true
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = spurs.Id,
-                                              AwayTeamId = newcastle.Id,
-                                              Venue = spurs.HomeGround,
-                                              KickOff = day4,
-                                              HomeTeamImageSource = "tottenham1.png",
-                                              AwayTeamImageSource = "newcastle2.png",
-                                              CanPredict = true
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = chelsea.Id,
-                                              AwayTeamId = spurs.Id,
-                                              Venue = chelsea.HomeGround,
-                                              KickOff = day5,
-                                              HomeTeamImageSource = "chelsea1.png",
-                                              AwayTeamImageSource = "tottenham2.png",
-                                              CanPredict = true
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = arsenal.Id,
-                                              AwayTeamId = manunited.Id,
-                                              Venue = arsenal.HomeGround,
-                                              KickOff = day6.AddHours(3),
-                                              HomeTeamImageSource = "arsenal1.png",
-                                              AwayTeamImageSource = "manu2.png",
-                                              CanPredict = true
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = liverpool.Id,
-                                              AwayTeamId = mancity.Id,
-                                              Venue = liverpool.HomeGround,
-                                              KickOff = day6.AddHours(6),
-                                              HomeTeamImageSource = "liverpool1.png",
-                                              AwayTeamImageSource = "mancity2.png",
-                                              CanPredict = true
-                                          },
-                                      new Fixture
-                                          {
-                                              Season = eplSeason,
-                                              League = eplLeague,
-                                              HomeTeamId = newcastle.Id,
-                                              AwayTeamId = everton.Id,
-                                              Venue = newcastle.HomeGround,
-                                              KickOff = day6.AddHours(6),
-                                              HomeTeamImageSource = "newcastle1.png",
-                                              AwayTeamImageSource = "everton2.png",
-                                              CanPredict = true
-                                          }
-                                  };
-            context.Fixtures.AddOrUpdate(p => new {p.SeasonId, p.HomeTeamId, p.AwayTeamId}, eplFixtures);
-        }
-        #endregion
 
         private void SeedMembership(PnwDbContext context)
         {
@@ -844,5 +714,3 @@ namespace Pnw.DataAccess.Migrations
         }
     }
 }
-    
-

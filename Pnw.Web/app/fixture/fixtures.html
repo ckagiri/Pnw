@@ -6,7 +6,7 @@
                         data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
                 </select>
                 <a><span>
-                       <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>
+                       <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>&nbsp;&nbsp;(Timezone: GMT)
                    </span></a><p />
                 <div class="form-search">
                     <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
@@ -58,68 +58,68 @@
                 </div>
             </div>
             <div class="row-fluid">
-                    <div class="widget wviolet">
-                        <div data-cc-widget-header title="Fixtures"
-                            right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}"></div>
-                        <div class="widget-content text-center text-info" data-ng-switch="!!vm.fixtures.length">
-                            <div data-ng-switch-when="false">No Fixtures Yet</div>
-                            <table class="table table-condensed table-striped" data-ng-switch-when="true">
-                                <thead>
-                                    <tr>
-                                        <th>Kickoff</th>
-                                        <th></th>
-                                        <th class="text-center" colspan="2">
-                                            Match
-                                        </th>
-                                        <th></th>
-                                        <th>Prediction</th>
-                                        <th>Actual Score</th>
-                                        <th>Points</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr data-ng-repeat="f in vm.filteredFixtures">
-                                        <td>{{f.kickOffFormatted}}</td>
-                                        <td><img data-cc-img-person="{{f.homeTeam.imageSource}}" 
-                                                 class="thumbnail img-polaroid user-pic hidden-phone"/></td>
-                                        <td>{{f.homeTeam.name}}</td>
-                                        <td><img data-cc-img-person="{{f.awayTeam.imageSource}}" 
-                                                 class="thumbnail img-polaroid user-pic hidden-phone"/></td>
-                                        <td>{{f.awayTeam.name}}</td>
-                                        <td class="text-center">
-                                            <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.homeGoals" data-ng-options="goals for goals in vm.goalRange"
-                                                    data-ng-change="vm.homePredictionChanged(f)" class="input-mini">
-                                                <option value="">-</option>
-                                            </select>&nbsp;
-                                            <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.awayGoals" data-ng-options="goals for goals in vm.goalRange"
-                                                    data-ng-change="vm.awayPredictionChanged(f)" class="input-mini">
-                                                <option value="">-</option>
-                                            </select>
-                                        </td>
-                                        <td>{{f.score}}</td>
-                                        <td>{{f.prediction.isProcessed == null ? '': f.prediction.isProcessed === false ? "?" : f.prediction.points}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="widget-foot">
+                <div class="widget wviolet">
+                    <div data-cc-widget-header title="Fixtures"
+                         right-text="Page {{vm.paging.currentPage}} of {{vm.paging.pageCount}}"></div>
+                    <div class="widget-content text-center text-info" data-ng-switch="!!vm.fixtures.length">
+                        <div data-ng-switch-when="false">No Fixtures Yet</div>
+                        <table class="table table-condensed table-striped" data-ng-switch-when="true">
+                            <thead>
+                                <tr>
+                                    <th>Kickoff</th>
+                                    <th></th>
+                                    <th class="text-center" colspan="2">
+                                        Match
+                                    </th>
+                                    <th></th>
+                                    <th>Prediction</th>
+                                    <th>Actual Score</th>
+                                    <th>Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="f in vm.filteredFixtures">
+                                    <td>{{f.kickOffFormatted}}</td>
+                                    <td><img data-cc-img-person="{{f.homeTeam.imageSource}}" 
+                                             class="thumbnail img-polaroid user-pic hidden-phone"/></td>
+                                    <td>{{f.homeTeam.name}}</td>
+                                    <td><img data-cc-img-person="{{f.awayTeam.imageSource}}" 
+                                             class="thumbnail img-polaroid user-pic hidden-phone"/></td>
+                                    <td>{{f.awayTeam.name}}</td>
+                                    <td class="text-center">
+                                        <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.homeGoals" data-ng-options="goals for goals in vm.goalRange"
+                                                data-ng-change="vm.homePredictionChanged(f)" class="input-mini">
+                                            <option value="">-</option>
+                                        </select>&nbsp;
+                                        <select data-ng-disabled="!f.isScheduled || !f.canPredict" data-ng-model="f.prediction.awayGoals" data-ng-options="goals for goals in vm.goalRange"
+                                                data-ng-change="vm.awayPredictionChanged(f)" class="input-mini">
+                                            <option value="">-</option>
+                                        </select>
+                                    </td>
+                                    <td>{{f.score}}</td>
+                                    <td>{{f.prediction.isProcessed == null ? '': f.prediction.isProcessed === false ? "?" : f.prediction.points}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="widget-foot">
                         <div class="clearfix"></div>
                         <pagination boundary-links="true"
-                            on-select-page="vm.pageChanged(page)"
-                            total-items="vm.fixtureCount"
-                            items-per-page="vm.paging.pageSize"
-                            page="vm.paging.currentPage"
-                            max-size="vm.paging.maxPagesToShow"
-                            class="pagination-small"
-                            previous-text="Prev"
-                            next-text="Next"
-                            first-text="First"
-                            last-text="Last"></pagination>      
-                            <div class="clearfix"></div>
-                    </div>
+                                    on-select-page="vm.pageChanged(page)"
+                                    total-items="vm.fixtureCount"
+                                    items-per-page="vm.paging.pageSize"
+                                    page="vm.paging.currentPage"
+                                    max-size="vm.paging.maxPagesToShow"
+                                    class="pagination-small"
+                                    previous-text="Prev"
+                                    next-text="Next"
+                                    first-text="First"
+                                    last-text="Last"></pagination>      
+                        <div class="clearfix"></div>
                     </div>
                 </div>
+            </div>
         </div>
     </section>
 </section>
