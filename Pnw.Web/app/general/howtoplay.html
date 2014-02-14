@@ -107,15 +107,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>FINAL RESULT</td>
-                                        <td><select class="input-mini" data-ng-model="vm.teamAgoalsFinal" data-ng-options="g for g in vm.goalRange"
-                                            data-ng-change="vm.goalsChanged()"></select></td>
-                                        <td>&nbsp;</td>
-                                        <td><select class="input-mini" data-ng-model="vm.teamBgoalsFinal" data-ng-options="g for g in vm.goalRange" 
-                                            data-ng-change="vm.goalsChanged()"></select></td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
                                         <td>PREDICTION</td>
                                         <td><select class="input-mini" data-ng-model="vm.teamAgoalsPrediction" data-ng-options="g for g in vm.goalRange"
                                             data-ng-change="vm.goalsChanged()"></select></td>
@@ -124,6 +115,15 @@
                                             data-ng-change="vm.goalsChanged()"></select></td>
                                         <td>&nbsp;</td>
                                     </tr>
+                                    <tr>
+                                        <td>FINAL RESULT</td>
+                                        <td><select class="input-mini" data-ng-model="vm.teamAgoalsFinal" data-ng-options="g for g in vm.goalRange"
+                                            data-ng-change="vm.goalsChanged()"></select></td>
+                                        <td>&nbsp;</td>
+                                        <td><select class="input-mini" data-ng-model="vm.teamBgoalsFinal" data-ng-options="g for g in vm.goalRange" 
+                                            data-ng-change="vm.goalsChanged()"></select></td>
+                                        <td>&nbsp;</td>
+                                    </tr>                                    
                                 </tbody>
                             </table>
                             <br/>

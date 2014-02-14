@@ -25,7 +25,7 @@ namespace Pnw.DataAccess.Migrations
 
 
             AddTeamsToSeason(context, leagues, seasons, teams);
-            AddFixturesToSeason(context, leagues, seasons, teams);
+            //AddFixturesToSeason(context, leagues, seasons, teams);
             SeedMembership(context);
         }
 
@@ -68,17 +68,18 @@ namespace Pnw.DataAccess.Migrations
                                      new Season
                                          {
                                              League = leagues.First(l => l.Code == "EPL"),
-                                             StartDate = now.AddDays(-14),
-                                             EndDate = now.AddDays(91),
+                                             StartDate = new DateTime(2013, 8, 17),
+                                             EndDate = new DateTime(2014, 5, 11),
                                              Name = "2013 - 2014",
                                              IsReady = true
                                          },
                                      new Season
                                          {
                                              League = leagues.First(l => l.Code == "EPL"),
-                                             StartDate = now.AddMonths(-24),
-                                             EndDate = now.AddDays(-12),
+                                             StartDate = new DateTime(2012, 8, 18),
+                                             EndDate = new DateTime(2013, 5, 19),
                                              Name = "2012 - 2013",
+                                             IsReady = true
                                          }
                                  };
             var kplSeasons = new[]
@@ -86,9 +87,10 @@ namespace Pnw.DataAccess.Migrations
                                      new Season
                                          {
                                              League = leagues.First(l => l.Code == "KPL"),
-                                             StartDate = now.AddDays(-14),
-                                             EndDate = now.AddDays(21),
+                                             StartDate = new DateTime(2014, 2, 15),
+                                             EndDate = new DateTime(2014, 11, 30),
                                              Name = "2013 - 2014",
+                                             IsReady = true
                                          }
                                  };
             var worldcupSeason = new[]
@@ -98,7 +100,8 @@ namespace Pnw.DataAccess.Migrations
                                                  League =leagues.First(l => l.Code == "WC"),
                                                  StartDate = new DateTime(2014, 6, 12),
                                                  EndDate = new DateTime(2014, 7, 13),
-                                                 Name = "WC 2014"
+                                                 Name = "2014",
+                                                 IsReady = true
                                              }
                                      };
 
@@ -110,60 +113,145 @@ namespace Pnw.DataAccess.Migrations
 
         private Team[] AddTeams(PnwDbContext context)
         {
+            # region kpl
             var kplTeams = new[]
                                {
                                    new Team
                                        {
-                                           Id = 21,
                                            Name = "Gor Mahia",
                                            Code = "GOR",
-                                           HomeGround = "City Stadium",
+                                           HomeGround = "Gor Mahia",
                                            Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
-                                           Id = 22,
                                            Name = "AFC Leopards",
                                            Code = "AFC",
-                                           HomeGround = "Chui Stadium",
+                                           HomeGround = "AFC Leopards",
                                            Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
-                                           Id = 23,
                                            Name = "Tusker",
-                                           Code = "TUSK",
-                                           HomeGround = "The Breweries",
+                                           Code = "TUS",
+                                           HomeGround = "Tusker",
                                            Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
-                                           Id = 24,
                                            Name = "Sofapaka",
-                                           Code = "SOFP",
-                                           HomeGround = "Sofapaka Stadium",
+                                           Code = "SOF",
+                                           HomeGround = "Sofapaka",
                                            Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        },
                                    new Team
                                        {
-                                           Id = 25,
                                            Name = "Ulinzi Stars",
-                                           Code = "ULNZ",
-                                           HomeGround = "Ulinzi Grounds",
+                                           Code = "ULI",
+                                           HomeGround = "Ulinzi Stars",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Western Stima",
+                                           Code = "WES",
+                                           HomeGround = "Western Stima",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Mathare United",
+                                           Code = "MAT",
+                                           HomeGround = "Mathare United",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Muhoroni Youth",
+                                           Code = "MUH",
+                                           HomeGround = "Muhoroni Youth",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Sony Sugar",
+                                           Code = "SON",
+                                           HomeGround = "Sony Sugar",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Top Fry Nakuru",
+                                           Code = "TOP",
+                                           HomeGround = "Top Fry Nakuru",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Thika United",
+                                           Code = "THI",
+                                           HomeGround = "Thika United",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Chemelil Sugar",
+                                           Code = "CHE",
+                                           HomeGround = "Chemelil Sugar",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "Bandari",
+                                           Code = "BAN",
+                                           HomeGround = "Bandari",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "KRA",
+                                           Code = "KRA",
+                                           HomeGround = "KRA",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "KCB",
+                                           Code = "KCB",
+                                           HomeGround = "KCB",
+                                           Tags = "KPL|Tusker Premier League|Kenya|East Africa",
+                                           ImageSource = "kenya_premier_league.png"
+                                       },
+                                       new Team
+                                       {
+                                           Name = "City Stars",
+                                           Code = "CIT",
+                                           HomeGround = "City Stars",
                                            Tags = "KPL|Tusker Premier League|Kenya|East Africa",
                                            ImageSource = "kenya_premier_league.png"
                                        }
                                };
+            #endregion
 
+            #region epl
             var eplTeams = new[]
                                {
                                    new Team
                                        {
-                                           Id = 1,
                                            Name = "Manchester United",
                                            Code = "MANU",
                                            HomeGround = "Old Trafford",
@@ -172,7 +260,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 2,
                                            Name = "Manchester City",
                                            Code = "MANC",
                                            HomeGround = "Etihad",
@@ -182,7 +269,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 3,
                                            Name = "Chelsea",
                                            Code = "CHE",
                                            HomeGround = "Stamford Bridge",
@@ -191,7 +277,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 4,
                                            Name = "Arsenal",
                                            Code = "ARS",
                                            HomeGround = "Emirates",
@@ -200,7 +285,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 5,
                                            Name = "Tottenham Hotspur",
                                            Code = "TOTT",
                                            HomeGround = "White Hart Lane",
@@ -209,7 +293,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 6,
                                            Name = "Everton",
                                            Code = "EVE",
                                            HomeGround = "Goodison Park",
@@ -218,7 +301,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 7,
                                            Name = "Liverpool",
                                            Code = "LIV",
                                            HomeGround = "Anfield",
@@ -227,7 +309,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 8,
                                            Name = "West Bromwich Albion",
                                            Code = "WBA",
                                            HomeGround = "The Hawthorns",
@@ -236,8 +317,7 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 9,
-                                           Name = "Swansea",
+                                           Name = "Swansea City",
                                            Code = "SWA",
                                            HomeGround = "Liberty Stadium",
                                            Tags = "EPL|England|UK",
@@ -245,7 +325,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 10,
                                            Name = "West Ham United",
                                            Code = "WHU",
                                            HomeGround = "Boleyn Ground",
@@ -254,7 +333,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 11,
                                            Name = "Norwich City",
                                            Code = "NOR",
                                            HomeGround = "Carrow Road",
@@ -263,7 +341,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 12,
                                            Name = "Fulham",
                                            Code = "FUL",
                                            HomeGround = "Craven Cottage",
@@ -272,7 +349,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 13,
                                            Name = "Stoke City",
                                            Code = "STO",
                                            HomeGround = "Britannia Stadium",
@@ -281,7 +357,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 14,
                                            Name = "Southampton",
                                            Code = "SOU",
                                            HomeGround = "St. Marys",
@@ -290,7 +365,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 15,
                                            Name = "Aston Villa",
                                            Code = "AVIL",
                                            HomeGround = "Villa Park",
@@ -299,7 +373,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 16,
                                            Name = "Newcastle United",
                                            Code = "NUTD",
                                            HomeGround = "St. James' park",
@@ -308,7 +381,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 17,
                                            Name = "Sunderland",
                                            Code = "SUN",
                                            HomeGround = "Stadium Of Light",
@@ -317,7 +389,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 18,
                                            Name = "Hull City",
                                            Code = "HUC",
                                            HomeGround = "KC Stadium",
@@ -326,7 +397,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 19,
                                            Name = "Cardiff City",
                                            Code = "CAC",
                                            HomeGround = "Cardiff City Stadium",
@@ -335,7 +405,6 @@ namespace Pnw.DataAccess.Migrations
                                        },
                                    new Team
                                        {
-                                           Id = 20,
                                            Name = "Crystal Palace",
                                            Code = "CRP",
                                            HomeGround = "Selhurst Park",
@@ -343,8 +412,212 @@ namespace Pnw.DataAccess.Migrations
                                            ImageSource = "english_premier_league.png"
                                        }
                                };
+            # endregion
 
-            var teams = kplTeams.Concat(eplTeams).ToArray();
+            #region world-cup
+            var wcTeams = new[] 
+            { 
+                // afc
+                new Team
+                {
+                    Name = "Australia",
+                    Code = "AUS",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Iran",
+                    Code = "IRA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Japan",
+                    Code = "JAP",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "South Korea",
+                    Code = "SKO",
+                    Type = ClubOrCountry.Country
+                },
+                //concacaf
+                new Team
+                {
+                    Name = "Costa Rica",
+                    Code = "COS",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Honduras",
+                    Code = "HON",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Mexico",
+                    Code = "MEX",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "United States",
+                    Code = "USA",
+                    Type = ClubOrCountry.Country
+                },
+                //caf
+                new Team
+                {
+                    Name = "Algeria",
+                    Code = "ALG",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Cameroon",
+                    Code = "CAM",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Ghana",
+                    Code = "GHA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Ivory Coast",
+                    Code = "IVO",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Nigeria",
+                    Code = "NIG",
+                    Type = ClubOrCountry.Country
+                },
+                //conmebol
+                new Team
+                {
+                    Name = "Argentina",
+                    Code = "ARG",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Brazil",
+                    Code = "BRA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Chile",
+                    Code = "CHL",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Colombia",
+                    Code = "COL",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Ecuador",
+                    Code = "ECU",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Uruguay",
+                    Code = "URU",
+                    Type = ClubOrCountry.Country
+                },
+                //uefa
+                new Team
+                {
+                    Name = "Belgium",
+                    Code = "BEL",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Bosnia and Herzegovina",
+                    Code = "BOS",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Croatia",
+                    Code = "CRO",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "England",
+                    Code = "ENG",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "France",
+                    Code = "FRA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Germany",
+                    Code = "GER",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Greece",
+                    Code = "GRE",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Italy",
+                    Code = "ITA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Netherlands",
+                    Code = "NET",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Portugal",
+                    Code = "POR",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Russia",
+                    Code = "RUS",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Spain",
+                    Code = "SPA",
+                    Type = ClubOrCountry.Country
+                },
+                new Team
+                {
+                    Name = "Switzerland",
+                    Code = "SWI",
+                    Type = ClubOrCountry.Country
+                },
+            };
+            #endregion
+
+            var teams = kplTeams.Concat(eplTeams).Concat(wcTeams).ToArray();
             context.Teams.AddOrUpdate(p => p.Name, teams);
 
             return teams;
@@ -354,21 +627,27 @@ namespace Pnw.DataAccess.Migrations
         {
             var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
             var kplSeason = seasons.First(s => s.League.Code == "KPL" && s.Name == "2013 - 2014");
+            var wcSeason = seasons.First(s => s.League.Code == "WC" && s.Name == "2014");
 
-            var teamsKpl = teams.Take(5).ToList();
-            var teamsEpl = teams.Skip(5).ToList();
+            var teamsKpl = teams.Take(16).ToList();
+            var teamsEpl = teams.Skip(16).Take(20).ToList();
+            var teamsWc = teams.Skip(36).ToList();
 
             teamsKpl.ForEach(t => kplSeason.ParticipationList.Add(
                 new Participation {Season = kplSeason, Team = t}));
-
             teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
                 new Participation {Season = eplSeason, Team = t}));
+            teamsWc.ForEach(t => wcSeason.ParticipationList.Add(
+                new Participation { Season = wcSeason, Team = t}));
 
-            var participations = eplSeason.ParticipationList.Concat(kplSeason.ParticipationList).ToArray();
+            var participations = eplSeason.ParticipationList
+                .Concat(kplSeason.ParticipationList)
+                .Concat(wcSeason.ParticipationList).ToArray();
 
             context.Participations.AddOrUpdate(p => new {p.SeasonId, p.TeamId}, participations);
         }
 
+        #region fixtures
         private void AddFixturesToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
             var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
@@ -496,6 +775,7 @@ namespace Pnw.DataAccess.Migrations
                                   };
             context.Fixtures.AddOrUpdate(p => new {p.SeasonId, p.HomeTeamId, p.AwayTeamId}, eplFixtures);
         }
+        #endregion
 
         private void SeedMembership(PnwDbContext context)
         {

@@ -9,10 +9,10 @@
                         data-ng-options="s as s.name for s in vm.selectedLeague.seasons"
                         data-ng-change="vm.getLeaderboard()"
                         class="input-medium">
-                </select><br/>      
-                <div data-ng-show="false" >
-                    <select class="input-medium" data-ng-disabled="true">
-                        <option value="">-- Select Month --</option>
+                </select>     
+                <div data-ng-show="!vm.isTournament" >
+                    Month: <select class="input-medium">
+                        <option value="">-- All --</option>
                     </select><br/>
                 </div>
                 <a class="btn btn-info" data-ng-click="vm.refresh()">

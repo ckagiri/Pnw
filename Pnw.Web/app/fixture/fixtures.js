@@ -374,7 +374,7 @@
         }
 
         function loadTeams() {
-            if (vm.selectedSeason.isPartial) {
+            if (vm.selectedSeason.isReady && vm.selectedSeason.isPartial) {
                 return datacontext.team.getBySeason(vm.selectedSeason);
             }
             return $q.when(false);
