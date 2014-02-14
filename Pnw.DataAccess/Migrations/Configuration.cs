@@ -35,6 +35,7 @@ namespace Pnw.DataAccess.Migrations
                               {
                                   new League
                                       {
+                                          Id = 1,
                                           Name = "World Cup",
                                           Code = "WC",
                                           Region = Region.World,
@@ -43,12 +44,14 @@ namespace Pnw.DataAccess.Migrations
                                       },
                                   new League
                                       {
+                                          Id = 2,
                                           Name = "English Premier League",
                                           Code = "EPL",
                                           Region = Region.Europe
                                       },
                                   new League
                                       {
+                                          Id = 3,
                                           Name = "Kenya Premier League",
                                           Code = "KPL",
                                           Region = Region.Africa
@@ -56,7 +59,6 @@ namespace Pnw.DataAccess.Migrations
                               };
 
             context.Leagues.AddOrUpdate(p => p.Code, leagues);
-
             return leagues;
         }
 
@@ -67,7 +69,8 @@ namespace Pnw.DataAccess.Migrations
                                  {
                                      new Season
                                          {
-                                             League = leagues.First(l => l.Code == "EPL"),
+                                             Id = 1,
+                                             LeagueId = leagues.First(l => l.Code == "EPL").Id,
                                              StartDate = new DateTime(2013, 8, 17),
                                              EndDate = new DateTime(2014, 5, 11),
                                              Name = "2013 - 2014",
@@ -75,7 +78,8 @@ namespace Pnw.DataAccess.Migrations
                                          },
                                      new Season
                                          {
-                                             League = leagues.First(l => l.Code == "EPL"),
+                                             Id = 2,
+                                             LeagueId = leagues.First(l => l.Code == "EPL").Id,
                                              StartDate = new DateTime(2012, 8, 18),
                                              EndDate = new DateTime(2013, 5, 19),
                                              Name = "2012 - 2013",
@@ -86,7 +90,8 @@ namespace Pnw.DataAccess.Migrations
                                  {
                                      new Season
                                          {
-                                             League = leagues.First(l => l.Code == "KPL"),
+                                             Id = 3,
+                                             LeagueId = leagues.First(l => l.Code == "KPL").Id,
                                              StartDate = new DateTime(2014, 2, 15),
                                              EndDate = new DateTime(2014, 11, 30),
                                              Name = "2013 - 2014",
@@ -97,7 +102,8 @@ namespace Pnw.DataAccess.Migrations
                                      {
                                          new Season
                                              {
-                                                 League =leagues.First(l => l.Code == "WC"),
+                                                 Id = 4,
+                                                 LeagueId =leagues.First(l => l.Code == "WC").Id,
                                                  StartDate = new DateTime(2014, 6, 12),
                                                  EndDate = new DateTime(2014, 7, 13),
                                                  Name = "2014",
@@ -107,7 +113,7 @@ namespace Pnw.DataAccess.Migrations
 
             var seasons = eplSeasons.Concat(kplSeasons).Concat(worldcupSeason).ToArray();
             context.Seasons.AddOrUpdate(p => new { p.LeagueId, p.Name }, seasons);
-
+            context.SaveChanges();
             return seasons;
         }
 
@@ -625,20 +631,20 @@ namespace Pnw.DataAccess.Migrations
 
         private void AddTeamsToSeason(PnwDbContext context, League[] leagues, Season[] seasons, Team[] teams)
         {
-            var eplSeason = seasons.First(s => s.League.Code == "EPL" && s.Name == "2013 - 2014");
-            var kplSeason = seasons.First(s => s.League.Code == "KPL" && s.Name == "2013 - 2014");
-            var wcSeason = seasons.First(s => s.League.Code == "WC" && s.Name == "2014");
+            var eplSeason = seasons.First(s => s.LeagueId == 2 && s.Name == "2013 - 2014");
+            var kplSeason = seasons.First(s => s.LeagueId == 3 && s.Name == "2013 - 2014");
+            var wcSeason = seasons.First(s => s.LeagueId == 1 && s.Name == "2014");
 
             var teamsKpl = teams.Take(16).ToList();
             var teamsEpl = teams.Skip(16).Take(20).ToList();
             var teamsWc = teams.Skip(36).ToList();
 
             teamsKpl.ForEach(t => kplSeason.ParticipationList.Add(
-                new Participation { Season = kplSeason, Team = t }));
+                new Participation { SeasonId = kplSeason.Id, TeamId = t.Id }));
             teamsEpl.ForEach(t => eplSeason.ParticipationList.Add(
-                new Participation { Season = eplSeason, Team = t }));
+                new Participation { SeasonId = eplSeason.Id, TeamId = t.Id }));
             teamsWc.ForEach(t => wcSeason.ParticipationList.Add(
-                new Participation { Season = wcSeason, Team = t }));
+                new Participation { SeasonId = wcSeason.Id, TeamId = t.Id }));
 
             var participations = eplSeason.ParticipationList
                 .Concat(kplSeason.ParticipationList)
@@ -649,12 +655,15 @@ namespace Pnw.DataAccess.Migrations
 
         private void SeedMembership(PnwDbContext context)
         {
-            WebSecurity.InitializeDatabaseConnection(
-                                    "PnwDEMO",
-                                    "User",
-                                    "Id",
-                                    "Username",
-                                    autoCreateTables: true);
+            if (!WebSecurity.Initialized)
+            {
+                WebSecurity.InitializeDatabaseConnection(
+                    "PnwDEMO",
+                    "User",
+                    "Id",
+                    "Username",
+                    autoCreateTables: true);
+            }
 
             var roles = (SimpleRoleProvider)Roles.Provider;
             var membership = (SimpleMembershipProvider)Membership.Provider;

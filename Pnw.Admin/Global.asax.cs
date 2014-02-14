@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Threading;
 using System.Transactions;
@@ -6,9 +8,11 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Pnw.Admin.Models;
 using Pnw.DataAccess;
 using System.Linq;
 using Pnw.Model;
+using WebMatrix.WebData;
 
 namespace Pnw.Admin
 {
@@ -17,6 +21,10 @@ namespace Pnw.Admin
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static SimpleMembershipInitializer _initializer;
+        private static object _initializerLock = new object();
+        private static bool _isInitialized;
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -26,6 +34,8 @@ namespace Pnw.Admin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
 
             PollAndProcess();
         }
@@ -117,6 +127,37 @@ namespace Pnw.Admin
                 TimeSpan.FromSeconds(60),
                 false
             );
+        }
+
+        public class SimpleMembershipInitializer
+        {
+            public SimpleMembershipInitializer()
+            {
+                Database.SetInitializer<UsersContext>(null);
+
+                try
+                {
+                    using (var context = new UsersContext())
+                    {
+                        if (!context.Database.Exists())
+                        {
+                            // Create the SimpleMembership database without Entity Framework migration schema
+                            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
+                        }
+                    }
+
+                    WebSecurity.InitializeDatabaseConnection(
+                        Config.ConnectionStringName,
+                        Config.UsersTableName,
+                        Config.UsersPrimaryKeyColumnName,
+                        Config.UsersUserNameColumnName,
+                        autoCreateTables: true);
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
+                }
+            }
         }
     }
 }

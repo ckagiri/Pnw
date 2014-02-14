@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Pnw.Web
+namespace Pnw.Admin
 {
     public class Config
     {

@@ -11,7 +11,6 @@ using Membership = System.Web.Security.Membership;
 
 namespace Pnw.Admin.Controllers.Mvc
 {
-    [InitializeSimpleMembership]
     [Authorize]
     public class HomeController : Controller
     {

@@ -4,7 +4,6 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using Pnw.Admin.Models;
-using Pnw.Web;
 using WebMatrix.WebData;
 
 namespace Pnw.Admin.Filters
@@ -39,12 +38,15 @@ namespace Pnw.Admin.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection(
-                        Config.ConnectionStringName,
-                        Config.UsersTableName,
-                        Config.UsersPrimaryKeyColumnName,
-                        Config.UsersUserNameColumnName,
-                        autoCreateTables: true);
+                    if (!WebSecurity.Initialized)
+                    {
+                        WebSecurity.InitializeDatabaseConnection(
+                            Config.ConnectionStringName,
+                            Config.UsersTableName,
+                            Config.UsersPrimaryKeyColumnName,
+                            Config.UsersUserNameColumnName,
+                            autoCreateTables: true);
+                    }
                 }
                 catch (Exception ex)
                 {
