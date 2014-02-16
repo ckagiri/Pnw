@@ -148,7 +148,7 @@ namespace Pnw.DataAccess
                 .ThenByDescending(n => n.SpreadDifference)
                 .ThenByDescending(n => n.AccuracyDifference)
                 .ThenBy(n => n.LastBetTimestamp)
-                .Take(20)
+                .Take(50)
                 .AsQueryable();
 
             return query;

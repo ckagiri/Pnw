@@ -66,7 +66,7 @@
             Object.defineProperty(Fixture.prototype, 'kickOffFormatted', {
                 get: function () {
                     var kickOff = this.kickOff;
-                    var value = moment.utc(kickOff).format('ddd MMM DD, h:mm a');
+                    var value = moment.utc(kickOff).format('ddd MMM DD, H:mm');
                     return value;
                 }
             });

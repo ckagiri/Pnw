@@ -11,7 +11,6 @@ using Membership = System.Web.Security.Membership;
 
 namespace Pnw.Web.Controllers.Mvc
 {
-    [InitializeSimpleMembership]
     public class HomeController : Controller
     {
         public ActionResult Index()

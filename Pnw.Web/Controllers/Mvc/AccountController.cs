@@ -13,7 +13,6 @@ using WebMatrix.WebData;
 namespace Pnw.Web.Controllers.Mvc
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
