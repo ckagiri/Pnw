@@ -8,25 +8,13 @@
     function sidebar($location, $route, bsDialog, config, datacontext, routes) {
         var vm = this;
         
-        vm.clearStorage = clearStorage;
         vm.isCurrent = isCurrent;
         vm.routes = routes;
-        vm.wip = [];
-        vm.wipChangedEvent = config.events.storage.wipChanged;
 
         activate();
 
         function activate() {
             getNavRoutes();
-            vm.wip = datacontext.zStorageWip.getWipSummary();
-        }
-        
-        function clearStorage() {
-            return bsDialog.deleteDialog('local storage and work in progress')
-                .then(confirmDelete, cancelDelete);
-
-            function confirmDelete() { datacontext.zStorage.clear(); }
-            function cancelDelete() { }
         }
         
         function getNavRoutes() {

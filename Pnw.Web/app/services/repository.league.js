@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.league';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositoryLeague]);
+        ['model', 'repository.abstract', RepositoryLeague]);
 
-    function RepositoryLeague(model, AbstractRepository, zStorage) {
+    function RepositoryLeague(model, AbstractRepository) {
         var entityName = model.entityNames.league;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'name';
@@ -14,7 +14,6 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
             // Exposed data access functions
             this.getById = getById;
             this.getAll = getAll;
@@ -39,7 +38,7 @@
             var orderBy = 'name';
             var leagues = [];
 
-            if (self.zStorage.areItemsLoaded('leagues') && !forceRemote) {
+            if (self._areItemsLoaded() && !forceRemote) {
                 leagues = self._getAllLocal(entityName, orderBy);
                 return self.$q.when(leagues);
             }
@@ -52,8 +51,7 @@
 
             function querySucceeded(data) {
                 leagues = data.results;
-                self.zStorage.areItemsLoaded('leagues', true);
-                self.zStorage.save();
+                self._areItemsLoaded(true);
                 self.log('Retrieved [League Partials] from remote data source', leagues.length, false);
                 return leagues;
             }

@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.team';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', 'zStorageWip', RepositoryTeam]);
+        ['model', 'repository.abstract', RepositoryTeam]);
 
-    function RepositoryTeam(model, AbstractRepository, zStorage, zStorageWip) {
+    function RepositoryTeam(model, AbstractRepository) {
         var entityName = model.entityNames.team;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'name';
@@ -15,8 +15,6 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
-            this.zStorageWip = zStorageWip;
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
@@ -41,7 +39,7 @@
 
         function getCount() {
             var self = this;
-            if (self.zStorage.areItemsLoaded('teams')) {
+            if (self._areItemsLoaded()) {
                 return self.$q.when(self._getLocalEntityCount(entityName));
             }
             // Teams aren't loaded; ask the server for a count.
@@ -54,7 +52,7 @@
         function getAll(forceRemote) {
             var self = this;
 
-            if (self.zStorage.areItemsLoaded('teams') && !forceRemote) {
+            if (self._areItemsLoaded() && !forceRemote) {
                 // Get the page of teams from local cache
                 var teams = self._getAllLocal(entityName, orderBy);
                 return self.$q.when(teams);
@@ -69,8 +67,7 @@
 
             function querySucceeded(data) {
                 self._setIsPartialTrue(data.results);
-                self.zStorage.areItemsLoaded('teams', true);
-                self.zStorage.save();
+                self._areItemsLoaded(true);
                 self.log('Retrieved [Team Partials] from remote data source', data.results.length, false);
                 return data.results;
             }
@@ -114,8 +111,7 @@
                 if (teams.length) {
                     season.isPartial = false;
                 }
-                self.zStorage.areItemsLoaded('teams', true);
-                self.zStorage.save();
+                self._areItemsLoaded(true);
                 self.log('Retrieved [Team Partials] from remote data source', teams.length, false);
                 return teams;
             }

@@ -27,8 +27,8 @@
             repoCtor.prototype.constructor = repoCtor;
         };
         
-        Ctor.prototype.getEntityByIdOrFromWip = getEntityByIdOrFromWip;
         // Shared by repository classes 
+        Ctor.prototype._areItemsLoaded = _areItemsLoaded;
         Ctor.prototype._getAllLocal = _getAllLocal;
         Ctor.prototype._getById = _getById;
         Ctor.prototype._getInlineCount = _getInlineCount;
@@ -41,6 +41,13 @@
         Ctor.prototype.$q = common.$q;
         
         return Ctor;
+        
+        function _areItemsLoaded(value) {
+            if (value === undefined) {
+                return this.isLoaded; // get
+            }
+            return this.isLoaded = value; // set
+        }
 
         function _getAllLocal(resource, ordering, predicate) {
             return EntityQuery.from(resource)
@@ -48,29 +55,6 @@
                 .where(predicate)
                 .using(this.manager)
                 .executeLocally();
-        }
-        
-        function getEntityByIdOrFromWip(val) {
-            // val could be an ID or a wipKey
-            var wipEntityKey = val;
-
-            if (common.isNumber(val)) {
-                val = parseInt(val);
-                wipEntityKey = this.zStorageWip.findWipKeyByEntityId(this.entityName, val);
-                if (!wipEntityKey) {
-                    // Returns a promise with the entity because 
-                    // the entity may be in storagelocal or remote (async). 
-                    return this._getById(this.entityName, val);
-                }
-            }
-
-            var importedEntity = this.zStorageWip.loadWipEntity(wipEntityKey);
-            if (importedEntity) {
-                // Need to re-validate the entity we are re-hydrating
-                importedEntity.entityAspect.validateEntity();
-                return $q.when({ entity: importedEntity, key: wipEntityKey });
-            }
-            return $q.reject({ error: 'Couldn\'t find entity for WIP key ' + wipEntityKey });
         }
         
         function _getById(entityName, id, forceRemote) {
@@ -102,7 +86,6 @@
                 entity.isPartial = false;
                 self.log('Retrieved [' + entityName + '] id ' + entity.id
                     + ' from remote data source', entity, true);
-                self.zStorage.save();
                 return entity;
             }
         }

@@ -3,11 +3,9 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['$rootScope', 'common', 'config', 'entityManagerFactory',
-            'model', 'repositories', 'zStorage', 'zStorageWip', datacontext]);
+        ['common', 'config', 'entityManagerFactory','model', 'repositories', datacontext]);
 
-    function datacontext($rootScope, common, config, emFactory,
-            model, repositories, zStorage, zStorageWip) {
+    function datacontext(common, config, emFactory, model, repositories) {
         var entityNames = model.entityNames;
         var events = config.events;
         var getLogFn = common.logger.getLogFn;
@@ -24,9 +22,6 @@
             markDeleted: markDeleted,
             save: save,
             prime: prime,
-            // sub-services
-            zStorage: zStorage,
-            zStorageWip: zStorageWip
             // Repositories to be added on demand:
         };
 
@@ -35,13 +30,10 @@
         return service;
 
         function init() {
-            zStorage.init(manager);
-            zStorageWip.init(manager);
             repositories.init(manager);
             defineLazyLoadedRepos();
             setupEventForHasChangesChanged();
             setupEventForEntitiesChanged();
-            listenForStorageEvents();
         }
         
         function cancel() {
@@ -72,18 +64,6 @@
             });
         }
         
-        function listenForStorageEvents() {
-            $rootScope.$on(config.events.storage.storeChanged, function (event, data) {
-                log('Updated local storage', data, false);
-            });
-            $rootScope.$on(config.events.storage.wipChanged, function (event, data) {
-                log('Updated WIP', data, false);
-            });
-            $rootScope.$on(config.events.storage.error, function (event, data) {
-                logError('Error with local storage. ' + data.activity, data, true);
-            });
-        }
-
         function markDeleted(entity) {
             return entity.entityAspect.setDeleted();
         }
@@ -91,17 +71,12 @@
         function prime() {
             if (primePromise) return primePromise;
 
-            // look in local storage, if data is here, 
-            // grab it. otherwise get from 'resources'
-            var storageEnabledAndHasData = zStorage.load(manager);
-            primePromise = storageEnabledAndHasData ?
-                $q.when(log('Loading entities and metadata from local storage', null, false)) :
-                $q.all([service.league.getAll(true), service.season.getAll(true)]).then(extendMetadata);
+            primePromise = $q.all([service.league.getAll(true), service.season.getAll(true)])
+                .then(extendMetadata)
+                .then(success);
+            return primePromise;
 
-            return primePromise.then(success);
-           
             function success() {
-                zStorage.save();
                 log('Primed the data', null, false);
             }
 
@@ -110,7 +85,7 @@
                 model.extendMetadata(metadataStore);
                 registerResourceNames(metadataStore);
             }
-            
+
             // Wait to call until entityTypes are loaded in metadata
             function registerResourceNames(metadataStore) {
                 var types = metadataStore.getEntityTypes();
@@ -125,6 +100,7 @@
                     set(r, fixtureEntityName);
                 });
                 
+                // really?
                 set('LeaderBoard', 'LeaderBoard');
 
                 function set(resourceName, entityName) {
@@ -138,7 +114,6 @@
                 .to$q(saveSucceeded, saveFailed);
 
             function saveSucceeded(result) {
-                zStorage.save();
                 logSuccess('Saved data', result, true);
             }
 

@@ -8,43 +8,33 @@
                             allow-collapse="true">
                         </div>
                         <div class="widget-content text-info">
-                            <b>Basics</b><p />
-                            1. Points - The sum of correct score points and correct result points (see 2 & 3 below)
-                            <p />
-
-                            2. Correct Score Points - Correctly predicting the team-score of a match earns you 1 point. 
+                            <b>Game Overview</b><p/>
+                            The concept of the game is to accurately predict the correct result or score of a football match. 
+                            <p/>Points are awarded based on how close your prediction is to the actual score of the match.<p/> 
+                            The objective of the game is to collect as many points as possible and compete for trophies, rewards and prizes. <p/>
+                            <b>Scoring</b><p />
+                            Points are awarded as follows:<p/>
+                            1. Correct Score - Correctly predicting the team-score of a match earns you 1 point. 
                             If you get both team-scores correct you earn an extra (bonus) point
                             i.e. you earn 3 points for predicting the exact scores of a match.
                             <p />
-
-                            3. Correct Result Points - Correctly predicting the outcome of a match i.e. draw or winning team earns you 3 points.
+                            2. Correct Result - Correctly predicting the outcome of a match i.e. draw or winning team earns you 3 points.
                             <p />
-
-                            <b>Example 1:</b><p />
-                            Team A  vs  Team B.&nbsp; Final result 2 - 2 (Team A scored 2 goals, Team B scored 2 goals)<p />
-                            (a) If you predicted 1 – 0 = 0 points (You did not predict the correct score for either Team A or Team B, and you did not predict the correct outcome - draw)<p />
-
-                            (b) If you predicted 2 – 1 = 1 point (You predicted the correct score for one team by predicting that Team A will score 2 goals, but you did not predict the correct outcome)<p />
-
-                            (c) If you predicted 1 – 1 = 3 points (You did not predict the correct score for either Team A or Team B, but you predicted a draw (correct outcome))<p />
-
-                            (d) If you predicted 2 – 2 = 6 points (You predicted the correct score for both teams, and you predicted the correct outcome - draw)<p />
-
-                            <b>Example 2:</b><p />
+                            <b>Example:</b><p />
                             Team A  vs  Team B.&nbsp; Final result 3 - 1 (Team A scored 3 goals, Team B scored 1 goal)<p />
-                            (a) If you predicted 0 – 0 = 0 points (You did not predict the correct score for either Team A or Team B, and you did not predict the correct winning team)<p />
+                            (a) If you predicted 0 – 0, you earn 0 points (You did not predict the correct score for either Team A or Team B, and you did not predict the correct winning team)<p />
 
-                            (b) If you predicted 0 – 1 = 1 point (You predicted the correct score for one team by predicting that Team B will score 1 goal, but you did not predict the correct winning team)<p />
+                            (b) If you predicted 0 – 1, you earn 1 point (You predicted the correct score for one team by predicting that Team B will score 1 goal, but you did not predict the correct winning team)<p />
 
-                            (c) If you predicted 1 – 0 = 3 points (You did not predict the correct score for either Team A or Team B, but you predicted that team A will win (correct outcome))<p />
+                            (c) If you predicted 1 – 0, you earn 3 points (You did not predict the correct score for either Team A or Team B, but you predicted that team A will win (correct outcome))<p />
 
-                            (d) If you predicted 2 – 1 = 4 points (You predicted the correct score for 1 team by predicting that Team B will score 1 goal and you also predicted the correct winning team)<p />
+                            (d) If you predicted 2 – 1, you earn 4 points (You predicted the correct score for 1 team by predicting that Team B will score 1 goal and you also predicted the correct winning team)<p />
 
-                            (e) If you predicted 3 – 0 = 4 points (You predicted the correct score for 1 team by predicting that Team A will score 3 goals and you also predicted the correct winning team)<p />
+                            (e) If you predicted 3 – 0, you earn 4 points (You predicted the correct score for 1 team by predicting that Team A will score 3 goals and you also predicted the correct winning team)<p />
 
-                            (f) If you predicted 3 – 1 = 6 points (You predicted the correct score for both teams, and you predicted the correct winning team)<p />
+                            (f) If you predicted 3 – 1, you earn 6 points (You predicted the correct score for both teams, and you predicted the correct winning team)<p />
 
-                            <b>NB: Players are first ranked by total number of points, then total correct-score points, then total correct-result points.</b><p />
+                            <b>In the event of two or more players having the same number of points, the tie break process (see below) is used to decide who ranks higher than the other.</b><p />
                         </div>
                     </div>
                 </div>
@@ -107,15 +97,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>PREDICTION</td>
-                                        <td><select class="input-mini" data-ng-model="vm.teamAgoalsPrediction" data-ng-options="g for g in vm.goalRange"
-                                            data-ng-change="vm.goalsChanged()"></select></td>
-                                        <td>&nbsp;</td>
-                                        <td><select class="input-mini" data-ng-model="vm.teamBgoalsPrediction" data-ng-options="g for g in vm.goalRange"
-                                            data-ng-change="vm.goalsChanged()"></select></td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
                                         <td>FINAL RESULT</td>
                                         <td><select class="input-mini" data-ng-model="vm.teamAgoalsFinal" data-ng-options="g for g in vm.goalRange"
                                             data-ng-change="vm.goalsChanged()"></select></td>
@@ -123,13 +104,24 @@
                                         <td><select class="input-mini" data-ng-model="vm.teamBgoalsFinal" data-ng-options="g for g in vm.goalRange" 
                                             data-ng-change="vm.goalsChanged()"></select></td>
                                         <td>&nbsp;</td>
-                                    </tr>                                    
+                                    </tr>     
+                                    <tr>
+                                        <td>PREDICTION</td>
+                                        <td><select class="input-mini" data-ng-model="vm.teamAgoalsPrediction" data-ng-options="g for g in vm.goalRange"
+                                            data-ng-change="vm.goalsChanged()"></select></td>
+                                        <td>&nbsp;</td>
+                                        <td><select class="input-mini" data-ng-model="vm.teamBgoalsPrediction" data-ng-options="g for g in vm.goalRange"
+                                            data-ng-change="vm.goalsChanged()"></select></td>
+                                        <td>&nbsp;</td>
+                                    </tr>                               
                                 </tbody>
                             </table>
                             <br/>
+                            <b>Main:</b><p/>
                             Points: <b>{{vm.points}}</b>&nbsp;&nbsp;&nbsp;&nbsp;
                             Correct-Score-Points: <b>{{vm.correctScorePoints}}</b>&nbsp;&nbsp;&nbsp;&nbsp;
                             Correct-Result-Points: <b>{{vm.correctResultPoints}}</b>&nbsp;&nbsp;&nbsp;&nbsp;<br/><p/>
+                            <b>Others: </b><p/>
                             Cross Product Points: <b>{{vm.crossProductPoints}}</b><p/>Spread-Difference: <b>{{vm.spreadDifference}}</b><p/>Accuracy-Difference: <b>{{vm.accuracyDifference}}</b><p/>
                         </div>
                     </div>

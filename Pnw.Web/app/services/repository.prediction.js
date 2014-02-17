@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.prediction';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositoryPrediction]);
+        ['model', 'repository.abstract', RepositoryPrediction]);
 
-    function RepositoryPrediction(model, AbstractRepository, zStorage) {
+    function RepositoryPrediction(model, AbstractRepository) {
         var entityName = model.entityNames.prediction;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'kickOff, homeTeam.name';
@@ -15,13 +15,11 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
             // Exposed data access functions
             this.create = create;
             this.getById = getById;
             this.getByUserAndFixtureId = getByUserAndFixtureId;
             this.getAllLocal = getAllLocal;
-            //this.getTopLocal = getTopLocal;
             this.getAll = getAll;
         }
 
@@ -74,7 +72,7 @@
             var predictions = [];
             var predicate = breeze.Predicate.create('userId', '==', userId).and('seasonId','==', seasonId);
 
-            if (self.zStorage.areItemsLoaded('predictions') && !forceRemote) {
+            if (self._areItemsLoaded() && !forceRemote) {
                 predictions = self._getAllLocal(entityName, orderBy, predicate);
                 // passing an explicit false means you know what you're doing
                 if (predictions.length || forceRemote === false) {
@@ -93,8 +91,7 @@
 
             function querySucceeded(data) {
                 predictions = data.results;
-                self.zStorage.areItemsLoaded('predictions', true);
-                self.zStorage.save();
+                self._areItemsLoaded(true);
                 self.log('Retrieved [Prediction Partials] from remote data source', predictions.length, false);
                 return predictions;
             }

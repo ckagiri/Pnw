@@ -71,22 +71,6 @@
     }]);
     //#endregion
     
-    //#region Configure the zStorage and zStorageWip services via zStorageConfig
-    app.config(['zStorageConfigProvider', function (cfg) {
-        cfg.config = {
-            // zStorage
-            enabled: true,
-            key: 'PnwWebAngularBreeze',
-            events: events.storage,
-            appErrorPrefix: config.appErrorPrefix,
-            version: config.version,
-            // zStorageWip
-            wipKey: 'PnwWebAngularBreeze.wip',
-            newGuid: breeze.core.getUuid
-        };
-    }]);
-    //#endregion
-    
     //#region Configure the Breeze Validation Directive
     //app.config(['zDirectivesConfigProvider', function (cfg) {
     //    cfg.zValidateTemplate =

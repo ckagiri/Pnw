@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.leaderboard';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositoryLeaderboard]);
+        ['model', 'repository.abstract', RepositoryLeaderboard]);
 
-    function RepositoryLeaderboard(model, AbstractRepository, zStorage) {
+    function RepositoryLeaderboard(model, AbstractRepository) {
         var entityName = model.entityNames.leaderboard;
         var EntityQuery = breeze.EntityQuery;
         var Predicate = breeze.Predicate;
@@ -14,7 +14,6 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
             // Exposed data access functions
             this.get = get;
         }
@@ -26,12 +25,6 @@
         function get(forceRemote, leagueId, seasonId) {
             var self = this;
             var leaderboard = [];
-            //var predicate
-            //if (self.zStorage.areItemsLoaded('leaderboard') && !forceRemote) {
-            //    leaderboard = self._getAllLocal(entityName, null, predicate);
-            //    return self.$q.when(leaderboard);
-            //}
-
             return EntityQuery.from('Leaderboard')
                 .withParameters({ leagueId: leagueId, seasonId: seasonId })
                 .toType(entityName)
@@ -40,8 +33,6 @@
 
             function querySucceeded(data) {
                 leaderboard = data.results;
-                self.zStorage.areItemsLoaded('leaderboard', true);
-                self.zStorage.save();
                 self.log('Retrieved [Leaderboard] from remote data source', leaderboard.length, false);
                 return leaderboard;
             }

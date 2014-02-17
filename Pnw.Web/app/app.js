@@ -13,8 +13,7 @@
 
         // 3rd Party Modules
         'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
-        'breeze.directives', // breeze validation directive (zValidate)
-        'ngzWip'            // local storage and WIP module
+        'breeze.directives' // breeze validation directive (zValidate)
     ]);
     
     // Handle routing errors and success events

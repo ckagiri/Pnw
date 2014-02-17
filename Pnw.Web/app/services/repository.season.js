@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.season';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositorySeason]);
+        ['model', 'repository.abstract', RepositorySeason]);
 
-    function RepositorySeason(model, AbstractRepository, zStorage) {
+    function RepositorySeason(model, AbstractRepository) {
         var entityName = model.entityNames.season;
         var EntityQuery = breeze.EntityQuery;
         var orderBy = 'startDate desc';
@@ -15,7 +15,6 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
             // Exposed data access functions
             this.getById = getById;
             this.getAll = getAll;
@@ -39,7 +38,7 @@
             var self = this;
             var seasons = [];
 
-            if (self.zStorage.areItemsLoaded('seasons') && !forceRemote) {
+            if (self._areItemsLoaded() && !forceRemote) {
                 seasons = self._getAllLocal(entityName, orderBy);
                 return self.$q.when(seasons);
             }
@@ -52,8 +51,7 @@
 
             function querySucceeded(data) {
                 seasons = data.results;
-                self.zStorage.areItemsLoaded('seasons', true);
-                self.zStorage.save();
+                self._areItemsLoaded(true);
                 self.log('Retrieved [Season Partials] from remote data source', seasons.length, false);
                 return seasons;
             }
