@@ -26,39 +26,54 @@
 
         return Ctor;
         
-        function create(seasonId) {
-            return this.manager.createEntity(entityName, { seasonId: seasonId });
+        function create(obj) {
+            return this.manager.createEntity(entityName, { leagueId: obj.leagueId, seasonId: obj.seasonId });
         }
 
         function getById(id, forceRemote) {
             return this._getById(entityName, id, forceRemote);
         }
 
-        function getAllLocal() {
+        function getAllLocal(seasonId) {
+            var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
             var self = this;
-            return self._getAllLocal(entityName, orderBy);
+            return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getAll(forceRemote) {
+        function getAll(forceRemote, page, size, seasonId) {
             var self = this;
-            var rounds = [];
+            var take = size || 20;
+            var skip = page ? (page - 1) * size : 0;
+            var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
+            var orderBy = 'startDate';
 
             if (self.zStorage.areItemsLoaded('rounds') && !forceRemote) {
-                rounds = self._getAllLocal(entityName);
-                return self.$q.when(rounds);
+                return self.$q.when(getByPage());
             }
             
-            return EntityQuery.from('MatchWeeks')
+            return EntityQuery.from('Rounds')
                 .select('id, seasonId, leagueId, name, startDate, endDate')
+                .where(predicate)
                 .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
-                rounds = data.results;
+                var rounds = data.results;
                 self.zStorage.areItemsLoaded('rounds', true);
                 self.zStorage.save();
                 self.log('Retrieved [Season-Round Partials] from remote data source', rounds.length, true);
+                return getByPage();
+            }
+
+            function getByPage() {
+                var rounds = EntityQuery.from(entityName)
+                    .where(predicate)
+                    .orderBy(orderBy)
+                    .take(take).skip(skip)
+                    .using(self.manager)
+                    .executeLocally();
+
                 return rounds;
             }
         }

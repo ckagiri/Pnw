@@ -122,7 +122,8 @@
             var val = $routeParams.id;
             if (val === 'new') {
                 var seasonId = parseInt($route.current.params.seasonId, 10);
-                vm.round = datacontext.round.create(seasonId);
+                var leagueId = parseInt($route.current.params.leagueId, 10);
+                vm.round = datacontext.round.create({leagueId: leagueId, seasonId: seasonId});
                 vm.round.startDate = new Date();
                 vm.round.endDate = new Date();
                 return $q.when(vm.round);

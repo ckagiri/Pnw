@@ -62,9 +62,9 @@ namespace Pnw.Admin.Controllers.Api
         }
 
         [HttpGet]
-        public IQueryable<MatchWeek> MatchWeeks()
+        public IQueryable<Round> Rounds()
         {
-            return _repository.MatchWeeks;
+            return _repository.Rounds;
         }
         
         [HttpGet]

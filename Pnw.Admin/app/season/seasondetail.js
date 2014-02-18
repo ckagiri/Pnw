@@ -102,7 +102,10 @@
             var val = $routeParams.id;
             if (val === 'new') {
                 var leagueId = parseInt($route.current.params.leagueId, 10);
-                return $q.when(vm.season = datacontext.season.create(leagueId));
+                vm.season = datacontext.season.create(leagueId);
+                vm.season.startDate = new Date();
+                vm.season.endDate = new Date();
+                return $q.when(vm.season);
             }
 
             return datacontext.season.getById(val)

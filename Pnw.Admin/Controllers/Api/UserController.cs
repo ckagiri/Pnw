@@ -1,24 +1,22 @@
 ﻿using Pnw.Admin.Models;
 using Pnw.Admin.Utils;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Security;
+using WebMatrix.WebData;
 
-namespace BackboneTemplate.Controllers
+namespace Pnw.Admin.Controllers.Api
 {
-    using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Http;
-    using System.Web.Security;
-
-    using WebMatrix.WebData;
-
     public class UserController : ApiController
     {
-        private readonly Func<string, string, bool, string> signup;
-        private readonly IMailer mailer;
+        private readonly Func<string, string, bool, string> _signup;
+        private readonly IMailer _mailer;
 
-        private bool? debuggingEnabled;
+        private bool? _debuggingEnabled;
 
         public UserController()
             : this(
@@ -35,15 +33,15 @@ namespace BackboneTemplate.Controllers
             Func<string, string, bool, string> signup,
             IMailer mailer)
         {
-            this.signup = signup;
-            this.mailer = mailer;
+            this._signup = signup;
+            this._mailer = mailer;
         }
 
         public bool IsDebuggingEnabled
         {
             get
             {
-                if (debuggingEnabled == null)
+                if (_debuggingEnabled == null)
                 {
                     object context;
 
@@ -51,20 +49,20 @@ namespace BackboneTemplate.Controllers
                     {
                         var httpContext = context as HttpContextBase;
 
-                        debuggingEnabled = (httpContext != null) && httpContext.IsDebuggingEnabled;
+                        _debuggingEnabled = (httpContext != null) && httpContext.IsDebuggingEnabled;
                     }
                     else
                     {
-                        debuggingEnabled = false;
+                        _debuggingEnabled = false;
                     }
                 }
 
-                return debuggingEnabled.GetValueOrDefault();
+                return _debuggingEnabled.GetValueOrDefault();
             }
 
             set
             {
-                debuggingEnabled = value;
+                _debuggingEnabled = value;
             }
         }
 
@@ -84,7 +82,7 @@ namespace BackboneTemplate.Controllers
 
             try
             {
-                token = signup(userName, model.Password, requireConfirmation);
+                token = _signup(userName, model.Password, requireConfirmation);
             }
             catch (MembershipCreateUserException e)
             {
@@ -95,7 +93,7 @@ namespace BackboneTemplate.Controllers
             {
                 if (requireConfirmation)
                 {
-                    await mailer.UserConfirmationAsync(userName, token);
+                    await _mailer.UserConfirmationAsync(userName, token);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.NoContent);

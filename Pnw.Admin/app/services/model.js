@@ -18,7 +18,7 @@
             season: 'Season',
             team: 'Team',
             participation: 'Participation',
-            round: 'MatchWeek'
+            round: 'Round'
         };
 
         var service = {

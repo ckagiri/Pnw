@@ -28,5 +28,7 @@ namespace Pnw.Model
         [JsonIgnore]
         [IgnoreDataMember] 
         public ICollection<Participation> ParticipationList { get; set; }
+
+        public ICollection<Round> Rounds { get; set; }
     }
 }

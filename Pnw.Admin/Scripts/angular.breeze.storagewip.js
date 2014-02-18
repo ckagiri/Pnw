@@ -68,7 +68,8 @@
                 participations: false,
                 teams: false,
                 fixtures: false,
-                results: false
+                results: false,
+                rounds: false
             }
         };
 
@@ -102,6 +103,7 @@
                         storeMeta.isLoaded.teams = storeMeta.isLoaded.teams || importMeta.isLoaded.teams;
                         storeMeta.isLoaded.fixtures = storeMeta.isLoaded.fixtures || importMeta.isLoaded.fixtures;
                         storeMeta.isLoaded.results = storeMeta.isLoaded.results || importMeta.isLoaded.results;
+                        storeMeta.isLoaded.rounds = storeMeta.isLoaded.rounds || importMeta.isLoaded.rounds;
                     }
                     return data[1];
                 } else {

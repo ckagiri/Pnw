@@ -8,7 +8,7 @@
                         <option value="">-- Select League --</option>
                     </select>
                     <select data-ng-model="vm.selectedSeason" data-ng-options="s as s.name for s in vm.selectedLeague.seasons"
-                            data-ng-change="vm.seasonChanged()"
+                            data-ng-change="vm.getSeasonRounds()"
                             class="input-medium">
                         <option value="">-- Select Season --</option>
                     </select>                    
@@ -46,6 +46,18 @@
                         </table>
                     </div>
                     <div class="widget-foot">
+                        <div class="clearfix"></div>
+                        <pagination boundary-links="true"
+                            on-select-page="vm.pageChanged(page)"
+                            total-items="vm.seasonroundsFilteredCount"
+                            items-per-page="vm.paging.pageSize"
+                            page="vm.paging.currentPage"
+                            max-size="vm.paging.maxPagesToShow"
+                            class="pagination-small"
+                            previous-text="Prev"
+                            next-text="Next"
+                            first-text="First"
+                            last-text="Last"></pagination>
                         <div class="clearfix"></div>
                     </div>
                 </div>

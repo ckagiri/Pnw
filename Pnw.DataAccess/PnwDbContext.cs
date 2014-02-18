@@ -69,7 +69,7 @@ namespace Pnw.DataAccess
         public DbSet<League> Leagues { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<MatchWeek> MatchWeeks { get; set; }
+        public DbSet<Round> Rounds { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<Participation> Participations { get; set; }
         public DbSet<User> Users { get; set; }

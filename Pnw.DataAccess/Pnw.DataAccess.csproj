@@ -111,6 +111,10 @@
     <Compile Include="Migrations\201402141456344_Initial.Designer.cs">
       <DependentUpon>201402141456344_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402181956141_ChangedMatchWeekToRound.cs" />
+    <Compile Include="Migrations\201402181956141_ChangedMatchWeekToRound.Designer.cs">
+      <DependentUpon>201402181956141_ChangedMatchWeekToRound.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PnwDbContext.cs">
       <SubType>Code</SubType>
@@ -140,6 +144,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201402141456344_Initial.resx">
       <DependentUpon>201402141456344_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402181956141_ChangedMatchWeekToRound.resx">
+      <DependentUpon>201402181956141_ChangedMatchWeekToRound.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
