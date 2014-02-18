@@ -10,23 +10,24 @@
                    </span></a><p />
                 <div class="form-search">
                     <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index > 0"
-                           data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.prev()">
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index > 0"
+                           data-ng-disabled="vm.isBusy" data-ng-click="vm.roundPager.prev()">
                             <i class="icon-chevron-left"></i>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index <= 0"
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index <= 0"
                            data-ng-disabled="true">
                             <i class="icon-chevron-left"></i>
                         </a>
                         <a class="btn btn-info"><i class="icon-calendar"></i>
-                            <span>{{vm.selectedMonth}} ({{vm.totalPoints}}) 
-                                point{{vm.totalPoints === 1 ? '' : 's'}}</span>
+                            <span>
+                                {{vm.selectedRound.name}}&nbsp;&nbsp;({{vm.selectedRound.startDate | date:'dd MMM'}} - {{vm.selectedRound.endDate | date:'dd MMM'}}) 
+                            </span>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index < vm.monthPager.maxIndex"
-                           data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.next()">
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index < vm.roundPager.maxIndex"
+                           data-ng-disabled="vm.isBusy" data-ng-click="vm.roundPager.next()">
                             <i class="icon-chevron-right"></i>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index >= vm.monthPager.maxIndex"
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index >= vm.roundPager.maxIndex"
                            data-ng-disabled="true">
                             <i class="icon-chevron-right"></i>
                         </a>

@@ -3,9 +3,9 @@
 
     var serviceId = 'repository.round';
     angular.module('app').factory(serviceId,
-        ['model', 'repository.abstract', 'zStorage', RepositoryRound]);
+        ['model', 'repository.abstract', RepositoryRound]);
 
-    function RepositoryRound(model, AbstractRepository, zStorage) {
+    function RepositoryRound(model, AbstractRepository) {
         var entityName = model.entityNames.round;
         var EntityQuery = breeze.EntityQuery;
 
@@ -13,25 +13,14 @@
             this.serviceId = serviceId;
             this.entityName = entityName;
             this.manager = mgr;
-            this.zStorage = zStorage;
             // Exposed data access functions
-            this.create = create;
             this.getAll = getAll;
             this.getAllLocal = getAllLocal;
-            this.getById = getById;
         }
 
         AbstractRepository.extend(Ctor);
 
         return Ctor;
-        
-        function create(obj) {
-            return this.manager.createEntity(entityName, { leagueId: obj.leagueId, seasonId: obj.seasonId });
-        }
-
-        function getById(id, forceRemote) {
-            return this._getById(entityName, id, forceRemote);
-        }
 
         function getAllLocal(seasonId) {
             var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
@@ -39,15 +28,15 @@
             return self._getAllLocal(entityName, orderBy, predicate);
         }
 
-        function getAll(forceRemote, page, size, seasonId) {
-            var self = this;
-            var take = size || 20;
-            var skip = page ? (page - 1) * size : 0;
+        function getAll(forceRemote, seasonId) {
             var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
             var orderBy = 'startDate';
+            var rounds;
+            var self = this;
 
-            if (self.zStorage.areItemsLoaded('rounds') && !forceRemote) {
-                return self.$q.when(getByPage());
+            if (self._areItemsLoaded() && !forceRemote) {
+                rounds = self._getAllLocal(entityName, orderBy);
+                return self.$q.when(rounds);
             }
             
             return EntityQuery.from('Rounds')
@@ -58,21 +47,9 @@
                 .to$q(querySucceeded, self._queryFailed);
 
             function querySucceeded(data) {
-                var rounds = data.results;
-                self.zStorage.areItemsLoaded('rounds', true);
-                self.zStorage.save();
+                rounds = data.results;
+                self._areItemsLoaded(true);
                 self.log('Retrieved [Season-Round Partials] from remote data source', rounds.length, true);
-                return getByPage();
-            }
-
-            function getByPage() {
-                var rounds = EntityQuery.from(entityName)
-                    .where(predicate)
-                    .orderBy(orderBy)
-                    .take(take).skip(skip)
-                    .using(self.manager)
-                    .executeLocally();
-
                 return rounds;
             }
         }

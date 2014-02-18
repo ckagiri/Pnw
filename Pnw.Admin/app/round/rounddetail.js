@@ -147,8 +147,9 @@
 
         function save() {
             if (!canSave()) { return $q.when(null); }
-
             vm.isSaving = true;
+            vm.round.startDate.setUTCHours(0, 0, 0, 0);
+            vm.round.endDate.setUTCHours(0, 0, 0, 0);
             return datacontext.save().then(function (saveResult) {
                 vm.isSaving = false;
                 gotoSeasonRounds();

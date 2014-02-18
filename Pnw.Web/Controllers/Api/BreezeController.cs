@@ -66,6 +66,12 @@ namespace Pnw.Web.Controllers.Api
         }
 
         [HttpGet]
+        public IQueryable<Round> Rounds()
+        {
+            return _repository.Rounds;
+        }
+
+        [HttpGet]
         public IQueryable<Participation> Participations()
         {
             return _repository.Participations;

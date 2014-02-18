@@ -64,9 +64,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Pnw.Model">
-      <HintPath>..\Pnw.TestConsole\bin\Debug\Pnw.Model.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -253,6 +250,7 @@
     <Content Include="app\services\repositories.js" />
     <Content Include="app\services\repository.abstract.js" />
     <Content Include="app\services\repository.fixture.js" />
+    <Content Include="app\services\repository.round.js" />
     <Content Include="app\services\repository.season.js" />
     <Content Include="app\services\repository.team.js" />
     <Content Include="app\services\routemediator.js" />
@@ -453,6 +451,10 @@
     <ProjectReference Include="..\Pnw.DataAccess\Pnw.DataAccess.csproj">
       <Project>{953C99D2-45F6-49AA-B331-131A5B1A5529}</Project>
       <Name>Pnw.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pnw.Model\Pnw.Model.csproj">
+      <Project>{fb892e18-d487-438b-b16b-1a438eb0bc59}</Project>
+      <Name>Pnw.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -37,6 +37,8 @@
         vm.selectedLeague = undefined;
         vm.selectedSeason = undefined;
         vm.selectedMonth = undefined;
+        vm.selectedRound = undefined;
+        vm.rounds = [];
         vm.totalPoints = 0;
         vm.paging = {
             currentPage: 1,
@@ -45,6 +47,12 @@
         };
         vm.pageChanged = pageChanged;
         vm.monthPager = {
+            index: 0,
+            maxIndex: 1,
+            prev: prev,
+            next: next
+        };
+        vm.roundPager = {
             index: 0,
             maxIndex: 1,
             prev: prev,
@@ -74,7 +82,8 @@
             initLookups()
                 .then(getDefaults)
                 .then(restoreFilter)
-                .then(initMonthPager)
+                .then(loadRounds)
+                .then(initRoundPager)
                 .then(loadTeams)
                 .then(getFixtures)
                 .then(getStartingPage)
@@ -109,11 +118,17 @@
             vm.monthPager.index = ix;
             vm.monthPager.maxIndex = vm.months.length - 1;
         }
+        
+        function initRoundPager() {
+            var ix = vm.roundPager.index = 0;
+            vm.selectedRound = vm.rounds[ix];
+            vm.roundPager.maxIndex = vm.rounds.length - 1;
+        }
 
         function prev() {
             if (!vm.isBusy) {
                 vm.isBusy = true;
-                vm.monthPager.index -= 1;
+                vm.roundPager.index -= 1;
                 gotoMonthIndex();
             }
         }
@@ -121,14 +136,14 @@
         function next() {
             if (!vm.isBusy) {
                 vm.isBusy = true;
-                vm.monthPager.index += 1;
+                vm.roundPager.index += 1;
                 gotoMonthIndex();
             }
         }
 
         function gotoMonthIndex() {
-            var i = vm.monthPager.index;
-            vm.selectedMonth = vm.months[i];
+            var i = vm.roundPager.index;
+            vm.selectedRound = vm.rounds[i];
             getFixtures()
                 .then(getFilteredFixtures)
                 .then(calculateTotalPoints)
@@ -262,6 +277,12 @@
             });
             return false;
         }
+
+        function loadRounds(forceRemote) {
+            return datacontext.round.getAll(forceRemote, vm.selectedSeason.id).then(function(data) {
+                vm.rounds = data;
+            });
+        }
         
         function cancel() {
             datacontext.cancel();
@@ -314,11 +335,16 @@
         }
         
         function getFixtures(forceRemote) {
+            var offset = moment().zone();
+            var kickOff, startOfWeek, endOfWeek;
             if (!vm.selectedSeason.isPartial) {
                 return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id)
                     .then(function(data) {
-                        vm.fixtures = data.filter(function(f) {
-                            return moment(f.kickOff).format('MMMM') === vm.selectedMonth;
+                        vm.fixtures = data.filter(function (fixture) {
+                            kickOff = moment(fixture.kickOff).toDate();
+                            startOfWeek = moment(vm.selectedRound.startDate).add('minutes', offset).toDate();
+                            endOfWeek = moment(vm.selectedRound.endDate).add('days', 1).add('minutes', offset).toDate();
+                            return startOfWeek <= kickOff && kickOff <= endOfWeek;
                         });
                         vm.fixtureCount = vm.fixtures.length;
                     });
