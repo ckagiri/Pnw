@@ -39,7 +39,11 @@
         vm.selectedMonth = undefined;
         vm.selectedRound = undefined;
         vm.rounds = [];
-        vm.totalPoints = 0;
+        vm.summary = {
+            totalPoints: 0,
+            correctScore: 0,
+            correctResult: 0
+        };
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
@@ -211,14 +215,14 @@
         }
 
         function calculateTotalPoints() {
-            var total = vm.predictions.filter(function (p) {
+            vm.predictions.filter(function (p) {
                 return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
-            }).reduce(function (sum, prediction) {
-                sum += prediction.points;
-                return sum;
-            }, 0);
-
-            vm.totalPoints = total;
+            }).reduce(function (accum, prediction) {
+                accum.totalPoints += prediction.points;
+                accum.correctScore += prediction.correctScorePoints;
+                accum.correctResult += prediction.correctResultPoints;
+                return accum;
+            }, vm.summary);
         }
 
         function predictionChanged(f) {
