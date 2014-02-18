@@ -264,6 +264,10 @@
     <Content Include="app\layout\sidebar.html" />
     <Content Include="app\layout\sidebar.js" />
     <Content Include="app\layout\widgetheader.html" />
+    <Content Include="app\round\rounddetail.html" />
+    <Content Include="app\round\rounddetail.js" />
+    <Content Include="app\round\rounds.html" />
+    <Content Include="app\round\rounds.js" />
     <Content Include="app\season\seasons.html" />
     <Content Include="app\league\leagues.js" />
     <Content Include="app\result\editresult.html" />
@@ -280,13 +284,14 @@
     <Content Include="app\security\events.js" />
     <Content Include="app\security\flashmessage.js" />
     <Content Include="app\security\forgotpassword.js" />
-    <Content Include="app\security\profile.js" />
+    <Content Include="app\security\myaccount.js" />
     <Content Include="app\security\securityapi.js" />
     <Content Include="app\security\signin.html" />
     <Content Include="app\security\signin.js" />
     <Content Include="app\security\signup.html" />
     <Content Include="app\security\signup.js" />
     <Content Include="app\security\validation.js" />
+    <Content Include="app\services\repository.round.js" />
     <Content Include="app\services\repository.participation.js" />
     <Content Include="app\services\repository.season.js" />
     <Content Include="app\services\repository.league.js" />
@@ -413,6 +418,10 @@
     <Content Include="Scripts\ui-bootstrap-0.7.0.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.7.0.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.7.0.min.js" />
+    <Content Include="Scripts\ui.bootstrap.alert.js" />
+    <Content Include="Scripts\ui.bootstrap.dialog.js" />
+    <Content Include="Scripts\ui.bootstrap.transition.js" />
+    <Content Include="Scripts\ui.validate.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

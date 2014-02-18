@@ -17,7 +17,7 @@
         var manager = emFactory.newManager();
         var primePromise;
         var $q = common.$q;
-        var repoNames = ['league', 'season', 'fixture', 'team', 'result', 'participation'];
+        var repoNames = ['league', 'season', 'fixture', 'team', 'result', 'participation', 'round'];
         
         var service = {
             cancel: cancel,

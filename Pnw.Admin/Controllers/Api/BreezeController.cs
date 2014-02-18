@@ -62,6 +62,12 @@ namespace Pnw.Admin.Controllers.Api
         }
 
         [HttpGet]
+        public IQueryable<MatchWeek> MatchWeeks()
+        {
+            return _repository.MatchWeeks;
+        }
+        
+        [HttpGet]
         public object Lookups()
         {
             var leagues = _repository.Leagues;

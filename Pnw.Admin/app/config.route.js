@@ -155,6 +155,23 @@
                     settings: { }
                 }
             }, {
+                url: '/seasonrounds',
+                config: {
+                    title: 'seasonrounds',
+                    templateUrl: 'app/round/rounds.html',
+                    settings: {
+                        nav: 7,
+                        content: '<i class="icon-list"></i> Season-Rounds'
+                    }
+                }
+            }, {
+                url: '/seasonround/:id',
+                config: {
+                    title: 'season-round',
+                    templateUrl: 'app/round/rounddetail.html',
+                    settings: {}
+                }
+            }, {
                 url: '/forgot-password',
                 config: {
                     title: 'forgot password',

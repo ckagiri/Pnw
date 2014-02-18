@@ -1,4 +1,4 @@
-﻿<section class="mainbar" data-ng-controller="seasondetail as vm">
+﻿<section class="mainbar" data-ng-controller="rounddetail as vm">
     <section class="matter">
         <div class="container-fluid">
             <div>
@@ -17,7 +17,7 @@
                     <i class="icon-save"></i>Save
                 </button>
                 <button class="btn btn-danger" 
-                   data-ng-click="">
+                   data-ng-click="vm.deleteRound()">
                     <i class="icon-trash"></i>Delete
                 </button> 
                 <span data-ng-show="vm.hasChanges"
@@ -26,18 +26,17 @@
                 </span>
             </div>
             <div class="widget wgreen">
-                <div data-cc-widget-header title="Edit {{vm.season.name || 'New ' + vm.selectedLeague.code + ' Season'}}"></div>
+                <div data-cc-widget-header title="Edit {{'' || 'New ' + 'Season-Round'}}"></div>
                 <div class="widget-content user">
                     <div>
                         <div>
-                            <label>League</label>
-                            <input class="uneditable-input input-large" data-ng-disabled="true" data-ng-model="vm.selectedLeague.name"
-                                   data-z-validate
+                            <label>League-season</label>
+                            <input class="uneditable-input input-xlarge" data-ng-disabled="true" data-ng-model="vm.leagueSeason"
                                 placeholder="Name" />
                         </div>
                         <div>
                             <label>Name</label>
-                            <input data-ng-model="vm.season.name"
+                            <input data-ng-model="vm.round.name"
                                    data-z-validate
                                    placeholder="Name" />
                         </div>
@@ -45,7 +44,7 @@
                             <label>StartDate</label>
                             <div class="form-horizontal">
                                 <input id="startDate" type="text" datepicker-popup="yyyy-MMM-dd"
-                                       data-ng-model="vm.season.startDate" is-open="vm.opened1" show-weeks="false"
+                                       data-ng-model="vm.round.startDate" is-open="vm.opened1" show-weeks="false"
                                        datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
                                        data-ng-click="vm.open1($event)"
                                     data-ng-required="true" close-text="Close"  data-z-validate/>
@@ -55,7 +54,7 @@
                             <label>EndDate</label>
                             <div>
                                 <input id="endDate" type="text" datepicker-popup="yyyy-MMM-dd"
-                                       data-ng-model="vm.season.endDate" is-open="vm.opened2" show-weeks="false"
+                                       data-ng-model="vm.round.endDate" is-open="vm.opened2" show-weeks="false"
                                        datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
                                        data-ng-click="vm.open2($event)"
                                     data-ng-required="true" close-text="Close"  data-z-validate/>

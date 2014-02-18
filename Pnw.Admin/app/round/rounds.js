@@ -1,21 +1,21 @@
 ﻿(function () {
     'use strict';
-    var controllerId = 'seasonteams';
-    angular.module('app').controller(controllerId, ['$location', 'bootstrappedData', 'common', 'datacontext', seasonteams]);
+    var controllerId = 'seasonrounds';
+    angular.module('app').controller(controllerId, ['$location', 'bootstrappedData', 'common', 'datacontext', seasonrounds]);
 
-    function seasonteams($location, bootstrappedData, common, datacontext) {
+    function seasonrounds($location, bootstrappedData, common, datacontext) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var defaultSeason = bootstrappedData.defaultSeason;
         var vm = this;
-        
-        vm.title = 'Season Teams';
+
+        vm.title = 'Season Rounds';
         vm.leagues = [];
         vm.seasons = [];
         vm.selectedLeague = null;
         vm.selectedSeason = null;
-        vm.seasonteams = [];
-        vm.addSeasonTeams = addSeasonTeams;
+        vm.seasonrounds = [];
+        vm.gotoSeasonRound = gotoSeasonRound;
         vm.leagueChanged = onLeagueChanged;
         vm.seasonChanged = onSeasonChanged;
 
@@ -24,14 +24,13 @@
         function activate() {
             common.activateController([init()], controllerId);
         }
-        
+
         function init() {
             return loadLeagues()
                 .then(loadSeasons)
-                .then(loadTeams)
-                .then(getSeasonTeams);
+                .then(getSeasonRounds);
         }
-        
+
         function loadLeagues() {
             return datacontext.league.getAll().then(function (data) {
                 if (defaultSeason) {
@@ -61,25 +60,6 @@
                 vm.seasons = data;
             });
         }
-        
-        function loadTeams() {
-            return datacontext.team.getAll().then(function (data) {
-                // vm.teams = data;
-            });
-        }
-        
-        function getSeasonTeams(forceRemote) {
-            return datacontext.participation.getAll().then(function() {
-                vm.selectedSeason.participationList.forEach(function(p) {
-                    vm.seasonteams.push(p.team);
-                });
-            });
-        }
-
-        function addSeasonTeams(seasonteam) {
-            var seasonId = vm.selectedSeason.id;
-            $location.path('/seasonteams/add/' + seasonId);
-        }
 
         function onLeagueChanged() {
             
@@ -87,6 +67,18 @@
 
         function onSeasonChanged() {
             
+        }
+        
+        function getSeasonRounds(forceRemote) {
+            return datacontext.round.getAll().then(function (data) {
+                vm.seasonrounds = data;
+            });
+        }
+
+        function gotoSeasonRound(round) {
+            if (round && round.id) {
+                $location.path('/seasonround/' + round.id);
+            }
         }
     }
 })();
