@@ -227,6 +227,7 @@
     <Content Include="app\config.route.js" />
     <Content Include="app\general\howtoplay.html" />
     <Content Include="app\general\howtoplay.js" />
+    <Content Include="app\general\Rules.html" />
     <Content Include="app\leaderboard\leaderboard.html" />
     <Content Include="app\leaderboard\leaderboard.js" />
     <Content Include="app\layout\shell.html" />
@@ -443,6 +444,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -454,12 +456,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="obj\angular-animate.min.js.map" />
-    <Content Include="obj\angular-route.min.js.map" />
-    <Content Include="obj\angular-sanitize.min.js.map" />
-    <Content Include="obj\angular.min.js.map" />
-    <Content Include="obj\jquery-2.0.3.min.map" />
-    <Content Include="obj\toastr.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="Scripts\toastr.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

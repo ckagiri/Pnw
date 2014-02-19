@@ -6,6 +6,7 @@
         'ngAnimate',        // animations
         'ngRoute',          // routing
         'ngSanitize',       // sanitizes html bindings (ex: sidebar.js)
+        'ngResource',
 
         // Custom modules 
         'common',           // common functions, logger, spinner
@@ -13,8 +14,11 @@
 
         // 3rd Party Modules
         'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
+        'ui.validate',
         'breeze.directives', // breeze validation directive (zValidate)
-        'ngzWip'            // local storage and WIP module
+        'ngzWip',            // local storage and WIP module
+        'ui.bootstrap.alert',
+        'ui.bootstrap.dialog'
     ]);
     
     // Handle routing errors and success events

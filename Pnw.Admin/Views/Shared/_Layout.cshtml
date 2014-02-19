@@ -32,7 +32,7 @@
 </head>
 <body>
     <header class="clearfix">
-        <nav class="navbar navbar-fixed-top navbar-inverse">
+        <nav class="navbar navbar-fixed-top navbar-inverse" data-ng-controller="navigation as vm">
             <div class="navbar-inner">
                 <div class="container">
                     <!-- Menu button for smallar screens -->
@@ -46,10 +46,10 @@
 
                     <!-- Navigation starts -->
                     <div class="nav-collapse collapse">
-                        <div class="pull-right navbar-logo">
+                        <div class="pull-right">
                             <ul class="nav pull-right">
                                 <li>
-                                    @if (User.Identity.IsAuthenticated)
+                                    @* @if (User.Identity.IsAuthenticated)
                                     {
                                         using (Html.BeginForm("LogOff", "account"))
                                         {
@@ -61,7 +61,10 @@
                                     else
                                     {
                                        @Html.ActionLink("Login / Register", "manage", "account")
-                                    }
+                                    }*@
+                                    <a href="javascript:;" data-ng-click="vm.myAccount()">
+                                        <i class="icon-user"></i>My Account
+                                    </a>
                                 </li>
                             </ul>
                         </div>

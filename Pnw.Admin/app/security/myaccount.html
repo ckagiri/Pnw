@@ -1,0 +1,94 @@
+﻿<section class="mainbar" data-ng-controller="myaccount as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div>
+                <h2 class="page-header">My Account</h2>
+                <form name="form" data-ng-submit="vm.changePassword()" novalidate>
+                    <div class="alert alert-error" data-ng-show="vm.modelErrors" data-ng-switch="vm.modelErrors.length">
+                        <strong>Error!</strong>
+                        <span data-ng-switch-when="1">{{vm.modelErrors[0]}}</span>
+                        <ul ng-switch-default>
+                            <li data-ng-repeat="error in vm.modelErrors">{{error}}</li>
+                        </ul>
+                    </div>
+                    <field-group for="oldPassword">
+                        <label class="control-label" for="change-password-old">Old password</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input
+                                    id="change-password-old"
+                                    name="oldPassword"
+                                    type="password"
+                                    data-ng-model="password.oldPassword"
+                                    data-ng-required="true"/>
+                            </div>
+                        </div>
+                        <validation-message
+                            for="oldPassword"
+                            required="Old password is required." />
+                    </field-group>
+                    <field-group for="newPassword">
+                        <label class="control-label" for="change-password-new">New password</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input
+                                    id="change-password-new"
+                                    name="newPassword"
+                                    type="password"
+                                    data-ng-model="vm.password.newPassword"
+                                    data-ng-required="true"
+                                    data-ng-minlength="6" />
+                            </div>
+                        </div>
+                        <validation-message
+                            for="newPassword"
+                            required="New password is required."
+                            minlength="New password must be at least 6 characters." />
+                    </field-group>
+                    <field-group for="confirmPassword">
+                        <label class="control-label" for="change-password-confirm">
+                            Confirm password
+                        </label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input
+                                    id="change-password-confirm"
+                                    name="confirmPassword"
+                                    type="password"
+                                    data-ng-model="vm.password.confirmPassword"
+                                    ui-validate="'$value==vm.password.newPassword'"
+                                    ui-validate-watch="'vm.password.newPassword'" />
+                            </div>
+                        </div>
+                        <validation-message
+                            for="confirmPassword"
+                            validator="Confirm password must be same as new password." />
+                    </field-group>
+                    <div class="form-actions">
+                        <submit-button>Submit</submit-button>
+                        or <a class="text-info" href="javascript:;" data-ng-click="vm.signOut()">sign out?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</section>
+<script type="text/ng-template" id="template/dialog/message.html">
+  <div class="modal-header">
+    <h3>{{title}}</h3>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      ng-repeat="btn in buttons"
+      ng-click="close(btn.result)"
+      class="btn" ng-class="btn.cssClass">
+      {{btn.label}}
+    </button>
+  </div>
+</script>

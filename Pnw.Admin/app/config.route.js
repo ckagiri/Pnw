@@ -152,9 +152,35 @@
                 config: {
                     title: 'addteams',
                     templateUrl: 'app/participation/addteams.html',
-                    settings: {
-                        content: '<i class="icon-list"></i> Season-Teams'
-                    }
+                    settings: { }
+                }
+            }, {
+                url: '/forgot-password',
+                config: {
+                    title: 'forgot password',
+                    templateUrl: 'app/security/forgotpassword.html',
+                    settings: {}
+                }
+            }, {
+                url: '/sign-in',
+                config: {
+                    title: 'sign in',
+                    templateUrl: 'app/security/signin.html',
+                    settings: { }
+                }
+            }, {
+                url: '/sign-up',
+                config: {
+                    title: 'sign up',
+                    templateUrl: 'app/security/signup.html',
+                    settings: {}
+                }
+            }, {
+                url: '/my-account',
+                config: {
+                    title: 'my account',
+                    templateUrl: 'app/security/myaccount.html',
+                    settings: {}
                 }
             }
         ];

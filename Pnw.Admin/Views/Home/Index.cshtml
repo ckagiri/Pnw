@@ -17,10 +17,11 @@
 <span data-cc-scroll-to-top></span>
 
 <!-- Vendor Scripts -->
-@*<script src="~/scripts/jquery-2.0.3.js"></script>
+<script src="~/scripts/jquery-2.0.3.js"></script>
 <script src="~/scripts/angular.js"></script>
 <script src="~/scripts/angular-animate.js"></script>
 <script src="~/scripts/angular-route.js"></script>
+<script src="~/Scripts/angular-resource.js"></script>
 <script src="~/scripts/angular-sanitize.js"></script>
 <script src="~/scripts/bootstrap.js"></script>
 <script src="~/scripts/toastr.js"></script>
@@ -28,12 +29,13 @@
 <script src="~/scripts/ui-bootstrap-tpls-0.7.0.js"></script>
 <script src="~/scripts/spin.js"></script>
 <script src="~/scripts/q.js"></script>
-<script src="~/scripts/breeze.debug.js"></script>*@
+<script src="~/scripts/breeze.debug.js"></script>
 
-<script src="~/Scripts/jquery-2.0.3.min.js"></script>
+@*<script src="~/Scripts/jquery-2.0.3.min.js"></script>
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/angular-animate.min.js"></script>
 <script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/angular-resource.min.js"></script>
 <script src="~/Scripts/angular-sanitize.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/toastr.min.js"></script>
@@ -41,12 +43,15 @@
 <script src="~/Scripts/ui-bootstrap-tpls-0.7.0.min.js"></script>
 <script src="~/Scripts/spin.min.js"></script>
 <script src="~/Scripts/q.min.js"></script>
-<script src="~/Scripts/breeze.min.js"></script>
+<script src="~/Scripts/breeze.min.js"></script>*@
 
 <script src="~/scripts/breeze.directives.validation.js"></script>
 <script src="~/scripts/breeze.to$q.js"></script>
 <script src="~/scripts/breeze.saveErrorExtensions.js"></script>
 <script src="~/scripts/angular.breeze.storagewip.js"></script>
+<script src="~/Scripts/ui.validate.js"></script>
+<script src="~/Scripts/ui.bootstrap.alert.js"></script>
+<script src="~/Scripts/ui.bootstrap.dialog.js"></script>
 
 <!-- Bootstrapping -->
 <script src="~/app/app.js"></script>
@@ -78,10 +83,22 @@
 <!-- common.bootstrap Modules -->
 <script src="~/app/common/bootstrap/bootstrap.dialog.js"></script>
 
-<!-- app -->
+<!-- app Security -->
+<script src="~/app/security/events.js"></script>
+<script src="~/app/security/flashmessage.js"></script>
+<script src="~/app/security/forgotpassword.js"></script>
+<script src="~/app/security/myaccount.js"></script>
+<script src="~/app/security/securityapi.js"></script>
+<script src="~/app/security/securitycontext.js"></script>
+<script src="~/app/security/signin.js"></script>
+<script src="~/app/security/signup.js"></script>
+<script src="~/app/security/validation.js"></script>
+
+<!-- app Layout-->
 <script src="~/app/dashboard/dashboard.js"></script>
 <script src="~/app/layout/shell.js"></script>
 <script src="~/app/layout/sidebar.js"></script>
+<script src="~/app/layout/navigation.js"></script>
 
 <!-- app Services -->
 <script src="~/app/services/datacontext.js"></script>

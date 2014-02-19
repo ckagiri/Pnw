@@ -1,8 +1,6 @@
 ﻿(function () {
     'use strict';
-
     var serviceId = 'cache';
-
     angular.module('app').factory(serviceId, ['$cacheFactory', cache]);
 
     function cache($cacheFactory) {

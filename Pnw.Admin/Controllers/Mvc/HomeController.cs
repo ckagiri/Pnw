@@ -72,15 +72,5 @@ namespace Pnw.Admin.Controllers.Mvc
             
             return View("Index", bootstrapVm);
         }
-
-        public ActionResult About()
-        {
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            return View();
-        }
     }
 }
