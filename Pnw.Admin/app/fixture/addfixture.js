@@ -110,6 +110,7 @@
             return datacontext.save().then(function (saveResult) {
                 vm.isSaving = false;
                 datacontext.fixture.calcIsScheduled();
+                gotoFixtures();
             }, function (error) {
                 vm.isSaving = false;
             });

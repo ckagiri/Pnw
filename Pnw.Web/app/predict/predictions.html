@@ -7,40 +7,30 @@
                     data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
                 </select>
                 <a><span>
-                    <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>&nbsp;&nbsp;(Timezone: GMT)
+                    <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>&nbsp;&nbsp;(Timezone: GMT 0)
                 </span></a>
                 <p />
                 <div class="form-search">
-                    <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index > 0"
-                            data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.prev()">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index > 0"
+                            data-ng-disabled="vm.isBusy" data-ng-click="vm.roundPager.prev()">
                             <i class="icon-chevron-left"></i>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index <= 0"
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index <= 0"
                             data-ng-disabled="true">
                             <i class="icon-chevron-left"></i>
                         </a>
                         <a class="btn btn-info"><i class="icon-calendar"></i>
-                            <span>{{vm.selectedMonth}} ({{vm.summary.points}}) 
-                                point{{vm.summary.points === 1 ? '' : 's'}}</span>
+                            <span>
+                                {{vm.selectedRound.name}}
+                            </span>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index < vm.monthPager.maxIndex"
-                            data-ng-disabled="vm.isBusy" data-ng-click="vm.monthPager.next()">
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index < vm.roundPager.maxIndex"
+                            data-ng-disabled="vm.isBusy" data-ng-click="vm.roundPager.next()">
                             <i class="icon-chevron-right"></i>
                         </a>
-                        <a class="btn btn-info" data-ng-show="vm.monthPager.index >= vm.monthPager.maxIndex"
+                        <a class="btn btn-info" data-ng-show="vm.roundPager.index >= vm.roundPager.maxIndex"
                             data-ng-disabled="true">
-                            <i class="icon-chevron-right"></i>
-                        </a>
-                    </div>
-                    <div class="btn-group pull-left" data-ng-show="vm.selectedLeague.isTournament">
-                        <a class="btn btn-info" data-ng-disabled="true">
-                            <i class="icon-chevron-left"></i>
-                        </a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>
-                            <span>{{vm.summary.points}} point{{vm.summary.points === 1 ? '' : 's'}}</span>
-                        </a>
-                        <a class="btn btn-info" data-ng-disabled="true">
                             <i class="icon-chevron-right"></i>
                         </a>
                     </div>
