@@ -266,7 +266,7 @@
             var offset = moment().zone();
             var fixtureDate, startOfWeek, endOfWeek;
             if (user.isAuthenticated) {
-                if (!vm.selectedSeason.isPartial) {
+                if (!vm.selectedSeason.isPartial && vm.selectedRound) {
                     return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         vm.predictions = data.filter(function (p) {
                             fixtureDate = moment(p.fixtureDate).toDate();

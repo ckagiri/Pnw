@@ -328,7 +328,7 @@
         function getFixtures(forceRemote) {
             var offset = moment().zone();
             var kickOff, startOfWeek, endOfWeek;
-            if (!vm.selectedSeason.isPartial) {
+            if (!vm.selectedSeason.isPartial && vm.selectedRound) {
                 return datacontext.fixture.getAll(forceRemote, vm.selectedSeason.id)
                     .then(function(data) {
                         vm.fixtures = data.filter(function (fixture) {
