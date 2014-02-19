@@ -19,6 +19,7 @@
             this.getAll = getAll;
             this.getAllLocal = getAllLocal;
             this.getById = getById;
+            this.getCount = getCount;
         }
 
         AbstractRepository.extend(Ctor);
@@ -75,6 +76,18 @@
 
                 return rounds;
             }
+        }
+
+        function getCount() {
+            var self = this;
+            if (self.zStorage.areItemsLoaded('rounds')) {
+                return self.$q.when(self._getLocalEntityCount(entityName));
+            }
+            // Teams aren't loaded; ask the server for a count.
+            return EntityQuery.from('Rounds')
+                .take(0).inlineCount()
+                .using(self.manager).execute()
+                .to$q(self._getInlineCount);
         }
     }
 })();

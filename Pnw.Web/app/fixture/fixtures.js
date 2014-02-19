@@ -50,12 +50,6 @@
             pageSize: 10
         };
         vm.pageChanged = pageChanged;
-        vm.monthPager = {
-            index: 0,
-            maxIndex: 1,
-            prev: prev,
-            next: next
-        };
         vm.roundPager = {
             index: 0,
             maxIndex: 1,
@@ -96,36 +90,28 @@
                 .then(calculateTotalPoints)
                 .then(addPredictionToFixture);
         }
-
-        function initMonthPager() {
-            vm.selectedMonth = moment.utc(currentDate).format('MMMM');
-
-            var sd = moment.utc(vm.selectedSeason.startDate),
-               ed = moment.utc(vm.selectedSeason.endDate);
-
-            var from = sd.clone().startOf('month'),
-                end = ed.startOf('month').add('M', 1);
-
-            var counter = 0;
-            vm.months = [];
-            while (from.isBefore(end) && counter < 12) {
-                vm.months.push(from.format('MMMM'));
-                from.add('M', 1);
-                counter += 1;
-            }
-
-            var ix = vm.months.indexOf(vm.selectedMonth);
-            if (ix < 0) {
-                vm.selectedMonth = moment.utc(ed).format('MMMM');
-                ix = vm.months.indexOf(vm.selectedMonth);
-            }
-            vm.monthPager.index = ix;
-            vm.monthPager.maxIndex = vm.months.length - 1;
-        }
-        
+       
         function initRoundPager() {
-            var ix = vm.roundPager.index = 0;
-            vm.selectedRound = vm.rounds[ix];
+            var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
+               mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
+               dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
+
+            vm.rounds.some(function(r) {
+                var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
+                    mEndDate = parseInt(moment(r.endDate).format('M'), 10),
+                    dEndDate = parseInt(moment(r.endDate).format('D'), 10);
+                if (yEndDate >= yCurrentDate && mEndDate >= mCurrentDate && dEndDate >= dCurrentDate) {
+                    vm.selectedRound = r;
+                    return true;
+                }
+                return false;
+            });
+            var index = vm.rounds.indexOf(vm.selectedRound);
+            if (index < 0) {
+                vm.selectedRound = vm.rounds[vm.rounds.length - 1];
+                index = vm.months.indexOf(vm.selectedMonth);
+            }
+            vm.roundPager.index = index;
             vm.roundPager.maxIndex = vm.rounds.length - 1;
         }
 
@@ -133,7 +119,7 @@
             if (!vm.isBusy) {
                 vm.isBusy = true;
                 vm.roundPager.index -= 1;
-                gotoMonthIndex();
+                gotoRoundIndex();
             }
         }
 
@@ -141,11 +127,11 @@
             if (!vm.isBusy) {
                 vm.isBusy = true;
                 vm.roundPager.index += 1;
-                gotoMonthIndex();
+                gotoRoundIndex();
             }
         }
 
-        function gotoMonthIndex() {
+        function gotoRoundIndex() {
             var i = vm.roundPager.index;
             vm.selectedRound = vm.rounds[i];
             getFixtures()
@@ -166,7 +152,8 @@
             if (!vm.isBusy) {
                 vm.isBusy = true;
                 vm.selectedSeason = vm.selectedLeague.seasons[0];
-                $q.when(initMonthPager())
+                $q.when(loadRounds())
+                    .then(initRoundPager)
                     .then(loadTeams)
                     .then(getFixtures)
                     .then(getStartingPage)

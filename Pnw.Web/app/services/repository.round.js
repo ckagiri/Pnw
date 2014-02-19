@@ -7,6 +7,7 @@
 
     function RepositoryRound(model, AbstractRepository) {
         var entityName = model.entityNames.round;
+        var orderBy = 'startDate';
         var EntityQuery = breeze.EntityQuery;
 
         function Ctor(mgr) {
@@ -30,18 +31,18 @@
 
         function getAll(forceRemote, seasonId) {
             var predicate = breeze.Predicate.create('seasonId', '==', seasonId);
-            var orderBy = 'startDate';
             var rounds;
             var self = this;
 
             if (self._areItemsLoaded() && !forceRemote) {
-                rounds = self._getAllLocal(entityName, orderBy);
+                rounds = self._getAllLocal(entityName, orderBy, predicate);
                 return self.$q.when(rounds);
             }
             
             return EntityQuery.from('Rounds')
                 .select('id, seasonId, leagueId, name, startDate, endDate')
                 .where(predicate)
+                .orderBy(orderBy)
                 .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);
@@ -49,7 +50,7 @@
             function querySucceeded(data) {
                 rounds = data.results;
                 self._areItemsLoaded(true);
-                self.log('Retrieved [Season-Round Partials] from remote data source', rounds.length, true);
+                self.log('Retrieved [Season-Round Partials] from remote data source', rounds.length, false);
                 return rounds;
             }
         }

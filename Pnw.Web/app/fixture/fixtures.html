@@ -6,10 +6,10 @@
                         data-ng-options="league.name group by league.region for league in vm.leagues | orderBy:['-region']">
                 </select>
                 <a><span>
-                       <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>&nbsp;&nbsp;(Timezone: GMT)
+                       <b>&nbsp;{{vm.selectedSeason.name || ''}}</b>&nbsp;&nbsp;(Timezone: GMT 0)
                    </span></a><p />
                 <div class="form-search">
-                    <div class="btn-group pull-left" data-ng-show="!vm.selectedLeague.isTournament">
+                    <div class="btn-group pull-left">
                         <a class="btn btn-info" data-ng-show="vm.roundPager.index > 0"
                            data-ng-disabled="vm.isBusy" data-ng-click="vm.roundPager.prev()">
                             <i class="icon-chevron-left"></i>
@@ -20,7 +20,7 @@
                         </a>
                         <a class="btn btn-info"><i class="icon-calendar"></i>
                             <span>
-                                {{vm.selectedRound.name}}&nbsp;&nbsp;({{vm.selectedRound.startDate | date:'dd MMM'}} - {{vm.selectedRound.endDate | date:'dd MMM'}}) 
+                                {{vm.selectedRound.name}}&nbsp;&nbsp;({{vm.selectedRound.startDate | date:'d MMM'}} - {{vm.selectedRound.endDate | date:'d MMM'}}) 
                             </span>
                         </a>
                         <a class="btn btn-info" data-ng-show="vm.roundPager.index < vm.roundPager.maxIndex"
@@ -29,17 +29,6 @@
                         </a>
                         <a class="btn btn-info" data-ng-show="vm.roundPager.index >= vm.roundPager.maxIndex"
                            data-ng-disabled="true">
-                            <i class="icon-chevron-right"></i>
-                        </a>
-                    </div>
-                    <div class="btn-group pull-left" data-ng-show="vm.selectedLeague.isTournament">
-                        <a class="btn btn-info" data-ng-disabled="true">
-                            <i class="icon-chevron-left"></i>
-                        </a>
-                        <a class="btn btn-info"><i class="icon-calendar"></i>
-                            <span>{{vm.totalPoints}} point{{vm.totalPoints === 1 ? '' : 's'}}</span>
-                        </a>
-                        <a class="btn btn-info" data-ng-disabled="true">
                             <i class="icon-chevron-right"></i>
                         </a>
                     </div>
@@ -121,9 +110,11 @@
                     </div>
                 </div>
             </div>
-            Correct-Score = <span><b>{{vm.summary.correctScore}}</b> point{{vm.summary.correctScore === 1 ? '' : 's'}}</span><p/>
-            Correct-Result = <span><b>{{vm.summary.correctResult}}</b> point{{vm.summary.correctResult === 1 ? '' : 's'}}</span><p/>
-            Total Points = <span><b>{{vm.summary.totalPoints}}</b> point{{vm.summary.totalPoints === 1 ? '' : 's'}}</span>
+            <div class="pull-right">
+                Correct-Score = <span><b>{{vm.summary.correctScore}}</b> point{{vm.summary.correctScore === 1 ? '' : 's'}}&nbsp;&nbsp;</span><p/>
+                Correct-Result = <span><b>{{vm.summary.correctResult}}</b> point{{vm.summary.correctResult === 1 ? '' : 's'}}&nbsp;&nbsp;</span><p/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Total Points = <span><b>{{vm.summary.totalPoints}}</b> point{{vm.summary.totalPoints === 1 ? '' : 's'}}&nbsp;&nbsp;</span>
+            </div>
         </div>
     </section>
 </section>

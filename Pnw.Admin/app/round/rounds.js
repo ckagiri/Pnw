@@ -19,13 +19,14 @@
         vm.paging = {
             currentPage: 1,
             maxPagesToShow: 5,
-            pageSize: 3
+            pageSize: 10
         };
         vm.pageChanged = pageChanged;
         vm.gotoSeasonRound = gotoSeasonRound;
         vm.leagueChanged = onLeagueChanged;
         vm.refresh = refresh;
         vm.getSeasonRounds = getSeasonRounds;
+        vm.seasonroundCount = 0;
         
         activate();
 
@@ -105,10 +106,20 @@
             getSeasonRounds();
         }
         
+        function getSeasonRoundCount() {
+            return datacontext.round.getCount().then(function (data) {
+                return vm.seasonroundCount = data;
+            });
+        }
+        
         function getSeasonRounds(forceRemote) {
             return datacontext.round.getAll(forceRemote, vm.paging.currentPage, vm.paging.pageSize, vm.selectedSeason.id)
                 .then(function (data) {
                     vm.seasonrounds = data;
+                    if (!vm.seasonroundCount || forceRemote) {
+                        // Only grab the full count once or on refresh
+                        getSeasonRoundCount();
+                    }
             });
         }
 
