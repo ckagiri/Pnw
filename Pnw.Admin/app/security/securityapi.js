@@ -5,14 +5,14 @@
     function securityAPI($http, $resource) {
         var urlPrefix = '/api';
         return {
-            User: $resource(urlPrefix + '/users'),
-            Session: $resource(urlPrefix + '/sessions'),
+            User: $resource(urlPrefix + '/user'),
+            Session: $resource(urlPrefix + '/session'),
             password: {
                 forgot: function (model) {
-                    return $http.post(urlPrefix + '/passwords/forgot', model);
+                    return $http.post(urlPrefix + '/password/forgot', model);
                 },
                 change: function (model) {
-                    return $http.post(urlPrefix + '/passwords/change', model);
+                    return $http.post(urlPrefix + '/password/change', model);
                 }
             }
         };

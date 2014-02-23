@@ -121,6 +121,7 @@
                 vm.isSaving = false;
                 removeWipEntity();
                 helper.replaceLocationUrlGuidWithId(vm.team.id);
+                gotoTeams();
             }, function (error) {
                 vm.isSaving = false;
             });

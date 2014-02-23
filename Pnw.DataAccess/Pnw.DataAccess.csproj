@@ -107,6 +107,7 @@
     <Compile Include="Configuration\OAuthMembershipConfiguration.cs" />
     <Compile Include="Configuration\RoleConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="LeaderboardFilter.cs" />
     <Compile Include="Migrations\201402141456344_Initial.cs" />
     <Compile Include="Migrations\201402141456344_Initial.Designer.cs">
       <DependentUpon>201402141456344_Initial.cs</DependentUpon>

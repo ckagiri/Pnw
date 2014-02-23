@@ -22,11 +22,11 @@
 
         return Ctor;
         
-        function get(forceRemote, leagueId, seasonId) {
+        function get(options) {
             var self = this;
             var leaderboard = [];
             return EntityQuery.from('Leaderboard')
-                .withParameters({ leagueId: leagueId, seasonId: seasonId })
+                .withParameters({ filter: options })
                 .toType(entityName)
                 .using(self.manager).execute()
                 .to$q(querySucceeded, self._queryFailed);

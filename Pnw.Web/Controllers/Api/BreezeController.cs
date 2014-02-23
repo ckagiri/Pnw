@@ -8,6 +8,7 @@ using Breeze.WebApi2;
 using Newtonsoft.Json.Linq;
 using Pnw.DataAccess;
 using Pnw.Model;
+using Pnw.Web.Models;
 
 namespace Pnw.Web.Controllers.Api
 {
@@ -92,9 +93,9 @@ namespace Pnw.Web.Controllers.Api
         }
 
         [HttpGet]
-        public IQueryable<object> Leaderboard(int leagueId, int seasonId)
+        public IQueryable<object> Leaderboard([FromUri]LeaderboardFilter filter)
         {
-            var lb = _repository.Leaderboard(leagueId, seasonId, null, null);
+            var lb = _repository.Leaderboard(filter);
             return lb;
         }
 

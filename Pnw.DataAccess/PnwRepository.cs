@@ -105,8 +105,22 @@ namespace Pnw.DataAccess
             get { return Context.Fixtures; }
         }
 
-        public IQueryable<object> Leaderboard(int leagueId, int? seasonId, int? year, int? monthId)
+        public IQueryable<object> Leaderboard(LeaderboardFilter filter)
         {
+            DateTime startDate, endDate;
+            var leagueId = filter.LeagueId.GetValueOrDefault();
+            var seasonId = filter.SeasonId.GetValueOrDefault();
+            var month = filter.Month.GetValueOrDefault();
+            var roundId = filter.RoundId.GetValueOrDefault();
+            if(roundId > 0)
+            {
+                var round = Context.Rounds.FirstOrDefault(r => r.Id == roundId);
+                if(round != null)
+                {
+                    startDate = round.StartDate;
+                    endDate = round.EndDate;
+                }
+            }
             var query = (from p in Context.Predictions
                          where p.LeagueId == leagueId && p.SeasonId == seasonId
                          group p by p.UserId
@@ -129,7 +143,7 @@ namespace Pnw.DataAccess
                                         AccuracyDifference = g.Sum(p => p.AccuracyDifference),
                                         LastBetTimestamp =
                              lastPrediction != null ? lastPrediction.CreatedOn : DateTime.Now
-                                    })
+                                    }) 
                 .AsEnumerable()
                 .Select((v, i) => new
                                       {

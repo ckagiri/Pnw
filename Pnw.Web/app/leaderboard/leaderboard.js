@@ -20,17 +20,28 @@
         vm.leaderboard = [];
         vm.selectedLeague = undefined;
         vm.selectedSeason = undefined;
+        vm.selectedMonth = undefined;
+        vm.selectedRound = undefined;
+        vm.months = [];
+        vm.rounds = [];
+        vm.filteredRounds = [];
         vm.leagueChanged = onLeagueChanged;
-        vm.getLeaderboard = function () { };
+        vm.getLeaderboard = getLeaderboard;
         vm.gotoPredictions = gotoPredictions;
-        vm.refresh = refresh;
+        vm.queryObj = { };
         
         activate();
 
         function activate() {
-            initLookups();
-            getDefaults();
-            common.activateController([getLeaderBoard()], controllerId);
+            common.activateController([init()], controllerId);
+        }
+
+        function init() {
+            initLookups()
+                .then(getDefaults)
+                .then(loadMonths)
+                .then(loadRounds)
+                .then(setDefaults);
         }
         
         function getDefaults() {
@@ -48,20 +59,67 @@
                 }
                 return false;
             });
-            vm.selectedMonth = moment.utc(currentDate).format('MMMM');
         }
 
-        function getLeaderBoard(forceRemote) {
-            var leagueId = vm.selectedLeague.id;
-            var seasonId = (vm.selectedSeason && vm.selectedSeason.id) || 0;
-            return datacontext.leaderboard.get(forceRemote, leagueId, seasonId).then(function(data) {
+        function loadMonths() {
+            var sd = moment.utc(vm.selectedSeason.startDate),
+                ed = moment.utc(vm.selectedSeason.endDate);
+
+            var from = sd.clone().startOf('month'),
+                end = ed.startOf('month').add('M', 1);
+
+            var counter = 0;
+            vm.months = [];
+            while (from.isBefore(end) && counter < 12) {
+                vm.months.push(from.format('MMMM'));
+                from.add('M', 1);
+                counter += 1;
+            }
+        }
+
+        function loadRounds(forceRemote) {
+            return datacontext.round.getAll(forceRemote, vm.selectedSeason.id).then(function (data) {
+                vm.rounds = data;
+            });
+        }
+
+        function setDefaults() {
+            var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
+               mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
+               dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
+
+            vm.rounds.some(function (r) {
+                var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
+                    mEndDate = parseInt(moment(r.endDate).format('M'), 10),
+                    dEndDate = parseInt(moment(r.endDate).format('D'), 10);
+                if (yEndDate >= yCurrentDate && mEndDate >= mCurrentDate && dEndDate >= dCurrentDate) {
+                    vm.selectedRound = r;
+                    return true;
+                }
+                return false;
+            });
+            var index = vm.rounds.indexOf(vm.selectedRound);
+            if (index < 0) {
+                vm.selectedRound = vm.rounds[vm.rounds.length - 1];
+            }
+            vm.selectedMonth = moment.utc(vm.selectedRound.startDate).format('MMMM');
+            vm.filteredRounds = vm.rounds.filter(function (round) {
+                return true;
+            });
+        }
+
+        function getLeaderboard() {
+            setQueryObj();
+            return datacontext.leaderboard.get(vm.queryObj).then(function(data) {
                 vm.leaderboard = data;
             });
         }
 
         function onLeagueChanged() {
+            vm.seasons = vm.selectedLeague.seasons;
             vm.selectedSeason = vm.selectedLeague.seasons[0];
-            getLeaderBoard();
+            setDefaults();
+            getLeaderboard();
         }
         
         function initLookups() {
@@ -77,8 +135,21 @@
             }
         }
 
-        function refresh() {
-            getLeaderBoard(true).then(logSuccess("Refresh Successful", null, true));
+        function setQueryObj() {
+            vm.queryObj = {
+                leagueId: vm.selectedLeague && vm.selectedLeague.id,
+                seasonId: vm.selectedLeague && vm.selectedLeague.id,
+                month: getMonthFromString(vm.selectedMonth),
+                roundId: vm.selectedRound && vm.selectedRound.id
+            };
+            
+            function getMonthFromString(monthStr) {
+                var d = Date.parse(monthStr + "1, 2000");
+                if (!isNaN(d)) {
+                    return new Date(d).getMonth() + 1;
+                }
+                return -1;
+            }
         }
     }
 })();
