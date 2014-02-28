@@ -69,9 +69,9 @@
                 currentDate: @Html.Raw(Model.CurrentDateJson),
                 user: @Html.Raw(Model.UserJSON)
             };
-            data.user.isAuthenticated = @Html.Raw(Model.IsUserAuthenticatedJson);
             return data;
         });
+        window.bootstrappedUserObject = @Html.Raw(Model.UserJSON);
     </Script>
 }
 
@@ -83,16 +83,18 @@
 <!-- common.bootstrap Modules -->
 <script src="~/app/common/bootstrap/bootstrap.dialog.js"></script>
 
-<!-- app Security -->
-<script src="~/app/security/events.js"></script>
-<script src="~/app/security/flashmessage.js"></script>
-<script src="~/app/security/forgotpassword.js"></script>
-<script src="~/app/security/myaccount.js"></script>
-<script src="~/app/security/securityapi.js"></script>
-<script src="~/app/security/securitycontext.js"></script>
-<script src="~/app/security/signin.js"></script>
-<script src="~/app/security/signup.js"></script>
-<script src="~/app/security/validation.js"></script>
+<!-- auth -->
+<script src="~/app/account/events.js"></script>
+<script src="~/app/account/auth.js"></script>
+<script src="~/app/account/identity.js"></script>
+<script src="~/app/account/forgotpassword.js"></script>
+<script src="~/app/account/changepassword.js"></script>
+<script src="~/app/account/user.js"></script>
+<script src="~/app/account/signin.js"></script>
+<script src="~/app/account/signup.js"></script>
+<script src="~/app/account/validation.js"></script>
+<script src="~/app/account/profile.js"></script>
+<script src="~/app/account/flashmessage.js"></script>
 
 <!-- app Layout-->
 <script src="~/app/dashboard/dashboard.js"></script>

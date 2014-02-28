@@ -95,15 +95,19 @@
             var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
                mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
                dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
+            
+            var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
 
             vm.rounds.some(function(r) {
                 var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
                     mEndDate = parseInt(moment(r.endDate).format('M'), 10),
                     dEndDate = parseInt(moment(r.endDate).format('D'), 10);
-                if (yEndDate >= yCurrentDate && mEndDate >= mCurrentDate && dEndDate >= dCurrentDate) {
+                var rEndDate = new Date(yEndDate, mEndDate - 1, dEndDate);
+                if(rEndDate >= cDate) {
                     vm.selectedRound = r;
                     return true;
                 }
+               
                 return false;
             });
             var index = vm.rounds.indexOf(vm.selectedRound);
@@ -350,12 +354,15 @@
                 mCurrentDate = parseInt(moment(currentDate).format('M'), 10), 
                 dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
 
+            var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
+
             var reqFixture = undefined;
             vm.fixtures.some(function(f) {
                 var yKickOff = parseInt(moment(f.kickOff).format('YYYY'), 10),
                     mKickOff = parseInt(moment(f.kickOff).format('M'), 10),
                     dKickOff = parseInt(moment(f.kickOff).format('D'), 10);
-                if (yKickOff >= yCurrentDate && mKickOff >= mCurrentDate && dKickOff >= dCurrentDate) {
+                var kickOffDate = new Date(yKickOff, mKickOff - 1, dKickOff);
+                if (kickOffDate >= cDate) {
                     reqFixture = f;
                     return true;
                 }

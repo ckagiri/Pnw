@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Web.Security;
 using Pnw.Model;
 using WebMatrix.WebData;
@@ -743,8 +744,18 @@ namespace Pnw.DataAccess.Migrations
 
             if (!roles.RoleExists("User")) { roles.CreateRole("User"); }
 
-            //context.SaveChanges();
-
+            if (membership.GetUser("ckagiri", false) == null)
+            {
+                membership.CreateUserAndAccount("ckagiri", "123456", false,
+                    new Dictionary<string, object>
+                    {
+                        {"Email", "ckagiri@gmail.com"}
+                    });
+            }
+            if (!roles.GetRolesForUser("ckagiri").Contains("User"))
+            {
+                roles.AddUsersToRoles(new[] { "ckagiri" }, new[] { "User" });
+            }
 
             if (membership.GetUser("test1", false) == null)
             {

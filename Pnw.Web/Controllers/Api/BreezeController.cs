@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Breeze.ContextProvider;
@@ -8,7 +6,6 @@ using Breeze.WebApi2;
 using Newtonsoft.Json.Linq;
 using Pnw.DataAccess;
 using Pnw.Model;
-using Pnw.Web.Models;
 
 namespace Pnw.Web.Controllers.Api
 {

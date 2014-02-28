@@ -9,6 +9,10 @@ namespace Pnw.Admin.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(64, MinimumLength = 2)]
+        public string Username { get; set; }
+
+        [Required]
         [StringLength(64, MinimumLength = 6)]
         public string Password { get; set; }
 

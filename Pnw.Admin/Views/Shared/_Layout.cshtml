@@ -7,6 +7,9 @@
         .ng-hide {
             display: none!important;
         }
+        .flash-bar {
+            position: fixed;
+        }
     </style>
     <title data-ng-bind="title">Pnw Admin</title>
     <meta charset="utf-8" />
@@ -30,51 +33,72 @@
     <link href="~/content/styles.css" rel="stylesheet" />
     <link href="~/content/bootstrap-responsive.min.css" rel="stylesheet" />
 </head>
-<body>
-    <header class="clearfix">
-        <nav class="navbar navbar-fixed-top navbar-inverse" data-ng-controller="navigation as vm">
-            <div class="navbar-inner">
-                <div class="container">
-                    <!-- Menu button for smallar screens -->
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <!-- Site name for smallar screens -->
-                    <a href="/" class="brand"><span class="brand-title">PNW ADMIN</span></a>
+    <body>
+        @Html.Partial("Flashbar")
+        <header class="clearfix">
+            <nav class="navbar navbar-fixed-top navbar-inverse" data-ng-controller="navigation as vm">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <!-- Menu button for smallar screens -->
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <!-- Site name for smallar screens -->
+                        <a href="/" class="brand"><span class="brand-title">PNW ADMIN</span></a>
 
-                    <!-- Navigation starts -->
-                    <div class="nav-collapse collapse">
-                        <div class="pull-right">
-                            <ul class="nav pull-right">
-                                <li>
-                                    @* @if (User.Identity.IsAuthenticated)
-                                    {
-                                        using (Html.BeginForm("LogOff", "account"))
-                                        {
-                                                  @Html.AntiForgeryToken()
-                                                  <span class="text-subtle">Logged in as @User.Identity.Name</span>
-                                                  <input class="btn btn-mini btn-success" type="submit" value="Log out" />
-                                        }
-                                    }
-                                    else
-                                    {
-                                       @Html.ActionLink("Login / Register", "manage", "account")
-                                    }*@
-                                    <a href="javascript:;" data-ng-click="vm.myAccount()">
-                                        <i class="icon-user"></i>My Account
-                                    </a>
-                                </li>
-                            </ul>
+                        <!-- Navigation starts -->
+                        <div class="nav-collapse collapse">
+                            <div class="pull-right">
+                                <ul data-ng-hide="vm.identity.isAuthenticated()" class="nav pull-right">
+                                    <li>
+                                        <a href="javascript:;" data-ng-click="vm.signin()">
+                                            <i class="icon-key"></i>Login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" data-ng-click="vm.register()">
+                                            <i class="icon-user"></i>Register
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul ng-show="vm.identity.isAuthenticated()" class="nav pull-right">
+                                    <li class="dropdown">
+                                        <a href="" data-toggle="dropdown" class="dropdown-toggle">{{vm.identity.currentUser.username}}
+                                            <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li data-ng-show="vm.identity.currentUser.isAdmin()"><a href="#/admin/users">User Admin</a></li>
+                                            <li><a href="#/change-password">Change Password</a></li>
+                                            <li><a href="#/profile">Profile</a></li>
+                                            <li><a href="" data-ng-click="vm.signout()">Sign Out</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    @RenderBody()
-    @RenderSection("script", required:false)
-    @RenderSection("scripts", required: false)
-</body>
+            </nav>
+        </header>
+        @RenderBody()
+        @RenderSection("script", required: false)
+        @RenderSection("scripts", required: false)
+        <script type="text/ng-template" id="template/dialog/message.html">
+  <div class="modal-header">
+    <h3>{{title}}</h3>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      ng-repeat="btn in buttons"
+      ng-click="close(btn.result)"
+      class="btn" ng-class="btn.cssClass">
+      {{btn.label}}
+    </button>
+  </div>
+</script>
+    </body>
 </html>

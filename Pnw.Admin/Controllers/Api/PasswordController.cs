@@ -17,11 +17,11 @@ namespace Pnw.Admin.Controllers.Api
 
         public PasswordController()
             : this(
-                userName =>
+                email =>
                 {
                     try
                     {
-                        return WebSecurity.GeneratePasswordResetToken(userName);
+                        return WebSecurity.GeneratePasswordResetToken(email);
                     }
                     catch (InvalidOperationException)
                     {
@@ -53,12 +53,12 @@ namespace Pnw.Admin.Controllers.Api
                     ModelState);
             }
 
-            var userName = model.Email.ToLowerInvariant();
-            var token = _forgotPassword(userName);
+            var email = model.Email.ToLowerInvariant();
+            var token = _forgotPassword(email);
 
             if (!string.IsNullOrWhiteSpace(token))
             {
-                await _mailer.ForgotPasswordAsync(userName, token);
+                await _mailer.ForgotPasswordAsync(email, token);
             }
 
             return Request.CreateResponse(HttpStatusCode.NoContent);

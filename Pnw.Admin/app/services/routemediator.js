@@ -9,9 +9,9 @@
     // Point to the factory definition function.
     angular.module('app')
         .factory(serviceId,
-            ['$location', '$rootScope', 'config', 'logger', routemediator]);
+            ['$location', '$rootScope', '$window', 'config', 'identity', 'logger', routemediator]);
 
-    function routemediator($location, $rootScope, config, logger) {
+    function routemediator($location, $rootScope, $window, config, identity, logger) {
         // Define the functions and properties to reveal.
         var handleRouteChangeError = false;
         var service = {
@@ -26,6 +26,12 @@
         }
 
         function handleRoutingErrors() {
+            $rootScope.$on('$routeChangeStart', function (e, next) {
+                if (next.secured && !identity.isAuthenticated()) {
+                    $location.path('/sign-in');
+                }
+            });
+            
             $rootScope.$on('$routeChangeError',
                 function (event, current, previous, rejection) {
                     if (handleRouteChangeError) { return; }

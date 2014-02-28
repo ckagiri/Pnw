@@ -42,7 +42,8 @@
                         nav: 1,
                         content: '<i class="icon-dashboard"></i> Dashboard'
                     }
-                }
+                },
+                secured: true
             }, {
                 url: '/fixtures',
                 config: {
@@ -175,28 +176,35 @@
                 url: '/forgot-password',
                 config: {
                     title: 'forgot password',
-                    templateUrl: 'app/security/forgotpassword.html',
+                    templateUrl: 'app/account/forgotpassword.html',
                     settings: {}
                 }
             }, {
                 url: '/sign-in',
                 config: {
                     title: 'sign in',
-                    templateUrl: 'app/security/signin.html',
+                    templateUrl: 'app/account/signin.html',
                     settings: { }
                 }
             }, {
                 url: '/sign-up',
                 config: {
                     title: 'sign up',
-                    templateUrl: 'app/security/signup.html',
+                    templateUrl: 'app/account/signup.html',
                     settings: {}
                 }
             }, {
-                url: '/my-account',
+                url: '/change-password',
                 config: {
-                    title: 'my account',
-                    templateUrl: 'app/security/myaccount.html',
+                    title: 'change password',
+                    templateUrl: 'app/account/changepassword.html',
+                    settings: {}
+                }
+            }, {
+                url: '/profile',
+                config: {
+                    title: 'profile',
+                    templateUrl: 'app/account/profile.html',
                     settings: {}
                 }
             }

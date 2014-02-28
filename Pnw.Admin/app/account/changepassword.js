@@ -1,17 +1,18 @@
 ﻿(function() {
     'use strict';
-    var controllerId = 'myaccount';
-    angular.module('app').controller(controllerId, ['$dialog', '$location', 'common', 'events', 'securityAPI', 'validation', myaccount]);
+    var controllerId = 'changepassword';
+    angular.module('app').controller(controllerId, ['$dialog', '$location', 'auth', 'common', 'events', 'validation', changepassword]);
 
-    function myaccount($dialog, $location, common, events, securityAPI, validation) {
+    function changepassword($dialog, $location, auth, common, events, validation) {
         var vm = this;
         vm.password = {
             oldPassword: null,
             newPassword: null,
             confirmPassword: null
         };
-        vm.changePassword = changePassword;
-        vm.signOut = signOut;
+        vm.modelErrors = void (0);
+        vm.submit = submit;
+        vm.signout = signout;
 
         activate();
         
@@ -19,9 +20,8 @@
             common.activateController([], controllerId);
         }
 
-        function changePassword() {
-            vm.modelErrors = void(0);
-            securityAPI.password.change(vm.password)
+        function submit() {
+            auth.changePassword(vm.password)
                 .success(function() {
                     events.trigger('passwordChanged');
                     $location.path('/');
@@ -34,29 +34,21 @@
                         'while changing your password.'];
                 });
         }
-
-        function signOut() {
+        
+        function signout() {
             $dialog.messageBox('Sign out?', 'Are you sure you want to sign out?', [
                 { label: 'Ok', result: true },
                 { label: 'Cancel', result: false, cssClass: 'btn-primary' }
-            ]).open().then(function(result) {
+            ]).open().then(function (result) {
                 if (result) {
-                    doSignOut();
+                    auth.logoutUser().then(function () {
+                        console.log('You have successfully signed out!');
+                        $location.path('/');
+                    });
                 }
             });
-        }
+        };
 
-        function doSignOut() {
-            var session = new securityAPI.Session();
-            session.$delete(function() {
-                events.trigger('signedOut');
-                $location.path('/');
-            }, function() {
-                events.trigger('flash:error', {
-                    message: 'An unexpected error has occurred while signing out.'
-                });
-            });
-        }
     }
 })();
 

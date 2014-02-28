@@ -11,10 +11,39 @@ using Membership = System.Web.Security.Membership;
 
 namespace Pnw.Admin.Controllers.Mvc
 {
-    [Authorize]
     public class HomeController : Controller
     {
-        [Authorize(Roles = "admin")]
+        private readonly Func<int> _getUserId;
+        private bool? _authenticated;
+
+        public HomeController() : this(() => WebSecurity.CurrentUserId)
+        {
+            
+        }
+
+        public HomeController(Func<int> getUserId)
+        {
+            _getUserId = getUserId;
+        }
+
+        public bool IsAuthenticated
+        {
+            get
+            {
+                if (_authenticated == null)
+                {
+                    _authenticated = Request.IsAuthenticated;
+                }
+
+                return _authenticated.GetValueOrDefault();
+            }
+
+            set
+            {
+                _authenticated = value;
+            }
+        }
+
         public ActionResult Index()
         {
             var bootstrapVm = new BootstrapVm();
@@ -58,16 +87,6 @@ namespace Pnw.Admin.Controllers.Mvc
             bootstrapVm.DefaultLeague = defaultLeague;
             bootstrapVm.DefaultSeason = defaultSeason;
             bootstrapVm.CurrentDate = DateTime.Now;
-
-            if (user == null)
-            {
-                user = new User();
-                bootstrapVm.IsUserAuthenticated = false;
-            }
-            else
-            {
-                bootstrapVm.IsUserAuthenticated = true;
-            }
             bootstrapVm.User = user;
             
             return View("Index", bootstrapVm);

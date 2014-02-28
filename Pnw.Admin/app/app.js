@@ -22,10 +22,18 @@
     ]);
     
     // Handle routing errors and success events
-    app.run(['$route', '$rootScope', '$q', 'routemediator',
-        function ($route, $rootScope, $q, routemediator) {
+    app.run(['$route', '$rootScope', '$q', 'events', 'routemediator',
+        function ($route, $rootScope, $q, events, routemediator) {
             // Include $route to kick start the router.
             breeze.core.extendQ($rootScope, $q);
             routemediator.setRoutingHandlers();
+            events.on('signedIn', function () {
+                showFlashSuccess('You are now signed in.');
+            });
+            function showFlashSuccess(message) {
+                events.trigger('flash:success', {
+                    message: message
+                });
+            }
         }]);
 })();

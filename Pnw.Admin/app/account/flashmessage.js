@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
-    var controllerId = 'flashMessage';
-    angular.module('app').controller(controllerId, ['$scope', '$timeout', flashMessage]);
+    var controllerId = 'flashmessage';
+    angular.module('app').controller(controllerId, ['$scope', '$timeout', flashmessage]);
 
-    function flashMessage($scope, $timeout) {
+    function flashmessage($scope, $timeout) {
         $scope.alerts = [];
 
         function remove(alert) {

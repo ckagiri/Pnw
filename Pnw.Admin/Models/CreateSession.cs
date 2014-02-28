@@ -5,7 +5,7 @@ namespace Pnw.Admin.Models
     public class CreateSession
     {
         [Required]
-        public string Email { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public string Password { get; set; }

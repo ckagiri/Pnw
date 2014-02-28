@@ -34,6 +34,7 @@ namespace Pnw.Admin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            GlobalConfig.CustomizeConfig(GlobalConfiguration.Configuration);
 
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
 

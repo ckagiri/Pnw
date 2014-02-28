@@ -1,0 +1,99 @@
+﻿<section id="signup-view" class="mainbar" data-ng-controller="signup as vm">
+    <section class="matter">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <h2 class="page-header">Sign Up</h2>
+                <form name="form" data-ng-submit="vm.register()" novalidate>
+                    <div class="alert alert-error" data-ng-show="vm.modelErrors" data-ng-switch="vm.modelErrors.length">
+                        <strong>Error!</strong>
+                        <span data-ng-switch-when="1">{{vm.modelErrors[0]}}</span>
+                        <ul ng-switch-default>
+                            <li data-ng-repeat="error in vm.modelErrors">{{error}}</li>
+                        </ul>
+                    </div>
+                    <field-group for="username">
+                        <label class="control-label" for="sign-up-username">User Name</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-user"></i></span>
+                                <input
+                                    id="sign-up-username"
+                                    name="username"
+                                    type="text"
+                                    data-ng-model="vm.username"
+                                    data-ng-required="true"
+                                    data-ng-minlength="2" />
+                            </div>
+                        </div>
+                        <validation-message
+                            for="username"
+                            required="User name is required."
+                            minlength="UserName must be at least 2 characters." />
+                    </field-group>
+                    <field-group for="email">
+                        <label class="control-label" for="sign-up-email">Email</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-envelope"></i></span>
+                                <input
+                                    id="sign-up-email"
+                                    name="email"
+                                    type="email"
+                                    data-ng-model="vm.email" 
+                                    data-ng-required="true"/>
+                            </div>
+                        </div>
+                        <validation-message
+                            for="email"
+                            required="Email is required."
+                            email="Email must be in valid format." />
+                    </field-group>
+                    <field-group for="password">
+                        <label class="control-label" for="sign-up-password">Password</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input
+                                    id="sign-up-password"
+                                    name="password"
+                                    type="password"
+                                    data-ng-model="vm.password"
+                                    data-ng-required="true"
+                                    data-ng-minlength="6" />
+                            </div>
+                        </div>
+                        <validation-message
+                            for="password"
+                            required="Password is required."
+                            minlength="Password must be at least 6 characters." />
+                    </field-group>
+                    <field-group for="confirmPassword">
+                        <label class="control-label" for="sign-up-confirm-password">
+                            Confirm password
+                        </label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input
+                                    id="sign-up-confirm-password"
+                                    name="confirmPassword"
+                                    type="password"
+                                    data-ng-model="vm.confirmPassword"
+                                    ui-validate="'$value==vm.password'"
+                                    ui-validate-watch="'vm.password'" />
+                            </div>
+                        </div>
+                        <validation-message
+                            for="confirmPassword"
+                            validator="Confirm password must be same as password." />
+                    </field-group>
+                    <div class="form-actions">
+                        <submit-button>Submit</submit-button>
+                        or <a class="text-info" href="#/sign-in">sign in</a>
+                        if you already have an account.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</section>
