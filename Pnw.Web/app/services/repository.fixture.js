@@ -41,7 +41,7 @@
             if (self._areItemsLoaded() && !forceRemote) {
                 fixtures = self._getAllLocal(entityName, orderBy, predicate);
                 // passing an explicit false means you know what you're doing
-                if (fixtures.length || forceRemote === false) {
+                if (fixtures.length && forceRemote === false) {
                     return self.$q.when(fixtures);
                 }
             }

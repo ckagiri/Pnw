@@ -28,10 +28,19 @@
         vm.leagueChanged = onLeagueChanged;
         vm.getLeaderboard = getLeaderboard;
         vm.gotoPredictions = gotoPredictions;
-        vm.queryObj = { };
+        vm.queryObj = {};
+        vm.version = {
+            val: "summary",
+            show: function() {
+                return (this.val === "full");
+            },
+            hide: function() {
+                return (this.val == "summary");
+            }
+        };
         
         activate();
-
+       
         function activate() {
             common.activateController([init()], controllerId);
         }
@@ -41,7 +50,8 @@
                 .then(getDefaults)
                 .then(loadMonths)
                 .then(loadRounds)
-                .then(setDefaults);
+                .then(setDefaults)
+                .then(getLeaderboard);
         }
         
         function getDefaults() {
@@ -87,12 +97,13 @@
             var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
                mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
                dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
-
+            var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
             vm.rounds.some(function (r) {
                 var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
                     mEndDate = parseInt(moment(r.endDate).format('M'), 10),
                     dEndDate = parseInt(moment(r.endDate).format('D'), 10);
-                if (yEndDate >= yCurrentDate && mEndDate >= mCurrentDate && dEndDate >= dCurrentDate) {
+                var rEndDate = new Date(yEndDate, mEndDate - 1, dEndDate);
+                if (rEndDate >= cDate) {
                     vm.selectedRound = r;
                     return true;
                 }
@@ -138,7 +149,7 @@
         function setQueryObj() {
             vm.queryObj = {
                 leagueId: vm.selectedLeague && vm.selectedLeague.id,
-                seasonId: vm.selectedLeague && vm.selectedLeague.id,
+                seasonId: vm.selectedSeason && vm.selectedSeason.id,
                 month: getMonthFromString(vm.selectedMonth),
                 roundId: vm.selectedRound && vm.selectedRound.id
             };

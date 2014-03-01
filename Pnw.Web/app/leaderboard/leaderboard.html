@@ -26,10 +26,15 @@
                         <option value="">-- All --</option>
                     </select><br/>
                 </div>
+                
                 <a class="btn btn-info" data-ng-click="vm.getLeaderboard()">
                     <span>Fetch</span>&nbsp;
                     <i class="icon-refresh"></i>
-                </a>
+                </a><p/><p/>
+                Show:&nbsp;&nbsp;
+                <input type="radio" data-ng-model="vm.version.val" value="summary"> Summary &nbsp;&nbsp;
+                <input type="radio" data-ng-model="vm.version.val" value="full"> Full 
+
             </div>
             <div class="row-fluid">
                 <div class="widget wviolet">
@@ -45,9 +50,9 @@
                                     <th>Points</th>
                                     <th>CorrectScorePoints</th>
                                     <th>CorrectResultPoints</th>
-                                    <th>CrossProductPoints</th>
-                                    <th>SpreadDifference</th>
-                                    <th>AccuracyDifference</th>
+                                    <th data-ng-show="vm.version.show()">CrossProduct</th>
+                                    <th data-ng-show="vm.version.show()">SpreadDifference</th>
+                                    <th data-ng-show="vm.version.show()">AccuracyDifference</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -58,10 +63,10 @@
                                     <td>{{lb.points}}</td>
                                     <td>{{lb.correctScorePoints}}</td>
                                     <td>{{lb.correctResultPoints}}</td>
-                                    <td>{{lb.crossProductPoints}}</td>
-                                    <td>{{lb.spreadDifference}}</td>
-                                    <td>{{lb.accuracyDifference}}</td>
-                                    <td><a href="#/predictions?userId={{lb.userId}}&leagueId={{lb.leagueId}}&seasonId={{lb.seasonId}}">GotoPredictions</a></td>
+                                    <td data-ng-show="vm.version.show()">{{lb.crossProductPoints}}</td>
+                                    <td data-ng-show="vm.version.show()">{{lb.spreadDifference}}</td>
+                                    <td data-ng-show="vm.version.show()">{{lb.accuracyDifference}}</td>
+                                    <td><a href="#/predictions?userId={{lb.userId}}&leagueId={{lb.leagueId}}&seasonId={{lb.seasonId}}&roundId={{vm.selectedRound && vm.selectedRound.id}}">GotoPredictions</a></td>
                                 </tr>
                             </tbody>
                         </table>

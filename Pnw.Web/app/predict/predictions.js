@@ -67,9 +67,10 @@
         
         function init() {
             initLookups()
-                .then(getDefaults)
-                .then(restoreFilter)
+                .then(getLeagueAndSeasonDefaults)
                 .then(loadRounds)
+                .then(getDefaultRound)
+                .then(restoreFilter)
                 .then(initRoundPager)
                 .then(loadTeams)
                 .then(getFixtures)
@@ -122,7 +123,7 @@
             }
         }
         
-        function getDefaults() {
+        function getLeagueAndSeasonDefaults() {
             var userId = parseInt($route.current.params.userId, 10);
             var leagueId = parseInt($route.current.params.leagueId, 10);
             var seasonId = parseInt($route.current.params.seasonId, 10);
@@ -162,6 +163,46 @@
                 return vm.selectedSeason;
             }
         }
+
+        function getDefaultRound() {
+            var roundId = parseInt($route.current.params.roundId, 10);
+            
+            if(roundId) {
+                vm.selectedRound = getSelectedRound(roundId);
+            } else {
+                vm.selectedRound = getSelectedRound();
+            }
+
+            function getSelectedRound(id) {
+                if (id) {
+                    vm.rounds.some(function(n) {
+                        if (n.id === id) {
+                            vm.selectedRound = n;
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+                var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
+                        mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
+                        dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
+                var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
+
+                vm.rounds.some(function (r) {
+                    var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
+                        mEndDate = parseInt(moment(r.endDate).format('M'), 10),
+                        dEndDate = parseInt(moment(r.endDate).format('D'), 10);
+                    var rEndDate = new Date(yEndDate, mEndDate - 1, dEndDate);
+                    if (rEndDate >= cDate) {
+                        vm.selectedRound = r;
+                        return true;
+                    }
+                    return false;
+                });
+
+                return vm.selectedRound;
+            }
+        }
         
         function prev() {
             if (!vm.isBusy) {
@@ -194,22 +235,6 @@
         }
        
         function initRoundPager() {
-            var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
-               mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
-               dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
-            var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
-            
-            vm.rounds.some(function (r) {
-                var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
-                    mEndDate = parseInt(moment(r.endDate).format('M'), 10),
-                    dEndDate = parseInt(moment(r.endDate).format('D'), 10);
-                var rEndDate = new Date(yEndDate, mEndDate - 1, dEndDate);
-                if(rEndDate >= cDate){
-                    vm.selectedRound = r;
-                    return true;
-                }
-                return false;
-            });
             var index = vm.rounds.indexOf(vm.selectedRound);
             if (index < 0) {
                 vm.selectedRound = vm.rounds[vm.rounds.length - 1];
@@ -267,7 +292,9 @@
         function getPredictions(forceRemote) {
             var offset = moment().zone();
             var fixtureDate, startOfWeek, endOfWeek;
-            if (identity.isAuthenticated()) {
+            user = user || {};
+            if (identity.isAuthenticated() || user.isAuthenticated) {
+                forceRemote = forceRemote || user.isAuthenticated;
                 if (!vm.selectedSeason.isPartial && vm.selectedRound) {
                     return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         vm.predictions = data.filter(function (p) {

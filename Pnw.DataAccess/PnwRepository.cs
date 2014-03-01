@@ -107,7 +107,8 @@ namespace Pnw.DataAccess
 
         public IQueryable<object> Leaderboard(LeaderboardFilter filter)
         {
-            DateTime startDate, endDate;
+            DateTime? startDate = null; 
+            DateTime? endDate = null;
             var leagueId = filter.LeagueId.GetValueOrDefault();
             var seasonId = filter.SeasonId.GetValueOrDefault();
             var month = filter.Month.GetValueOrDefault();
@@ -118,11 +119,13 @@ namespace Pnw.DataAccess
                 if(round != null)
                 {
                     startDate = round.StartDate;
-                    endDate = round.EndDate;
+                    endDate = round.EndDate.AddDays(1);
                 }
             }
-            var query = (from p in Context.Predictions
+            var query = (from p in Context.Predictions 
                          where p.LeagueId == leagueId && p.SeasonId == seasonId
+                         && (p.FixtureDate >=  startDate || startDate == null)
+                          && (p.FixtureDate <= endDate || endDate == null)
                          group p by p.UserId
                          into g
                          let @group = g.FirstOrDefault()
@@ -148,6 +151,7 @@ namespace Pnw.DataAccess
                 .Select((v, i) => new
                                       {
                                           Id = i + 1,
+                                          RoundId = roundId,
                                           v.UserId, 
                                           v.LeagueId, 
                                           v.SeasonId,
