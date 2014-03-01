@@ -73,6 +73,41 @@
                         content: '<i class="icon-book"></i> How To Play'
                     }
                 }
+            }, {
+                url: '/forgot-password',
+                config: {
+                    title: 'forgot password',
+                    templateUrl: 'app/account/forgotpassword.html',
+                    settings: {}
+                }
+            }, {
+                url: '/sign-in',
+                config: {
+                    title: 'sign in',
+                    templateUrl: 'app/account/signin.html',
+                    settings: {}
+                }
+            }, {
+                url: '/sign-up',
+                config: {
+                    title: 'sign up',
+                    templateUrl: 'app/account/signup.html',
+                    settings: {}
+                }
+            }, {
+                url: '/change-password',
+                config: {
+                    title: 'change password',
+                    templateUrl: 'app/account/changepassword.html',
+                    settings: {}
+                }
+            }, {
+                url: '/profile',
+                config: {
+                    title: 'profile',
+                    templateUrl: 'app/account/profile.html',
+                    settings: {}
+                }
             }
         ];
     }

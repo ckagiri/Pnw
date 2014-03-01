@@ -4,7 +4,7 @@ using Pnw.Web.Models;
 using Pnw.Web.Utils;
 using WebMatrix.WebData;
 
-namespace Pnw.Admin.Controllers.Api
+namespace Pnw.Web.Controllers.Api
 {
     public class SupportController : Controller
     {

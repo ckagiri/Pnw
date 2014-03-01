@@ -19,6 +19,7 @@ namespace Pnw.Admin.Controllers.Api
     public class UserController : ApiController
     {
         private readonly Func<string, string, string, bool, string> _signup;
+        private readonly Func<string, string, bool, bool> _signIn;
         private readonly IMailer _mailer;
         private readonly Func<int> _getUserId;
 
@@ -32,15 +33,20 @@ namespace Pnw.Admin.Controllers.Api
                     password,
                     new { Email = email },
                     requireConfirmation),
-                new Mailer(), () => WebSecurity.CurrentUserId)
+            WebSecurity.Login,
+            new Mailer(), 
+            () => WebSecurity.CurrentUserId)
         {
         }
 
         public UserController(
             Func<string, string, string, bool, string> signup,
-            IMailer mailer, Func<int> getUserId)
+            Func<string, string, bool, bool> signIn,
+            IMailer mailer, 
+            Func<int> getUserId)
         {
             _signup = signup;
+            _signIn = signIn;
             _mailer = mailer;
             _getUserId = getUserId;
         }
@@ -133,6 +139,7 @@ namespace Pnw.Admin.Controllers.Api
                     }
                 }
                 token = _signup(userName, model.Password, email, requireConfirmation);
+                _signIn(userName, model.Password, false);
             }
             catch (MembershipCreateUserException e)
             {

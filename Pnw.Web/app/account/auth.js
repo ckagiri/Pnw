@@ -15,7 +15,7 @@
                 var newUser = new User(newUserData);
                 var dfd = $q.defer();
 
-                newUser.$save().then(function () {
+                newUser.$save().then(function (response) {
                     identity.currentUser = newUser;
                     dfd.resolve();
                 }, function (response) {

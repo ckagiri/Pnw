@@ -35,7 +35,7 @@
 </head>
 <body>
     <header class="clearfix">
-        <nav class="navbar navbar-fixed-top navbar-inverse">
+        <nav class="navbar navbar-fixed-top navbar-inverse"  data-ng-controller="navigation as vm">
             <div class="navbar-inner">
                 <div class="container">
                     <!-- Menu button for smallar screens -->
@@ -83,5 +83,22 @@
     @RenderBody()
     @RenderSection("script", required: false)
     @RenderSection("scripts", required: false)
+    <script type="text/ng-template" id="template/dialog/message.html">
+  <div class="modal-header">
+    <h3>{{title}}</h3>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      ng-repeat="btn in buttons"
+      ng-click="close(btn.result)"
+      class="btn" ng-class="btn.cssClass">
+      {{btn.label}}
+    </button>
+  </div>
+    </script>
+
 </body>
 </html>

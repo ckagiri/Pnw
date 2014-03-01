@@ -266,6 +266,7 @@
                 + 'Work in Progress ({{wip.length}})</a>';
         }
     }]);
+    
     app.directive('fieldGroup', function () {
         return {
             restrict: 'E',

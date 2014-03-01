@@ -17,9 +17,7 @@ namespace Pnw.Admin.Controllers.Mvc
         private bool? _authenticated;
 
         public HomeController() : this(() => WebSecurity.CurrentUserId)
-        {
-            
-        }
+        { }
 
         public HomeController(Func<int> getUserId)
         {

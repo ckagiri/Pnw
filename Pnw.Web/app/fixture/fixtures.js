@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'fixtures';
-    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData','cache', 'common', 'config', 'datacontext', fixtures]);
+    angular.module('app').controller(controllerId, ['$scope', 'bootstrappedData','cache', 'common', 'config', 'datacontext', 'identity', fixtures]);
 
-    function fixtures($scope, bootstrappedData, cache, common, config, datacontext) {
+    function fixtures($scope, bootstrappedData, cache, common, config, datacontext, identity) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
@@ -12,7 +12,7 @@
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
         var currentDate = bootstrappedData.currentDate || new Date();
-        var user = bootstrappedData.user;
+        var user = identity.currentUser;
         var stateKey = { filter: 'public.fixtures.filter' };
         var vm = this;
 
@@ -95,7 +95,6 @@
             var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
                mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
                dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
-            
             var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
 
             vm.rounds.some(function(r) {
@@ -107,7 +106,6 @@
                     vm.selectedRound = r;
                     return true;
                 }
-               
                 return false;
             });
             var index = vm.rounds.indexOf(vm.selectedRound);
@@ -253,6 +251,8 @@
                 }
             }
             if (validPrediction && !match) {
+                user = user || {};
+                user.id = user.id || 0;
                 var newOne = datacontext.prediction.create(user.id, f);
                 vm.predictions.push(newOne);
             }
@@ -386,7 +386,7 @@
         }
         
         function getPredictions(forceRemote) {
-            if (user.isAuthenticated) {
+            if (identity.isAuthenticated()) {
                 if (!vm.selectedSeason.isPartial) {
                     return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         return vm.predictions = data;
@@ -405,7 +405,7 @@
         }
 
         function submit() {
-            if(!user.isAuthenticated) {
+            if(!identity.isAuthenticated()) {
                 logError("You must be logged in to submit predictions");
                 return $q.when(null);
             }

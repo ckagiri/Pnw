@@ -1,9 +1,9 @@
 ﻿(function () {
     'use strict';
     var controllerId = 'predictions';
-    angular.module('app').controller(controllerId, ['$route', '$routeParams', '$scope', 'bootstrappedData', 'cache', 'common', 'config', 'datacontext', predictions]);
+    angular.module('app').controller(controllerId, ['$route', '$routeParams', '$scope', 'bootstrappedData', 'cache', 'common', 'config', 'datacontext', 'identity', predictions]);
 
-    function predictions($route, $routeParams, $scope, bootstrappedData, cache, common, config, datacontext) {
+    function predictions($route, $routeParams, $scope, bootstrappedData, cache, common, config, datacontext, identity) {
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
         var logError = getLogFn(controllerId, 'error');
@@ -12,7 +12,7 @@
         var defaultLeague = bootstrappedData.defaultLeague;
         var defaultSeason = bootstrappedData.defaultSeason;
         var currentDate = bootstrappedData.currentDate;
-        var user = bootstrappedData.user;
+        var user = identity.currentUser;
         var stateKey = { filter: 'public.predictions.filter' };
         var vm = this;
 
@@ -197,12 +197,14 @@
             var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
                mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
                dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
-
+            var cDate = new Date(yCurrentDate, mCurrentDate - 1, dCurrentDate);
+            
             vm.rounds.some(function (r) {
                 var yEndDate = parseInt(moment(r.endDate).format('YYYY'), 10),
                     mEndDate = parseInt(moment(r.endDate).format('M'), 10),
                     dEndDate = parseInt(moment(r.endDate).format('D'), 10);
-                if (yEndDate >= yCurrentDate && mEndDate >= mCurrentDate && dEndDate >= dCurrentDate) {
+                var rEndDate = new Date(yEndDate, mEndDate - 1, dEndDate);
+                if(rEndDate >= cDate){
                     vm.selectedRound = r;
                     return true;
                 }
@@ -265,7 +267,7 @@
         function getPredictions(forceRemote) {
             var offset = moment().zone();
             var fixtureDate, startOfWeek, endOfWeek;
-            if (user.isAuthenticated) {
+            if (identity.isAuthenticated()) {
                 if (!vm.selectedSeason.isPartial && vm.selectedRound) {
                     return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         vm.predictions = data.filter(function (p) {

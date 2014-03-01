@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row-fluid">
                 <h2 class="page-header">Sign Up</h2>
-                <form name="form" data-ng-submit="vm.register()" novalidate>
+                <form name="form" data-ng-submit="vm.submit()" novalidate>
                     <div class="alert alert-error" data-ng-show="vm.modelErrors" data-ng-switch="vm.modelErrors.length">
                         <strong>Error!</strong>
                         <span data-ng-switch-when="1">{{vm.modelErrors[0]}}</span>

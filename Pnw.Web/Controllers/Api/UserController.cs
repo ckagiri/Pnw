@@ -14,11 +14,12 @@ using Pnw.Web.Utils;
 using WebMatrix.WebData;
 using Membership = System.Web.Security.Membership;
 
-namespace Pnw.Admin.Controllers.Api
+namespace Pnw.Web.Controllers.Api
 {
     public class UserController : ApiController
     {
         private readonly Func<string, string, string, bool, string> _signup;
+        private readonly Func<string, string, bool, bool> _signIn;
         private readonly IMailer _mailer;
         private readonly Func<int> _getUserId;
 
@@ -32,15 +33,20 @@ namespace Pnw.Admin.Controllers.Api
                     password,
                     new { Email = email },
                     requireConfirmation),
-                new Mailer(), () => WebSecurity.CurrentUserId)
+            WebSecurity.Login,
+            new Mailer(), 
+            () => WebSecurity.CurrentUserId)
         {
         }
 
         public UserController(
             Func<string, string, string, bool, string> signup,
-            IMailer mailer, Func<int> getUserId)
+            Func<string, string, bool, bool> signIn,
+            IMailer mailer, 
+            Func<int> getUserId)
         {
             _signup = signup;
+            _signIn = signIn;
             _mailer = mailer;
             _getUserId = getUserId;
         }
@@ -76,7 +82,6 @@ namespace Pnw.Admin.Controllers.Api
 
         public HttpResponseMessage Put(int id, [FromBody]User model)
         {
-            User user = null;
             HttpResponseMessage response;
             var userUpdates = model;
             if (_getUserId() != id)
@@ -87,7 +92,7 @@ namespace Pnw.Admin.Controllers.Api
             {
                 using (var context = new PnwDbContext())
                 {
-                    user = context.Users.FirstOrDefault(n => n.Id == id);
+                    var user = context.Users.FirstOrDefault(n => n.Id == id);
                     if (user != null)
                     {
                         user.FirstName = userUpdates.FirstName;
@@ -132,7 +137,8 @@ namespace Pnw.Admin.Controllers.Api
                         throw ex;
                     }
                 }
-                token = _signup(userName, model.Password, email, requireConfirmation);
+                token = _signup(userName, model.Password, email, false);
+                _signIn(userName, model.Password, false);
             }
             catch (MembershipCreateUserException e)
             {
@@ -141,12 +147,12 @@ namespace Pnw.Admin.Controllers.Api
             
             if (statusCode == MembershipCreateStatus.Success)
             {
-                if (requireConfirmation)
+                User user;
+                using (var context = new PnwDbContext())
                 {
-                    await _mailer.UserConfirmationAsync(userName, token);
+                    user = context.Users.FirstOrDefault(n => n.Username == userName);
                 }
-
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.OK, user);
             }
 
             switch (statusCode)

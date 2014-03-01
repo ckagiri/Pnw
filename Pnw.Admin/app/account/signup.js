@@ -6,7 +6,6 @@
     function signup($location, auth, common, events, validation) {
         var vm = this;
         vm.submit = submit;
-        vm.register = register;
         vm.modelErrors = void (0);
 
         activate();
@@ -15,7 +14,7 @@
             common.activateController([], controllerId);
         }
        
-        function register() {
+        function submit() {
             var newUserData = {
                 username: vm.username,
                 email: vm.email,

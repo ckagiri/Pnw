@@ -202,6 +202,7 @@
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\GlobalConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Config.cs" />
@@ -257,6 +258,7 @@
     <Content Include="app\general\howtoplay.html" />
     <Content Include="app\general\howtoplay.js" />
     <Content Include="app\general\Rules.html" />
+    <Content Include="app\layout\navigation.js" />
     <Content Include="app\leaderboard\leaderboard.html" />
     <Content Include="app\leaderboard\leaderboard.js" />
     <Content Include="app\layout\shell.html" />
@@ -402,6 +404,8 @@
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-resource.js" />
+    <Content Include="Scripts\angular-resource.min.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
@@ -414,6 +418,7 @@
     <Content Include="Scripts\breeze.directives.validation.js" />
     <None Include="Properties\PublishProfiles\pnwproto - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\pnwproto - Web Deploy.pubxml" />
+    <Content Include="Scripts\angular-resource.min.js.map" />
     <None Include="Scripts\breeze.intellisense.js" />
     <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\breeze.saveErrorExtensions.js" />
@@ -467,11 +472,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
