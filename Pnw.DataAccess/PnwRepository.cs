@@ -109,9 +109,9 @@ namespace Pnw.DataAccess
         {
             DateTime? startDate = null; 
             DateTime? endDate = null;
+            int? month = null;
             var leagueId = filter.LeagueId.GetValueOrDefault();
             var seasonId = filter.SeasonId.GetValueOrDefault();
-            var month = filter.Month.GetValueOrDefault();
             var roundId = filter.RoundId.GetValueOrDefault();
             if(roundId > 0)
             {
@@ -122,10 +122,15 @@ namespace Pnw.DataAccess
                     endDate = round.EndDate.AddDays(1);
                 }
             }
+            else
+            {
+                month = filter.Month.GetValueOrDefault();
+            }
             var query = (from p in Context.Predictions 
                          where p.LeagueId == leagueId && p.SeasonId == seasonId
                          && (p.FixtureDate >=  startDate || startDate == null)
-                          && (p.FixtureDate <= endDate || endDate == null)
+                         && (p.FixtureDate <= endDate || endDate == null)
+                         && (month == null || p.FixtureDate.Month == month)
                          group p by p.UserId
                          into g
                          let @group = g.FirstOrDefault()

@@ -204,8 +204,13 @@
         }
 
         function calculateTotalPoints() {
+            clearSummary();
+            var offset = moment().zone();
             vm.predictions.filter(function (p) {
-                return moment(p.fixtureDate).format('MMMM') === vm.selectedMonth;
+                var fDate = moment(p.fixtureDate).toDate();
+                var startOfWeek = moment(vm.selectedRound.startDate).add('minutes', offset).toDate();
+                var endOfWeek = moment(vm.selectedRound.endDate).add('days', 1).add('minutes', offset).toDate();
+                return startOfWeek <= fDate && fDate <= endOfWeek;
             }).reduce(function (accum, prediction) {
                 accum.totalPoints += prediction.points;
                 accum.correctScore += prediction.correctScorePoints;
@@ -277,6 +282,14 @@
             return datacontext.round.getAll(forceRemote, vm.selectedSeason.id).then(function(data) {
                 vm.rounds = data;
             });
+        }
+
+        function clearSummary() {
+            vm.summary = {
+                totalPoints: 0,
+                correctScore: 0,
+                correctResult: 0
+            };
         }
         
         function cancel() {

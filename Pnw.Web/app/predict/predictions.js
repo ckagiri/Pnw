@@ -166,12 +166,8 @@
 
         function getDefaultRound() {
             var roundId = parseInt($route.current.params.roundId, 10);
-            
-            if(roundId) {
-                vm.selectedRound = getSelectedRound(roundId);
-            } else {
-                vm.selectedRound = getSelectedRound();
-            }
+
+            return getSelectedRound(roundId);
 
             function getSelectedRound(id) {
                 if (id) {
@@ -182,7 +178,9 @@
                         }
                         return false;
                     });
+                    return vm.selectedRound;
                 }
+                
                 var yCurrentDate = parseInt(moment(currentDate).format('YYYY'), 10),
                         mCurrentDate = parseInt(moment(currentDate).format('M'), 10),
                         dCurrentDate = parseInt(moment(currentDate).format('D'), 10);
