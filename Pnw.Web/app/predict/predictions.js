@@ -132,14 +132,14 @@
                 vm.selectedLeague = getSelectedLeague(leagueId);
                 vm.selectedSeason = getSelectedSeason(seasonId);
                 user = { isAuthenticated: true, id: userId }; // todo: find elegant alternative 
-                return false;
+                return;
             } else {
                 vm.selectedLeague = getSelectedLeague(defaultLeague.id);
                 vm.selectedSeason = getSelectedSeason(defaultSeason.id);
             }
 
             if (!vm.selectedLeague) { vm.selectedLeague = vm.leagues[0]; }
-            return true;
+            return;
 
             function getSelectedLeague(id) {
                 vm.leagues.some(function (n) {
@@ -221,7 +221,7 @@
         function gotoRoundIndex() {
             var i = vm.roundPager.index;
             vm.selectedRound = vm.rounds[i];
-            getPredictions(false)
+            getPredictions()
                 .then(summarize)
                 .then(vm.isBusy = false);
         }
@@ -229,7 +229,7 @@
         function pageChanged(page) {
             if (!page) { return; }
             vm.paging.currentPage = page;
-            getPredictions(false);
+            getPredictions();
         }
        
         function initRoundPager() {
@@ -292,9 +292,8 @@
             var fixtureDate, startOfWeek, endOfWeek;
             user = user || {};
             if (identity.isAuthenticated() || user.isAuthenticated) {
-                forceRemote = forceRemote || user.isAuthenticated;
                 if (!vm.selectedSeason.isPartial && vm.selectedRound) {
-                    return datacontext.prediction.getAll(!!forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
+                    return datacontext.prediction.getAll(forceRemote, user.id, vm.selectedSeason.id).then(function(data) {
                         vm.predictions = data.filter(function (p) {
                             fixtureDate = moment(p.fixtureDate).toDate();
                             startOfWeek = moment(vm.selectedRound.startDate).add('minutes', offset).toDate();
