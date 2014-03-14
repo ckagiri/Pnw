@@ -9,7 +9,7 @@ namespace Pnw.Web
         {
             // Force optimization to be on or off, regardless of web.config setting
             BundleTable.EnableOptimizations = true;
-            //bundles.UseCdn = true;
+            bundles.UseCdn = true;
 
             // .debug.js, -vsdoc.js and .intellisense.js files 
             // are in BundleTable.Bundles.IgnoreList by default.
@@ -19,6 +19,17 @@ namespace Pnw.Web
             bundles.IgnoreList.Ignore("*-vsdoc.js");
             bundles.IgnoreList.Ignore("*intellisense.js");
 
+            // jQuery
+            bundles.Add(new ScriptBundle("~/bundles/jquery",
+                "//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+                .Include("~/Scripts/jquery-2.0.3.min.js"));
+
+            // angular
+            bundles.Add(new ScriptBundle("~/bundles/angular",
+                "//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js")
+                .Include("~/Scripts/angular.min.js"));
+
+            // 3rd Party JavaScript files
             bundles.Add(new ScriptBundle("~/bundles/jsextlibs")
                             .Include(
                                 "~/Scripts/angular-animate.min.js",
@@ -40,6 +51,7 @@ namespace Pnw.Web
                                 "~/Scripts/ui.bootstrap.dialog.js"
                             ));
 
+            // Application JavaScript files
             bundles.Add(new ScriptBundle("~/bundles/jsapplibs")
                             .Include(
                                 // bootstrapping
@@ -57,17 +69,17 @@ namespace Pnw.Web
                                 "~/app/common/bootstrap/bootstrap.dialog.js",
 
                                 // auth
-                                //"~/app/account/events.js",
-                                //"~/app/account/auth.js",
-                                //"~/app/account/identity.js",
-                                //"~/app/account/forgotpassword.js",
-                                //"~/app/account/changepassword.js",
-                                //"~/app/account/user.js",
-                                //"~/app/account/signin.js",
-                                //"~/app/account/signup.js",
-                                //"~/app/account/validation.js",
-                                //"~/app/account/profile.js",
-                                //"~/app/account/flashmessage.js",
+                                "~/app/account/events.js",
+                                "~/app/account/auth.js",
+                                "~/app/account/identity.js",
+                                "~/app/account/forgotpassword.js",
+                                "~/app/account/changepassword.js",
+                                "~/app/account/user.js",
+                                "~/app/account/signin.js",
+                                "~/app/account/signup.js",
+                                "~/app/account/validation.js",
+                                "~/app/account/profile.js",
+                                "~/app/account/flashmessage.js",
 
                                 // app
                                 "~/app/layout/navigation.js",

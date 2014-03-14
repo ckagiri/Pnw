@@ -16,56 +16,17 @@
 
 <span data-cc-scroll-to-top></span>
 
-<!-- Vendor Scripts -->
-@*<script src="~/scripts/jquery-2.0.3.js"></script>*@
-@*<script src="~/scripts/angular.js"></script>*@
-@*<script src="~/scripts/angular-animate.js"></script>*@
-@*<script src="~/scripts/angular-route.js"></script>*@
-@*<script src="~/scripts/angular-sanitize.js"></script>*@
-@*<script src="~/Scripts/angular-resource.js"></script>*@
-@*<script src="~/scripts/bootstrap.js"></script>*@
-@*<script src="~/scripts/toastr.js"></script>*@
-@*<script src="~/scripts/moment.js"></script>*@
-@*<script src="~/scripts/ui-bootstrap-tpls-0.7.0.js"></script>*@
-@*<script src="~/scripts/spin.js"></script>*@
-@*<script src="~/scripts/q.js"></script>*@
-@*<script src="~/scripts/breeze.debug.js"></script>*@
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
-@*<script src="~/Scripts/jquery-2.0.3.min.js"></script>*@
-@*<script src="~/Scripts/angular.min.js"></script>*@
-
-@Scripts.Render("~/bundles/jsextlibs", "~/bundles/jsapplibs")
-@*<script src="~/Scripts/angular-animate.min.js"></script>
-<script src="~/Scripts/angular-route.min.js"></script>
-<script src="~/Scripts/angular-sanitize.min.js"></script>
-<script src="~/Scripts/angular-resource.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/toastr.min.js"></script>
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Scripts/ui-bootstrap-tpls-0.7.0.min.js"></script>
-<script src="~/Scripts/spin.min.js"></script>
-<script src="~/Scripts/q.min.js"></script>
-<script src="~/Scripts/breeze.min.js"></script>
-
-<script src="~/scripts/breeze.directives.validation.js"></script>
-<script src="~/scripts/breeze.to$q.js"></script>
-<script src="~/scripts/breeze.saveErrorExtensions.js"></script>
-<script src="~/Scripts/ui.validate.js"></script>
-<script src="~/Scripts/ui.bootstrap.alert.js"></script>
-<script src="~/Scripts/ui.bootstrap.dialog.js"></script>*@
-
-<!-- Bootstrapping -->
-@*<script src="~/app/app.js"></script>
-<script src="~/app/config.js"></script>
-<script src="~/app/config.exceptionHandler.js"></script>
-<script src="~/app/config.route.js"></script>*@
+@Scripts.Render(
+    "~/bundles/jquery", 
+    "~/bundles/angular", 
+    "~/bundles/jsextlibs", 
+    "~/bundles/jsapplibs"
+)
 
 @section script
 {
     <script type="text/javascript">
-        //console.log(@Html.Raw(Model.UserJSON));
         angular.module('app').factory('bootstrappedData', function() {
             var data = {
                 defaultLeague: @Html.Raw(Model.DefaultLeagueJSON),
@@ -79,6 +40,47 @@
     </Script>
 }
 
+
+<!-- Vendor Scripts -->
+@*<script src="~/scripts/jquery-2.0.3.js"></script>
+<script src="~/scripts/angular.js"></script>
+<script src="~/scripts/angular-animate.js"></script>
+<script src="~/scripts/angular-route.js"></script>
+<script src="~/scripts/angular-sanitize.js"></script>
+<script src="~/Scripts/angular-resource.js"></script>
+<script src="~/scripts/bootstrap.js"></script>
+<script src="~/scripts/toastr.js"></script>
+<script src="~/scripts/moment.js"></script>
+<script src="~/scripts/ui-bootstrap-tpls-0.7.0.js"></script>
+<script src="~/scripts/spin.js"></script>
+<script src="~/scripts/q.js"></script>
+<script src="~/scripts/breeze.debug.js"></script>*@
+
+@*<script src="~/Scripts/angular-animate.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/angular-sanitize.min.js"></script>
+<script src="~/Scripts/angular-resource.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/ui-bootstrap-tpls-0.7.0.min.js"></script>
+<script src="~/Scripts/spin.min.js"></script>
+<script src="~/Scripts/q.min.js"></script>
+<script src="~/Scripts/breeze.min.js"></script>*@
+
+@*<script src="~/scripts/breeze.directives.validation.js"></script>
+<script src="~/scripts/breeze.to$q.js"></script>
+<script src="~/scripts/breeze.saveErrorExtensions.js"></script>
+<script src="~/Scripts/ui.validate.js"></script>
+<script src="~/Scripts/ui.bootstrap.alert.js"></script>
+<script src="~/Scripts/ui.bootstrap.dialog.js"></script>*@
+
+<!-- Bootstrapping -->
+@*<script src="~/app/app.js"></script>
+<script src="~/app/config.js"></script>
+<script src="~/app/config.exceptionHandler.js"></script>
+<script src="~/app/config.route.js"></script>*@
+
 <!-- common Modules -->
 @*<script src="~/app/common/common.js"></script>
 <script src="~/app/common/logger.js"></script>
@@ -88,7 +90,7 @@
 @*<script src="~/app/common/bootstrap/bootstrap.dialog.js"></script>*@
 
 <!-- auth -->
-<script src="~/app/account/events.js"></script>
+@*<script src="~/app/account/events.js"></script>
 <script src="~/app/account/auth.js"></script>
 <script src="~/app/account/identity.js"></script>
 <script src="~/app/account/forgotpassword.js"></script>
@@ -98,7 +100,7 @@
 <script src="~/app/account/signup.js"></script>
 <script src="~/app/account/validation.js"></script>
 <script src="~/app/account/profile.js"></script>
-<script src="~/app/account/flashmessage.js"></script>
+<script src="~/app/account/flashmessage.js"></script>*@
 
 <!-- app -->
 @*<script src="~/app/layout/navigation.js"></script>

@@ -65,7 +65,7 @@
                 if (!common.isNumber(val)) {
                     pageCount += 1;
                 }
-                return pageCount;
+                return pageCount || 0;
             }
         });
         
