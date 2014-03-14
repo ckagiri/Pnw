@@ -31,6 +31,7 @@ namespace Pnw.Web
                                 "~/Scripts/ui-bootstrap-tpls-0.7.0.min.js",
                                 "~/Scripts/spin.min.js",
                                 "~/Scripts/q.min.js",
+                                "~/Scripts/breeze.min.js",
                                 "~/scripts/breeze.directives.validation.js",
                                 "~/scripts/breeze.to$q.js",
                                 "~/scripts/breeze.saveErrorExtensions.js",
@@ -42,18 +43,18 @@ namespace Pnw.Web
             bundles.Add(new ScriptBundle("~/bundles/jsapplibs")
                             .Include(
                                 // bootstrapping
-                                //"~/app/app.js",
-                                //"~/app/config.js",
-                                //"~/app/config.exceptionHandler.js",
-                                //"~/app/config.route.js",
+                                "~/app/app.js",
+                                "~/app/config.js",
+                                "~/app/config.exceptionHandler.js",
+                                "~/app/config.route.js",
 
                                 // common modules
-                                //"~/app/common/common.js",
-                                //"~/app/common/logger.js",
-                                //"~/app/common/spinner.js",
+                                "~/app/common/common.js",
+                                "~/app/common/logger.js",
+                                "~/app/common/spinner.js",
 
                                 // common.bootstrap modules
-                                //"~/app/common/bootstrap/bootstrap.dialog.js",
+                                "~/app/common/bootstrap/bootstrap.dialog.js",
 
                                 // auth
                                 //"~/app/account/events.js",
@@ -69,41 +70,47 @@ namespace Pnw.Web
                                 //"~/app/account/flashmessage.js",
 
                                 // app
-                                //"~/app/layout/navigation.js",
-                                //"~/app/layout/shell.js",
-                                //"~/app/layout/sidebar.js"
+                                "~/app/layout/navigation.js",
+                                "~/app/layout/shell.js",
+                                "~/app/layout/sidebar.js",
 
                                 // app services
-                                //"~/app/services/datacontext.js",
-                                //"~/app/services/directives.js",
-                                //"~/app/services/entityManagerFactory.js",
-                                //"~/app/services/model.js",
-                                //"~/app/services/model.validation.js",
-                                //"~/app/services/routemediator.js",
-                                //"~/app/services/repositories.js",
-                                //"~/app/services/repository.abstract.js",
-                                //"~/app/services/cache.js",
-                                //"~/app/services/helper.js",
-                                //"~/app/services/repository.league.js",
-                                //"~/app/services/repository.season.js",
-                                //"~/app/services/repository.team.js",
-                                //"~/app/services/repository.fixture.js",
-                                //"~/app/services/repository.prediction.js",
-                                //"~/app/services/repository.leaderboard.js",
-                                //"~/app/services/repository.round.js",
+                                "~/app/services/datacontext.js",
+                                "~/app/services/directives.js",
+                                "~/app/services/entityManagerFactory.js",
+                                "~/app/services/model.js",
+                                "~/app/services/model.validation.js",
+                                "~/app/services/routemediator.js",
+                                "~/app/services/repositories.js",
+                                "~/app/services/repository.abstract.js",
+                                "~/app/services/cache.js",
+                                "~/app/services/helper.js",
+                                "~/app/services/repository.league.js",
+                                "~/app/services/repository.season.js",
+                                "~/app/services/repository.team.js",
+                                "~/app/services/repository.fixture.js",
+                                "~/app/services/repository.prediction.js",
+                                "~/app/services/repository.leaderboard.js",
+                                "~/app/services/repository.round.js",
 
                                 // app viewmodels
-                                //"~/app/fixture/fixtures.js",
-                                //"~/app/predict/predictions.js",
-                                //"~/app/leaderboard/leaderboard.js",
-                                //"~/app/general/howtoplay.js"
+                                "~/app/fixture/fixtures.js",
+                                "~/app/predict/predictions.js",
+                                "~/app/leaderboard/leaderboard.js",
+                                "~/app/general/howtoplay.js"
                             ));
 
             // 3rd Party CSS files
-            //bundles.Add(new StyleBundle("~/Content/css").Include(
-            //    "~/Content/boilerplate-styles.css",
-            //    "~/Content/toastr.css",
-            //    "~/Content/toastr-responsive.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/content/ie10mobile.css",
+                "~/content/bootstrap.min.css",
+                "~/content/font-awesome.min.css",
+                "~/content/toastr.css",
+                "~/content/breeze.directives.css",
+                "~/content/customtheme.css",
+                "~/content/styles.css",
+                "~/content/bootstrap-responsive.min.css"
+                ));
 
             // Custom LESS files
             //bundles.Add(new Bundle("~/Content/Less", new LessTransform(), new CssMinify())

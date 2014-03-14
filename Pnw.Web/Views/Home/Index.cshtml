@@ -31,9 +31,13 @@
 @*<script src="~/scripts/q.js"></script>*@
 @*<script src="~/scripts/breeze.debug.js"></script>*@
 
-<script src="~/Scripts/jquery-2.0.3.min.js"></script>
-<script src="~/Scripts/angular.min.js"></script>
-<script src="~/Scripts/angular-animate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+@*<script src="~/Scripts/jquery-2.0.3.min.js"></script>*@
+@*<script src="~/Scripts/angular.min.js"></script>*@
+
+@Scripts.Render("~/bundles/jsextlibs", "~/bundles/jsapplibs")
+@*<script src="~/Scripts/angular-animate.min.js"></script>
 <script src="~/Scripts/angular-route.min.js"></script>
 <script src="~/Scripts/angular-sanitize.min.js"></script>
 <script src="~/Scripts/angular-resource.min.js"></script>
@@ -50,13 +54,13 @@
 <script src="~/scripts/breeze.saveErrorExtensions.js"></script>
 <script src="~/Scripts/ui.validate.js"></script>
 <script src="~/Scripts/ui.bootstrap.alert.js"></script>
-<script src="~/Scripts/ui.bootstrap.dialog.js"></script>
+<script src="~/Scripts/ui.bootstrap.dialog.js"></script>*@
 
 <!-- Bootstrapping -->
-<script src="~/app/app.js"></script>
+@*<script src="~/app/app.js"></script>
 <script src="~/app/config.js"></script>
 <script src="~/app/config.exceptionHandler.js"></script>
-<script src="~/app/config.route.js"></script>
+<script src="~/app/config.route.js"></script>*@
 
 @section script
 {
@@ -76,12 +80,12 @@
 }
 
 <!-- common Modules -->
-<script src="~/app/common/common.js"></script>
+@*<script src="~/app/common/common.js"></script>
 <script src="~/app/common/logger.js"></script>
-<script src="~/app/common/spinner.js"></script>
+<script src="~/app/common/spinner.js"></script>*@
 
 <!-- common.bootstrap Modules -->
-<script src="~/app/common/bootstrap/bootstrap.dialog.js"></script>
+@*<script src="~/app/common/bootstrap/bootstrap.dialog.js"></script>*@
 
 <!-- auth -->
 <script src="~/app/account/events.js"></script>
@@ -96,14 +100,13 @@
 <script src="~/app/account/profile.js"></script>
 <script src="~/app/account/flashmessage.js"></script>
 
-
 <!-- app -->
-<script src="~/app/layout/navigation.js"></script>
+@*<script src="~/app/layout/navigation.js"></script>
 <script src="~/app/layout/shell.js"></script>
-<script src="~/app/layout/sidebar.js"></script>
+<script src="~/app/layout/sidebar.js"></script>*@
 
 <!-- app Services -->
-<script src="~/app/services/datacontext.js"></script>
+@*<script src="~/app/services/datacontext.js"></script>
 <script src="~/app/services/directives.js"></script>
 <script src="~/app/services/entityManagerFactory.js"></script>
 <script src="~/app/services/model.js"></script>
@@ -124,4 +127,4 @@
 <script src="~/app/fixture/fixtures.js"></script>
 <script src="~/app/predict/predictions.js"></script>
 <script src="~/app/leaderboard/leaderboard.js"></script>
-<script src="~/app/general/howtoplay.js"></script>
+<script src="~/app/general/howtoplay.js"></script>*@
